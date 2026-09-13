@@ -145,44 +145,6 @@ h3 {
   padding-left: 1.25rem;
 }
 
-/* Assignment list on the home page */
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-  list-style: none;
-  padding: 0;
-}
-
-.card {
-  display: block;
-  height: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  color: var(--text);
-  text-decoration: none;
-}
-
-a.card:hover {
-  border-color: var(--accent);
-}
-
-.card strong {
-  display: block;
-  margin-bottom: 0.25rem;
-}
-
-.card small {
-  color: var(--muted);
-}
-
-.card.upcoming {
-  opacity: 0.55;
-}
-
 /* Tables */
 
 .table-wrap {
@@ -246,14 +208,6 @@ figcaption {
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
-}
-
-footer {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 1.5rem 1.25rem 3rem;
-  color: var(--muted);
-  font-size: 0.9rem;
 }
 
 /* Printing to PDF for Learn: drop the navbar and keep figures whole */
