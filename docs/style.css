@@ -95,6 +95,13 @@ a {
   font-weight: 600;
 }
 
+/* External link, set apart from the assignment links */
+.nav-external {
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--border);
+}
+
 /* Assignments that aren't posted yet */
 .nav-links span {
   color: var(--muted);
