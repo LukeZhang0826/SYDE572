@@ -1,0 +1,9 @@
+.ipynb_checkpoints/
+.ruff_cache/
+__pycache__/
+
+# Course handouts aren't ours to republish, and the repo is public
+*.pdf
+
+# The notebook writes plots here; the site uses the copies in docs/1/media/
+/media/

@@ -1,0 +1,273 @@
+:root {
+  --bg: #fbfbf9;
+  --surface: #ffffff;
+  --text: #1a1a18;
+  --muted: #5f5e59;
+  --border: #e3e2dc;
+  --accent: #2a64c5;
+  --accent-soft: #e8effb;
+  --max-width: 960px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141413;
+    --surface: #1c1c1a;
+    --text: #ecebe6;
+    --muted: #a3a29b;
+    --border: #2e2e2b;
+    --accent: #7aa7f0;
+    --accent-soft: #1f2a3d;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+a {
+  color: var(--accent);
+}
+
+/* Navbar */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.nav-brand {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a,
+.nav-links span {
+  display: block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.nav-links a {
+  color: var(--text);
+}
+
+.nav-links a:hover {
+  background: var(--accent-soft);
+}
+
+.nav-links a[aria-current="page"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Assignments that aren't posted yet */
+.nav-links span {
+  color: var(--muted);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Page content */
+
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+h1 {
+  font-size: 2.1rem;
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 3rem 0 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin: 2rem 0 0.5rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin: 0 0 2rem;
+}
+
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.toc ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+/* Assignment list on the home page */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.card {
+  display: block;
+  height: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+a.card:hover {
+  border-color: var(--accent);
+}
+
+.card strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.card small {
+  color: var(--muted);
+}
+
+.card.upcoming {
+  opacity: 0.55;
+}
+
+/* Tables */
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+}
+
+th {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Figures */
+
+figure {
+  margin: 1.5rem 0;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+}
+
+figcaption {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1rem;
+}
+
+.figure-grid figure {
+  margin: 0;
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Printing to PDF for Learn: drop the navbar and keep figures whole */
+
+@media print {
+  .nav {
+    display: none;
+  }
+
+  figure {
+    break-inside: avoid;
+  }
+
+  .figure-grid {
+    grid-template-columns: 1fr;
+  }
+}
