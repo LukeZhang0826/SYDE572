@@ -14,6 +14,9 @@
       src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
       onload="renderMathInElement(document.body)"
     ></script>
+
+    <!-- Tabs and the image lightbox -->
+    <script defer src="../site.js"></script>
   </head>
   <body>
     <!-- Navbar: copied into every page. Update all copies when an assignment goes up. -->
@@ -88,53 +91,88 @@
         </table>
       </div>
 
-      <figure>
-        <a href="./media/parabola_0_0.png"><img src="./media/parabola_0_0.png" alt="Newton and golden section steps for P(0, 0) to y = x^2 + 5" loading="lazy" /></a>
-        <figcaption>P(0, 0) to \(y = x^2 + 5\)</figcaption>
-      </figure>
-      <figure>
-        <a href="./media/parabola_-4_0.png"><img src="./media/parabola_-4_0.png" alt="Newton and golden section steps for P(-4, 0) to y = x^2 + 5" loading="lazy" /></a>
-        <figcaption>P(−4, 0) to \(y = x^2 + 5\)</figcaption>
-      </figure>
-      <figure>
-        <a href="./media/parabola_-8_0.png"><img src="./media/parabola_-8_0.png" alt="Newton and golden section steps for P(-8, 0) to y = x^2 + 5" loading="lazy" /></a>
-        <figcaption>P(−8, 0) to \(y = x^2 + 5\)</figcaption>
-      </figure>
-      <figure>
-        <a href="./media/parabola_2_0.png"><img src="./media/parabola_2_0.png" alt="Newton and golden section steps for P(2, 0) to y = x^2 + 5" loading="lazy" /></a>
-        <figcaption>P(2, 0) to \(y = x^2 + 5\)</figcaption>
-      </figure>
-      <figure>
-        <a href="./media/parabola_6_0.png"><img src="./media/parabola_6_0.png" alt="Newton and golden section steps for P(6, 0) to y = x^2 + 5" loading="lazy" /></a>
-        <figcaption>P(6, 0) to \(y = x^2 + 5\)</figcaption>
-      </figure>
+      <div class="tabs" data-tabs>
+        <div class="tab-list" role="tablist" aria-label="Point">
+          <button role="tab" id="tab-point-0-0" aria-controls="panel-point-0-0" aria-selected="true">P(0, 0)</button>
+          <button role="tab" id="tab-point-m4-0" aria-controls="panel-point-m4-0" aria-selected="false">P(−4, 0)</button>
+          <button role="tab" id="tab-point-m8-0" aria-controls="panel-point-m8-0" aria-selected="false">P(−8, 0)</button>
+          <button role="tab" id="tab-point-2-0" aria-controls="panel-point-2-0" aria-selected="false">P(2, 0)</button>
+          <button role="tab" id="tab-point-6-0" aria-controls="panel-point-6-0" aria-selected="false">P(6, 0)</button>
+        </div>
+
+        <div class="tab-panel" role="tabpanel" id="panel-point-0-0" aria-labelledby="tab-point-0-0">
+          <figure>
+            <img src="./media/parabola_0_0.png" alt="Newton and golden section steps for P(0, 0) to y = x^2 + 5" loading="lazy" />
+            <figcaption>P(0, 0) to \(y = x^2 + 5\)</figcaption>
+          </figure>
+        </div>
+        <div class="tab-panel" role="tabpanel" id="panel-point-m4-0" aria-labelledby="tab-point-m4-0" hidden>
+          <figure>
+            <img src="./media/parabola_-4_0.png" alt="Newton and golden section steps for P(-4, 0) to y = x^2 + 5" loading="lazy" />
+            <figcaption>P(−4, 0) to \(y = x^2 + 5\)</figcaption>
+          </figure>
+        </div>
+        <div class="tab-panel" role="tabpanel" id="panel-point-m8-0" aria-labelledby="tab-point-m8-0" hidden>
+          <figure>
+            <img src="./media/parabola_-8_0.png" alt="Newton and golden section steps for P(-8, 0) to y = x^2 + 5" loading="lazy" />
+            <figcaption>P(−8, 0) to \(y = x^2 + 5\)</figcaption>
+          </figure>
+        </div>
+        <div class="tab-panel" role="tabpanel" id="panel-point-2-0" aria-labelledby="tab-point-2-0" hidden>
+          <figure>
+            <img src="./media/parabola_2_0.png" alt="Newton and golden section steps for P(2, 0) to y = x^2 + 5" loading="lazy" />
+            <figcaption>P(2, 0) to \(y = x^2 + 5\)</figcaption>
+          </figure>
+        </div>
+        <div class="tab-panel" role="tabpanel" id="panel-point-6-0" aria-labelledby="tab-point-6-0" hidden>
+          <figure>
+            <img src="./media/parabola_6_0.png" alt="Newton and golden section steps for P(6, 0) to y = x^2 + 5" loading="lazy" />
+            <figcaption>P(6, 0) to \(y = x^2 + 5\)</figcaption>
+          </figure>
+        </div>
+      </div>
 
       <h3>Other parabolas</h3>
       <!-- TODO: explain make_parabola(a, b, c) and how brackets were chosen -->
       <figure>
-        <a href="./media/parabola2_-2_-3.png"><img src="./media/parabola2_-2_-3.png" alt="Newton and golden section steps for P(-2, -3) to y = 2x^2 - 4x + 1" loading="lazy" /></a>
+        <img src="./media/parabola2_-2_-3.png" alt="Newton and golden section steps for P(-2, -3) to y = 2x^2 - 4x + 1" loading="lazy" />
         <figcaption>P(−2, −3) to \(y = 2x^2 - 4x + 1\)</figcaption>
       </figure>
 
       <h3>Non-polynomial functions</h3>
       <!-- TODO: what changed in the code, and why Newton needs a different initial guess for these -->
-      <div class="figure-grid">
-        <figure>
-          <a href="./media/exp_-2_3.png"><img src="./media/exp_-2_3.png" alt="Newton and golden section steps for P(-2, 3) to y = e^x" loading="lazy" /></a>
-          <figcaption>P(−2, 3) to \(y = e^x\)</figcaption>
-        </figure>
-        <figure>
-          <a href="./media/ln_-1_-1.png"><img src="./media/ln_-1_-1.png" alt="Newton and golden section steps for P(-1, -1) to y = ln(x)" loading="lazy" /></a>
-          <figcaption>P(−1, −1) to \(y = \ln(x)\)</figcaption>
-        </figure>
-        <figure>
-          <a href="./media/reciprocal_1_4.png"><img src="./media/reciprocal_1_4.png" alt="Newton and golden section steps for P(1, 4) to y = 1/x" loading="lazy" /></a>
-          <figcaption>P(1, 4) to \(y = 1/x\)</figcaption>
-        </figure>
-        <figure>
-          <a href="./media/sqrt_1_3.png"><img src="./media/sqrt_1_3.png" alt="Newton and golden section steps for P(1, 3) to y = sqrt(x)" loading="lazy" /></a>
-          <figcaption>P(1, 3) to \(y = \sqrt{x}\)</figcaption>
-        </figure>
+      <div class="tabs" data-tabs>
+        <div class="tab-list" role="tablist" aria-label="Function">
+          <button role="tab" id="tab-exp" aria-controls="panel-exp" aria-selected="true">\(e^x\)</button>
+          <button role="tab" id="tab-ln" aria-controls="panel-ln" aria-selected="false">\(\ln(x)\)</button>
+          <button role="tab" id="tab-reciprocal" aria-controls="panel-reciprocal" aria-selected="false">\(1/x\)</button>
+          <button role="tab" id="tab-sqrt" aria-controls="panel-sqrt" aria-selected="false">\(\sqrt{x}\)</button>
+        </div>
+
+        <div class="tab-panel" role="tabpanel" id="panel-exp" aria-labelledby="tab-exp">
+          <figure>
+            <img src="./media/exp_-2_3.png" alt="Newton and golden section steps for P(-2, 3) to y = e^x" loading="lazy" />
+            <figcaption>P(−2, 3) to \(y = e^x\)</figcaption>
+          </figure>
+        </div>
+        <div class="tab-panel" role="tabpanel" id="panel-ln" aria-labelledby="tab-ln" hidden>
+          <figure>
+            <img src="./media/ln_-1_-1.png" alt="Newton and golden section steps for P(-1, -1) to y = ln(x)" loading="lazy" />
+            <figcaption>P(−1, −1) to \(y = \ln(x)\)</figcaption>
+          </figure>
+        </div>
+        <div class="tab-panel" role="tabpanel" id="panel-reciprocal" aria-labelledby="tab-reciprocal" hidden>
+          <figure>
+            <img src="./media/reciprocal_1_4.png" alt="Newton and golden section steps for P(1, 4) to y = 1/x" loading="lazy" />
+            <figcaption>P(1, 4) to \(y = 1/x\)</figcaption>
+          </figure>
+        </div>
+        <div class="tab-panel" role="tabpanel" id="panel-sqrt" aria-labelledby="tab-sqrt" hidden>
+          <figure>
+            <img src="./media/sqrt_1_3.png" alt="Newton and golden section steps for P(1, 3) to y = sqrt(x)" loading="lazy" />
+            <figcaption>P(1, 3) to \(y = \sqrt{x}\)</figcaption>
+          </figure>
+        </div>
       </div>
 
       <!-- ============================== PART 2 ============================== -->
