@@ -19,6 +19,9 @@ $include-before$
 $if(subtitle)$
       <p class="subtitle">$subtitle$</p>
 $endif$
+$if(author)$
+      <p class="byline">$author$$if(pageurl)$<span class="byline-sep">|</span><a href="$pageurl$">$pagelabel$</a>$endif$$if(repourl)$<span class="byline-sep">|</span><a href="$repourl$">$repolabel$</a>$endif$</p>
+$endif$
 $if(toc)$
       <nav class="toc" aria-label="Contents">
 $toc$

@@ -1,6 +1,7 @@
 ---
 title: SYDE 572 - Assignment 1
-subtitle: Distance from a point to a function, and fitting to an equation - by Luke Zhang https://lukeypookster.com/SYDE572/1/ - https://github.com/LukeZhang0826/SYDE572
+subtitle: Distance from a point to a function, and fitting to an equation
+author: Luke Zhang
 ---
 
 ## Part 1: Shortest distance from a point to a function

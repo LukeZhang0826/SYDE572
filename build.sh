@@ -13,6 +13,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 REPO_URL="https://github.com/LukeZhang0826/SYDE572"
+SITE_URL="https://lukeypookster.com/SYDE572"
 TOTAL_ASSIGNMENTS=5
 
 OUT=docs
@@ -94,6 +95,10 @@ for n in "${targets[@]}"; do
     --toc-depth=2 \
     --syntax-highlighting tango \
     --variable root=../ \
+    --variable pageurl="$SITE_URL/$n/" \
+    --variable pagelabel="${SITE_URL#https://}/$n/" \
+    --variable repourl="$REPO_URL" \
+    --variable repolabel="${REPO_URL#https://}" \
     --output "$OUT/$n/index.html"
 
   if [[ -d content/$n/media ]]; then
