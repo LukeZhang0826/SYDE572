@@ -2,8 +2,12 @@
 .ruff_cache/
 __pycache__/
 
-# Course handouts aren't ours to republish, and the repo is public
+# Course handouts aren't ours to republish, and the repo is public.
+# This also covers the generated PDFs in build/pdf/.
 *.pdf
 
-# The notebook writes plots here; the site uses the copies in docs/1/media/
+# build.sh output: the PDFs and its scratch directory
+/build/
+
+# The notebook writes plots here; the site uses the copies in content/<n>/media/
 /media/

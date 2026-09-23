@@ -3,198 +3,1243 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Assignment 1 | SYDE 572</title>
+    <title>SYDE 572 - Assignment 1 | SYDE 572</title>
     <link rel="stylesheet" href="../style.css" />
-
-    <!-- KaTeX renders the $$...$$ and \( ... \) math on this page -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-      onload="renderMathInElement(document.body)"
-    ></script>
-
-    <!-- Tabs and the image lightbox -->
-    <script defer src="../site.js"></script>
+    <style>
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+<script defer=""
+src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+</script>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
   </head>
   <body>
-    <!-- Navbar: copied into every page. Update all copies when an assignment goes up. -->
-    <nav class="nav">
-      <div class="nav-inner">
-        <a class="nav-brand" href="../">SYDE 572</a>
-        <ul class="nav-links">
-          <li><a href="../1/" aria-current="page">Assignment 1</a></li>
-          <li><span aria-disabled="true">Assignment 2</span></li>
-          <li><span aria-disabled="true">Assignment 3</span></li>
-          <li><span aria-disabled="true">Assignment 4</span></li>
-          <li><span aria-disabled="true">Assignment 5</span></li>
-          <li class="nav-external"><a href="https://github.com/LukeZhang0826/SYDE572">GitHub ↗</a></li>
-        </ul>
-      </div>
-    </nav>
-
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../">SYDE 572</a>
+    <ul class="nav-links">
+      <li><a href="../1/" aria-current="page">Assignment 1</a></li>
+      <li><span aria-disabled="true">Assignment 2</span></li>
+      <li><span aria-disabled="true">Assignment 3</span></li>
+      <li><span aria-disabled="true">Assignment 4</span></li>
+      <li><span aria-disabled="true">Assignment 5</span></li>
+      <li class="nav-external"><a href="https://github.com/LukeZhang0826/SYDE572">GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>
     <main>
-      <h1>Assignment 1</h1>
-      <p class="subtitle">Distance from a point to a function, and fitting to an equation</p>
-
+      <h1>SYDE 572 - Assignment 1</h1>
+      <p class="subtitle">Distance from a point to a function, and
+fitting to an equation - by Luke Zhang
+https://lukeypookster.com/SYDE572/1/ -
+https://github.com/LukeZhang0826/SYDE572</p>
       <nav class="toc" aria-label="Contents">
-        <ol>
-          <li><a href="#part-1">Part 1: Shortest distance from a point to a function</a></li>
-          <li><a href="#part-2">Part 2: Fitting to an equation</a></li>
-          <li><a href="#appendix">Appendix: Hand work</a></li>
-        </ol>
+<ul>
+<li><a href="#part-1-shortest-distance-from-a-point-to-a-function"
+id="toc-part-1-shortest-distance-from-a-point-to-a-function">Part 1:
+Shortest distance from a point to a function</a></li>
+<li><a href="#part-2-fitting-to-an-equation"
+id="toc-part-2-fitting-to-an-equation">Part 2: Fitting to an
+equation</a></li>
+<li><a href="#appendix-hand-work" id="toc-appendix-hand-work">Appendix:
+Hand work</a></li>
+</ul>
       </nav>
-
-      <!-- ============================== PART 1 ============================== -->
-
-      <h2 id="part-1">Part 1: Shortest distance from a point to a function</h2>
-
-      <h3>Setup</h3>
-      <p>
-        For a point \((x_0, y_0)\) and a curve \(y = f(x)\), minimize the squared distance
-      </p>
-      $$D(x) = (x - x_0)^2 + (f(x) - y_0)^2$$
-      <!-- TODO: explain why minimizing D gives the same x as minimizing the distance d -->
-
-      <h3>Analytical solution</h3>
-      $$D'(x) = 2(x - x_0) + 2\big(f(x) - y_0\big)f'(x) = 0$$
-      <p>For \(y = x^2 + 5\) and points of the form \((x_0, 0)\), this becomes the cubic</p>
-      $$2x^3 + 11x - x_0 = 0$$
-      <!-- TODO: your worked hand solution. Why there is exactly one real root (derivative 6x^2 + 11 > 0),
-           Cardano with p = 11/2 and q = -x0/2, and the distance for each point. -->
-
-      <h3>Newton-Raphson</h3>
-      $$x_{k+1} = x_k - \frac{D'(x_k)}{D''(x_k)}, \qquad D''(x) = 2 + 2f'(x)^2 + 2\big(f(x) - y_0\big)f''(x)$$
-      <!-- TODO: your explanation and hand iterations -->
-
-      <h3>Golden section search</h3>
-      <!-- TODO: your explanation of the bracket, the 0.618 shrink per iteration, and your hand iterations -->
-
-      <h3>Results for \(y = x^2 + 5\)</h3>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Point</th>
-              <th>Closest point</th>
-              <th>Distance</th>
-              <th>Newton steps</th>
-              <th>Golden section iterations</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>(0, 0)</td><td>(0.000, 5.000)</td><td>5.000</td><td>0</td><td>35</td></tr>
-            <tr><td>(−4, 0)</td><td>(−0.355, 5.126)</td><td>6.290</td><td>3</td><td>37</td></tr>
-            <tr><td>(−8, 0)</td><td>(−0.672, 5.452)</td><td>9.133</td><td>4</td><td>38</td></tr>
-            <tr><td>(2, 0)</td><td>(0.181, 5.033)</td><td>5.351</td><td>3</td><td>35</td></tr>
-            <tr><td>(6, 0)</td><td>(0.520, 5.270)</td><td>7.603</td><td>3</td><td>38</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="tabs" data-tabs>
-        <div class="tab-list" role="tablist" aria-label="Point">
-          <button role="tab" id="tab-point-0-0" aria-controls="panel-point-0-0" aria-selected="true">P(0, 0)</button>
-          <button role="tab" id="tab-point-m4-0" aria-controls="panel-point-m4-0" aria-selected="false">P(−4, 0)</button>
-          <button role="tab" id="tab-point-m8-0" aria-controls="panel-point-m8-0" aria-selected="false">P(−8, 0)</button>
-          <button role="tab" id="tab-point-2-0" aria-controls="panel-point-2-0" aria-selected="false">P(2, 0)</button>
-          <button role="tab" id="tab-point-6-0" aria-controls="panel-point-6-0" aria-selected="false">P(6, 0)</button>
-        </div>
-
-        <div class="tab-panel" role="tabpanel" id="panel-point-0-0" aria-labelledby="tab-point-0-0">
-          <figure>
-            <img src="./media/parabola_0_0.png" alt="Newton and golden section steps for P(0, 0) to y = x^2 + 5" loading="lazy" />
-            <figcaption>P(0, 0) to \(y = x^2 + 5\)</figcaption>
-          </figure>
-        </div>
-        <div class="tab-panel" role="tabpanel" id="panel-point-m4-0" aria-labelledby="tab-point-m4-0" hidden>
-          <figure>
-            <img src="./media/parabola_-4_0.png" alt="Newton and golden section steps for P(-4, 0) to y = x^2 + 5" loading="lazy" />
-            <figcaption>P(−4, 0) to \(y = x^2 + 5\)</figcaption>
-          </figure>
-        </div>
-        <div class="tab-panel" role="tabpanel" id="panel-point-m8-0" aria-labelledby="tab-point-m8-0" hidden>
-          <figure>
-            <img src="./media/parabola_-8_0.png" alt="Newton and golden section steps for P(-8, 0) to y = x^2 + 5" loading="lazy" />
-            <figcaption>P(−8, 0) to \(y = x^2 + 5\)</figcaption>
-          </figure>
-        </div>
-        <div class="tab-panel" role="tabpanel" id="panel-point-2-0" aria-labelledby="tab-point-2-0" hidden>
-          <figure>
-            <img src="./media/parabola_2_0.png" alt="Newton and golden section steps for P(2, 0) to y = x^2 + 5" loading="lazy" />
-            <figcaption>P(2, 0) to \(y = x^2 + 5\)</figcaption>
-          </figure>
-        </div>
-        <div class="tab-panel" role="tabpanel" id="panel-point-6-0" aria-labelledby="tab-point-6-0" hidden>
-          <figure>
-            <img src="./media/parabola_6_0.png" alt="Newton and golden section steps for P(6, 0) to y = x^2 + 5" loading="lazy" />
-            <figcaption>P(6, 0) to \(y = x^2 + 5\)</figcaption>
-          </figure>
-        </div>
-      </div>
-
-      <h3>Other parabolas</h3>
-      <!-- TODO: explain make_parabola(a, b, c) and how brackets were chosen -->
-      <figure>
-        <img src="./media/parabola2_-2_-3.png" alt="Newton and golden section steps for P(-2, -3) to y = 2x^2 - 4x + 1" loading="lazy" />
-        <figcaption>P(−2, −3) to \(y = 2x^2 - 4x + 1\)</figcaption>
-      </figure>
-
-      <h3>Non-polynomial functions</h3>
-      <!-- TODO: what changed in the code, and why Newton needs a different initial guess for these -->
-      <div class="tabs" data-tabs>
-        <div class="tab-list" role="tablist" aria-label="Function">
-          <button role="tab" id="tab-exp" aria-controls="panel-exp" aria-selected="true">\(e^x\)</button>
-          <button role="tab" id="tab-ln" aria-controls="panel-ln" aria-selected="false">\(\ln(x)\)</button>
-          <button role="tab" id="tab-reciprocal" aria-controls="panel-reciprocal" aria-selected="false">\(1/x\)</button>
-          <button role="tab" id="tab-sqrt" aria-controls="panel-sqrt" aria-selected="false">\(\sqrt{x}\)</button>
-        </div>
-
-        <div class="tab-panel" role="tabpanel" id="panel-exp" aria-labelledby="tab-exp">
-          <figure>
-            <img src="./media/exp_-2_3.png" alt="Newton and golden section steps for P(-2, 3) to y = e^x" loading="lazy" />
-            <figcaption>P(−2, 3) to \(y = e^x\)</figcaption>
-          </figure>
-        </div>
-        <div class="tab-panel" role="tabpanel" id="panel-ln" aria-labelledby="tab-ln" hidden>
-          <figure>
-            <img src="./media/ln_-1_-1.png" alt="Newton and golden section steps for P(-1, -1) to y = ln(x)" loading="lazy" />
-            <figcaption>P(−1, −1) to \(y = \ln(x)\)</figcaption>
-          </figure>
-        </div>
-        <div class="tab-panel" role="tabpanel" id="panel-reciprocal" aria-labelledby="tab-reciprocal" hidden>
-          <figure>
-            <img src="./media/reciprocal_1_4.png" alt="Newton and golden section steps for P(1, 4) to y = 1/x" loading="lazy" />
-            <figcaption>P(1, 4) to \(y = 1/x\)</figcaption>
-          </figure>
-        </div>
-        <div class="tab-panel" role="tabpanel" id="panel-sqrt" aria-labelledby="tab-sqrt" hidden>
-          <figure>
-            <img src="./media/sqrt_1_3.png" alt="Newton and golden section steps for P(1, 3) to y = sqrt(x)" loading="lazy" />
-            <figcaption>P(1, 3) to \(y = \sqrt{x}\)</figcaption>
-          </figure>
-        </div>
-      </div>
-
-      <!-- ============================== PART 2 ============================== -->
-
-      <h2 id="part-2">Part 2: Fitting to an equation</h2>
-      <p>Points: \((0, 0.5), (2, 3.5), (1, 1.5), (3, 7.5)\)</p>
-      <!-- TODO: MSE setup, analytical fit, Newton-Raphson multivariate fit, plots, and the MSE for the line and the parabola -->
-
-      <!-- ============================== APPENDIX ============================== -->
-
-      <h2 id="appendix">Appendix: Hand work</h2>
-
-      <figure>
-        <img src="./media/SYDE542_Analytical_Method_Newtons_Method.jpeg" alt="Handwritten analytical solution and Newton's method iterations for all five points" loading="lazy" />
-        <figcaption>Analytical solution and Newton's method by hand</figcaption>
-      </figure>
-      <figure>
-        <img src="./media/SYDE542_Golden_Section.jpeg" alt="Handwritten golden section search iterations for all five points" loading="lazy" />
-        <figcaption>Golden section search by hand</figcaption>
-      </figure>
+<h2 id="part-1-shortest-distance-from-a-point-to-a-function">Part 1:
+Shortest distance from a point to a function</h2>
+<h3 id="setup">Setup</h3>
+<p>For a point <span class="math inline">(x_0, y_0)</span> and a curve
+<span class="math inline">y = f(x)</span>, minimize the squared
+distance</p>
+<p><span class="math display">D(x) = (x - x_0)^2 + \big(f(x) -
+y_0\big)^2</span></p>
+<p>We use this because it is the square of the Euclidean distance
+function, and the square root is monotonically increasing. Hence we only
+need to care about the argument of the square root, as shown above, and
+it is less computationally expensive. So the goal is to find the point
+on <span class="math inline">y = f(x)</span> that minimizes <span
+class="math inline">D(x)</span>.</p>
+<h3 id="analytical-solution">Analytical solution</h3>
+<p>We can solve for the <span class="math inline">x</span> that yields
+the minimum distance by taking the derivative of <span
+class="math inline">D(x)</span> and setting it to zero:</p>
+<p><span class="math display">D&#39;(x) = 2(x - x_0) + 2\big(f(x) -
+y_0\big)f&#39;(x) = 0</span></p>
+<p>For <span class="math inline">y = x^2 + 5</span>, this becomes:</p>
+<p><span class="math display">(x - x_0) + 2x\big(x^2 + 5 - y_0\big) =
+0</span></p>
+<p><span class="math display">x - x_0 + 2x^3 + 10x - 2xy_0 =
+0</span></p>
+<p>All sample points have <span class="math inline">y_0 = 0</span>, so
+this reduces to:</p>
+<p><span class="math display">2x^3 + 11x - x_0 = 0</span></p>
+<p>Take <span class="math inline">(0, 0)</span> and substitute:</p>
+<p><span class="math display">2x^3 + 11x = x(2x^2 + 11) = 0</span></p>
+<p>There is only one real root, at <span class="math inline">x =
+0</span>, so the minimum of <span class="math inline">D(x)</span> must
+be at <span class="math inline">x = 0</span> on the parabola. Finding
+the <span class="math inline">y</span> value on the parabola is trivial:
+<span class="math inline">y = 5</span>, so the closest point on the
+parabola to <span class="math inline">(0, 0)</span> is <span
+class="math inline">(0, 5)</span>.</p>
+<p>We can repeat the process for the other points <span
+class="math inline">(-4, 0)</span>, <span class="math inline">(-8,
+0)</span>, <span class="math inline">(2, 0)</span> and <span
+class="math inline">(6, 0)</span> to get</p>
+<p><span class="math display">2x^3 + 11x + 4 = 0, \qquad 2x^3 + 11x + 8
+= 0, \qquad 2x^3 + 11x - 2 = 0, \qquad 2x^3 + 11x - 6 = 0</span></p>
+<p>respectively. Using Cardano’s rule or a graphing calculator, the
+closest matching points are <span class="math inline">(-0.355,
+5.126)</span>, <span class="math inline">(-0.672, 5.452)</span>, <span
+class="math inline">(0.181, 5.033)</span> and <span
+class="math inline">(0.520, 5.270)</span>. In tabular form:</p>
+<table>
+<thead>
+<tr>
+<th>Point <span class="math inline">(a, 0)</span></th>
+<th>Equation to solve</th>
+<th>Closest point on the curve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">(0, 0)</span></td>
+<td><span class="math inline">2x^3 + 11x = 0</span></td>
+<td><span class="math inline">(0, 5)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-4, 0)</span></td>
+<td><span class="math inline">2x^3 + 11x + 4 = 0</span></td>
+<td><span class="math inline">(-0.355, 5.126)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-8, 0)</span></td>
+<td><span class="math inline">2x^3 + 11x + 8 = 0</span></td>
+<td><span class="math inline">(-0.672, 5.452)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(2, 0)</span></td>
+<td><span class="math inline">2x^3 + 11x - 2 = 0</span></td>
+<td><span class="math inline">(0.181, 5.033)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(6, 0)</span></td>
+<td><span class="math inline">2x^3 + 11x - 6 = 0</span></td>
+<td><span class="math inline">(0.520, 5.270)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="newton-raphson">Newton-Raphson</h3>
+<p>For Newton’s method we need the second order derivative of the
+distance function.</p>
+<p><span class="math display">x_{k+1} = x_k -
+\frac{D&#39;(x_k)}{D&#39;&#39;(x_k)}</span></p>
+<p><span class="math display">D&#39;(x) = 2(x - x_0) + 2\big(f(x) -
+y_0\big)f&#39;(x), \qquad D&#39;&#39;(x) = 2 + 2f&#39;(x)^2 + 2\big(f(x)
+- y_0\big)f&#39;&#39;(x)</span></p>
+<p>For <span class="math inline">y = x^2 + 5</span> we have <span
+class="math inline">f&#39;(x) = 2x</span> and <span
+class="math inline">f&#39;&#39;(x) = 2</span>, so</p>
+<p><span class="math display">D&#39;(x) = 2(x - x_0) + 4x\big(x^2 + 5 -
+y_0\big), \qquad D&#39;&#39;(x) = 2 + 8x^2 + 4\big(x^2 + 5 -
+y_0\big)</span></p>
+<p>Newton’s method here is an iterative method for finding a good
+approximation of the zeroes of a function, provided we know the first
+and second order derivatives and we have a good initial guess.</p>
+<p>Every run below starts from the initial guess <span
+class="math inline">x_0 = 0</span>.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>Point</th>
+<th>Iteration</th>
+<th><span class="math inline">x_k</span></th>
+<th><span class="math inline">f(x_k)</span></th>
+<th><span class="math inline">D&#39;(x_k)</span></th>
+<th><span class="math inline">D&#39;&#39;(x_k)</span></th>
+<th><span class="math inline">x_{k+1}</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">(0, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">0</span></td>
+<td><span class="math inline">5</span></td>
+<td><span class="math inline">0</span></td>
+<td><span class="math inline">22</span></td>
+<td><span class="math inline">0</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-4, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">0</span></td>
+<td><span class="math inline">5</span></td>
+<td><span class="math inline">8</span></td>
+<td><span class="math inline">22</span></td>
+<td><span class="math inline">-0.364</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-4, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">-0.364</span></td>
+<td><span class="math inline">5.132</span></td>
+<td><span class="math inline">-0.192</span></td>
+<td><span class="math inline">23.587</span></td>
+<td><span class="math inline">-0.355</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-8, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">0</span></td>
+<td><span class="math inline">5</span></td>
+<td><span class="math inline">16</span></td>
+<td><span class="math inline">22</span></td>
+<td><span class="math inline">-0.727</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-8, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">-0.727</span></td>
+<td><span class="math inline">5.529</span></td>
+<td><span class="math inline">-1.539</span></td>
+<td><span class="math inline">28.347</span></td>
+<td><span class="math inline">-0.673</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(2, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">0</span></td>
+<td><span class="math inline">5</span></td>
+<td><span class="math inline">-4</span></td>
+<td><span class="math inline">22</span></td>
+<td><span class="math inline">0.182</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(2, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">0.182</span></td>
+<td><span class="math inline">5.033</span></td>
+<td><span class="math inline">0.024</span></td>
+<td><span class="math inline">22.397</span></td>
+<td><span class="math inline">0.181</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(6, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">0</span></td>
+<td><span class="math inline">5</span></td>
+<td><span class="math inline">-12</span></td>
+<td><span class="math inline">22</span></td>
+<td><span class="math inline">0.545</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(6, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">0.545</span></td>
+<td><span class="math inline">5.298</span></td>
+<td><span class="math inline">0.649</span></td>
+<td><span class="math inline">25.570</span></td>
+<td><span class="math inline">0.520</span></td>
+</tr>
+</tbody>
+</table>
+<p>For <span class="math inline">(0, 0)</span> the first step returns
+<span class="math inline">x_1 = 0 - \tfrac{0}{22} = 0</span>, so there
+is no second iteration. This converges immediately because the initial
+guess for <span class="math inline">x_0</span> was the exact critical
+point of the distance function.</p>
+<h3 id="golden-section-search">Golden section search</h3>
+<p>If we do not know the derivatives of a function, we can use another
+technique called golden section search to find its minimum. In our case
+we apply it to the distance function <span
+class="math inline">D(x)</span>. The iterative process works from a
+lower bound and an upper bound.</p>
+<p><span class="math display">\varphi = \frac{1 + \sqrt{5}}{2} \approx
+1.618, \qquad \rho = 2 - \varphi \approx 0.382</span></p>
+<p>Here is a brief explanation of how it works. Starting from a lower
+bound <span class="math inline">a</span> and an upper bound <span
+class="math inline">b</span>, we compute two interior values <span
+class="math inline">x_1</span> and <span class="math inline">x_2</span>,
+placed so that <span class="math inline">a &lt; x_1 &lt; x_2 &lt;
+b</span> always. For a function <span class="math inline">f(x)</span>,
+if <span class="math inline">f(x_2) &gt; f(x_1)</span> then the minimum
+cannot lie above <span class="math inline">x_2</span>, so we eliminate
+all <span class="math inline">x &gt; x_2</span> and reassign <span
+class="math inline">x_1</span> and <span class="math inline">x_2</span>
+inside the new, smaller interval. This forces the iterative process to
+converge on a minimum.</p>
+<p>The two interior values sit at</p>
+<p><span class="math display">x_1 = a + \rho(b - a), \qquad x_2 = b -
+\rho(b - a)</span></p>
+<p>and each iteration discards one end, leaving a bracket <span
+class="math inline">1/\varphi \approx 0.618</span> times as long as the
+last one.</p>
+<p>If <span class="math inline">D(x_1) &lt; D(x_2)</span> the minimum
+lies in <span class="math inline">[a, x_2]</span>, otherwise it lies in
+<span class="math inline">[x_1, b]</span>. The surviving <span
+class="math inline">x</span> value sits at the same golden ratio
+position in the new bracket, so each iteration after the first costs one
+evaluation of <span class="math inline">D</span> instead of two.</p>
+<p>We do have to create an initial bracket for <span
+class="math inline">a</span> and <span class="math inline">b</span>, and
+we can be smart about the guesses. We have a good idea of what <span
+class="math inline">y = x^2 + 5</span> looks like: a parabola symmetric
+about the <span class="math inline">y</span>-axis, sitting a bit above
+the <span class="math inline">x</span>-axis. So a point like <span
+class="math inline">(-4, 0)</span> can use an initial bracket of <span
+class="math inline">[-4, 0]</span>, because for all <span
+class="math inline">x &gt; 0</span> and all <span class="math inline">x
+&lt; -4</span> the distance from <span class="math inline">(-4,
+0)</span> strictly increases.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>Point</th>
+<th>It.</th>
+<th>Bracket <span class="math inline">[a, b]</span></th>
+<th><span class="math inline">x_1</span></th>
+<th><span class="math inline">D(x_1)</span></th>
+<th><span class="math inline">x_2</span></th>
+<th><span class="math inline">D(x_2)</span></th>
+<th>New bracket</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">(0, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">[-1, 1]</span></td>
+<td><span class="math inline">-0.236</span></td>
+<td><span class="math inline">25.616</span></td>
+<td><span class="math inline">0.236</span></td>
+<td><span class="math inline">25.616</span></td>
+<td><span class="math inline">[-0.236, 1]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(0, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">[-0.236, 1]</span></td>
+<td><span class="math inline">0.236</span></td>
+<td><span class="math inline">25.616</span></td>
+<td><span class="math inline">0.528</span></td>
+<td><span class="math inline">28.143</span></td>
+<td><span class="math inline">[-0.236, 0.528]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-4, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">[-4, 0]</span></td>
+<td><span class="math inline">-2.472</span></td>
+<td><span class="math inline">125.799</span></td>
+<td><span class="math inline">-1.528</span></td>
+<td><span class="math inline">59.904</span></td>
+<td><span class="math inline">[-2.472, 0]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-4, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">[-2.472, 0]</span></td>
+<td><span class="math inline">-1.528</span></td>
+<td><span class="math inline">59.904</span></td>
+<td><span class="math inline">-0.944</span></td>
+<td><span class="math inline">44.049</span></td>
+<td><span class="math inline">[-1.528, 0]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-8, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">[-8, 0]</span></td>
+<td><span class="math inline">-4.944</span></td>
+<td><span class="math inline">876.394</span></td>
+<td><span class="math inline">-3.056</span></td>
+<td><span class="math inline">230.009</span></td>
+<td><span class="math inline">[-4.944, 0]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(-8, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">[-4.944, 0]</span></td>
+<td><span class="math inline">-3.056</span></td>
+<td><span class="math inline">230.009</span></td>
+<td><span class="math inline">-1.889</span></td>
+<td><span class="math inline">110.736</span></td>
+<td><span class="math inline">[-3.056, 0]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(2, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">[0, 2]</span></td>
+<td><span class="math inline">0.764</span></td>
+<td><span class="math inline">32.704</span></td>
+<td><span class="math inline">1.236</span></td>
+<td><span class="math inline">43.197</span></td>
+<td><span class="math inline">[0, 1.236]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(2, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">[0, 1.236]</span></td>
+<td><span class="math inline">0.472</span></td>
+<td><span class="math inline">29.613</span></td>
+<td><span class="math inline">0.764</span></td>
+<td><span class="math inline">32.704</span></td>
+<td><span class="math inline">[0, 0.764]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(6, 0)</span></td>
+<td>1</td>
+<td><span class="math inline">[0, 6]</span></td>
+<td><span class="math inline">2.292</span></td>
+<td><span class="math inline">118.861</span></td>
+<td><span class="math inline">3.708</span></td>
+<td><span class="math inline">356.844</span></td>
+<td><span class="math inline">[0, 3.708]</span></td>
+</tr>
+<tr>
+<td><span class="math inline">(6, 0)</span></td>
+<td>2</td>
+<td><span class="math inline">[0, 3.708]</span></td>
+<td><span class="math inline">1.416</span></td>
+<td><span class="math inline">70.096</span></td>
+<td><span class="math inline">2.292</span></td>
+<td><span class="math inline">118.861</span></td>
+<td><span class="math inline">[0, 2.292]</span></td>
+</tr>
+</tbody>
+</table>
+<p>For <span class="math inline">(0, 0)</span> the bracket is symmetric
+about the minimum, so <span class="math inline">D(x_1) = D(x_2)</span>
+on the first iteration and either end can be discarded.</p>
+<h3 id="general-computed-results-for-y-x2-5">General computed results
+for <span class="math inline">y = x^2 + 5</span></h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Point</th>
+<th>Closest point</th>
+<th>Distance</th>
+<th>Newton steps</th>
+<th>Golden section iterations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">(0, 0)</span></td>
+<td><span class="math inline">(0.000, 5.000)</span></td>
+<td>5.000</td>
+<td>0</td>
+<td>35</td>
+</tr>
+<tr>
+<td><span class="math inline">(-4, 0)</span></td>
+<td><span class="math inline">(-0.355, 5.126)</span></td>
+<td>6.290</td>
+<td>3</td>
+<td>37</td>
+</tr>
+<tr>
+<td><span class="math inline">(-8, 0)</span></td>
+<td><span class="math inline">(-0.672, 5.452)</span></td>
+<td>9.133</td>
+<td>4</td>
+<td>38</td>
+</tr>
+<tr>
+<td><span class="math inline">(2, 0)</span></td>
+<td><span class="math inline">(0.181, 5.033)</span></td>
+<td>5.351</td>
+<td>3</td>
+<td>35</td>
+</tr>
+<tr>
+<td><span class="math inline">(6, 0)</span></td>
+<td><span class="math inline">(0.520, 5.270)</span></td>
+<td>7.603</td>
+<td>3</td>
+<td>38</td>
+</tr>
+</tbody>
+</table>
+<p>Here are some plots to visually articulate the different iterative
+methods for finding the shortest distance from the five points to the
+function <span class="math inline">y = x^2 + 5</span>.</p>
+<figure>
+<img src="media/parabola_0_0.png" alt="P(0, 0) to y = x^2 + 5" />
+<figcaption aria-hidden="true">P(0, 0) to <span class="math inline">y =
+x^2 + 5</span></figcaption>
+</figure>
+<figure>
+<img src="media/parabola_-4_0.png" alt="P(−4, 0) to y = x^2 + 5" />
+<figcaption aria-hidden="true">P(−4, 0) to <span class="math inline">y =
+x^2 + 5</span></figcaption>
+</figure>
+<figure>
+<img src="media/parabola_-8_0.png" alt="P(−8, 0) to y = x^2 + 5" />
+<figcaption aria-hidden="true">P(−8, 0) to <span class="math inline">y =
+x^2 + 5</span></figcaption>
+</figure>
+<figure>
+<img src="media/parabola_2_0.png" alt="P(2, 0) to y = x^2 + 5" />
+<figcaption aria-hidden="true">P(2, 0) to <span class="math inline">y =
+x^2 + 5</span></figcaption>
+</figure>
+<figure>
+<img src="media/parabola_6_0.png" alt="P(6, 0) to y = x^2 + 5" />
+<figcaption aria-hidden="true">P(6, 0) to <span class="math inline">y =
+x^2 + 5</span></figcaption>
+</figure>
+<h3 id="other-parabolas">Other parabolas</h3>
+<p>Here is an example of finding the shortest distance from a random
+point to a random parabola.</p>
+<figure>
+<img src="media/parabola2_-2_-3.png"
+alt="P(−2, −3) to y = 2x^2 - 4x + 1" />
+<figcaption aria-hidden="true">P(−2, −3) to <span class="math inline">y
+= 2x^2 - 4x + 1</span></figcaption>
+</figure>
+<h3 id="non-polynomial-functions">Non-polynomial functions</h3>
+<p>And here are examples using a few other basic functions.</p>
+<figure>
+<img src="media/exp_-2_3.png" alt="P(−2, 3) to y = e^x" />
+<figcaption aria-hidden="true">P(−2, 3) to <span class="math inline">y =
+e^x</span></figcaption>
+</figure>
+<figure>
+<img src="media/ln_-1_-1.png" alt="P(−1, −1) to y = \ln(x)" />
+<figcaption aria-hidden="true">P(−1, −1) to <span class="math inline">y
+= \ln(x)</span></figcaption>
+</figure>
+<figure>
+<img src="media/reciprocal_1_4.png" alt="P(1, 4) to y = 1/x" />
+<figcaption aria-hidden="true">P(1, 4) to <span class="math inline">y =
+1/x</span></figcaption>
+</figure>
+<figure>
+<img src="media/sqrt_1_3.png" alt="P(1, 3) to y = \sqrt{x}" />
+<figcaption aria-hidden="true">P(1, 3) to <span class="math inline">y =
+\sqrt{x}</span></figcaption>
+</figure>
+<h2 id="part-2-fitting-to-an-equation">Part 2: Fitting to an
+equation</h2>
+<h3 id="the-data">The data</h3>
+<p>We are given four points:</p>
+<p><span class="math display">(0, 0.5), \quad (1, 1.5), \quad (2, 3.5),
+\quad (3, 7.5)</span></p>
+<p>We want to fit a line and a parabola to these points as closely as we
+can, which we do by minimizing the mean squared error of the fitted
+function.</p>
+<h3 id="the-mse-function">The MSE function</h3>
+<p>A residual is the gap between a measured <span
+class="math inline">y_i</span> and what the model predicts at that same
+<span class="math inline">x_i</span>. The mean squared error is the
+average of those residuals squared.</p>
+<p>For the line <span class="math inline">y = mx + b</span>:</p>
+<p><span class="math display">\mathrm{MSE}(m, b) =
+\frac{1}{n}\sum_{i=1}^{n}\big(y_i - (m x_i + b)\big)^2</span></p>
+<p><span class="math display">\mathrm{MSE}(m, b) = \tfrac{1}{4}\Big[(0.5
+- b)^2 + \big(1.5 - (m + b)\big)^2 + \big(3.5 - (2m + b)\big)^2 +
+\big(7.5 - (3m + b)\big)^2\Big]</span></p>
+<p>For the parabola <span class="math inline">y = Bx^2 + Cx +
+D</span>:</p>
+<p><span class="math display">\mathrm{MSE}(B, C, D) =
+\frac{1}{n}\sum_{i=1}^{n}\big(y_i - (B x_i^2 + C x_i +
+D)\big)^2</span></p>
+<p><span class="math display">
+\begin{aligned}
+\mathrm{MSE}(B, C, D) = \tfrac{1}{4}\Big[&amp;(0.5 - D)^2 + \big(1.5 -
+(B + C + D)\big)^2 \\
+&amp;+ \big(3.5 - (4B + 2C + D)\big)^2 + \big(7.5 - (9B + 3C +
+D)\big)^2\Big]
+\end{aligned}
+</span></p>
+<h3 id="analytical-solution-1">Analytical solution</h3>
+<p>At the minimum every partial derivative is zero. Writing <span
+class="math inline">r_i = y_i - \hat{y}_i</span> for the residual:</p>
+<p><span class="math display">\frac{\partial\,\mathrm{MSE}}{\partial b}
+= -\frac{2}{n}\sum_i r_i, \qquad \frac{\partial\,\mathrm{MSE}}{\partial
+m} = -\frac{2}{n}\sum_i x_i r_i</span></p>
+<p><span class="math display">\frac{\partial\,\mathrm{MSE}}{\partial D}
+= -\frac{2}{n}\sum_i r_i, \qquad \frac{\partial\,\mathrm{MSE}}{\partial
+C} = -\frac{2}{n}\sum_i x_i r_i, \qquad
+\frac{\partial\,\mathrm{MSE}}{\partial B} = -\frac{2}{n}\sum_i x_i^2
+r_i</span></p>
+<p>Setting them to zero and expanding gives equations in the data sums
+alone:</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">n</span></th>
+<th><span class="math inline">\Sigma x</span></th>
+<th><span class="math inline">\Sigma x^2</span></th>
+<th><span class="math inline">\Sigma x^3</span></th>
+<th><span class="math inline">\Sigma x^4</span></th>
+<th><span class="math inline">\Sigma y</span></th>
+<th><span class="math inline">\Sigma xy</span></th>
+<th><span class="math inline">\Sigma x^2 y</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>6</td>
+<td>14</td>
+<td>36</td>
+<td>98</td>
+<td>13</td>
+<td>31</td>
+<td>83</td>
+</tr>
+</tbody>
+</table>
+<h4 id="line">Line</h4>
+<p><span class="math display">\begin{aligned} \Sigma y - m\,\Sigma x -
+b\,n &amp;= 0 &amp;&amp;\Longrightarrow&amp; 6m + 4b &amp;= 13 \\ \Sigma
+xy - m\,\Sigma x^2 - b\,\Sigma x &amp;= 0 &amp;&amp;\Longrightarrow&amp;
+14m + 6b &amp;= 31 \end{aligned}</span></p>
+<p>In matrix form, with <span class="math inline">A</span> the design
+matrix whose columns are <span class="math inline">x^0</span> and <span
+class="math inline">x^1</span>:</p>
+<p><span class="math display">A = \begin{bmatrix} 1 &amp; 0 \\ 1 &amp; 1
+\\ 1 &amp; 2 \\ 1 &amp; 3 \end{bmatrix}, \qquad \mathbf{y} =
+\begin{bmatrix} 0.5 \\ 1.5 \\ 3.5 \\ 7.5 \end{bmatrix}, \qquad
+\mathbf{c} = \begin{bmatrix} b \\ m \end{bmatrix}</span></p>
+<p><span class="math display">A^{\mathsf{T}}A\,\mathbf{c} =
+A^{\mathsf{T}}\mathbf{y} \qquad\Longrightarrow\qquad \begin{bmatrix} 4
+&amp; 6 \\ 6 &amp; 14 \end{bmatrix}\begin{bmatrix} b \\ m \end{bmatrix}
+= \begin{bmatrix} 13 \\ 31 \end{bmatrix}</span></p>
+<p><span class="math display">\det(A^{\mathsf{T}}A) = 20, \qquad
+\mathbf{c} = \frac{1}{20}\begin{bmatrix} 14 &amp; -6 \\ -6 &amp; 4
+\end{bmatrix}\begin{bmatrix} 13 \\ 31 \end{bmatrix} = \begin{bmatrix}
+-0.2 \\ 2.3 \end{bmatrix}</span></p>
+<p><span class="math display">\boxed{\,y = 2.3x - 0.2\,}</span></p>
+<h4 id="parabola">Parabola</h4>
+<p><span class="math display">\begin{aligned} \Sigma y - B\,\Sigma x^2 -
+C\,\Sigma x - D\,n &amp;= 0 &amp;&amp;\Longrightarrow&amp; 14B + 6C + 4D
+&amp;= 13 \\ \Sigma xy - B\,\Sigma x^3 - C\,\Sigma x^2 - D\,\Sigma x
+&amp;= 0 &amp;&amp;\Longrightarrow&amp; 36B + 14C + 6D &amp;= 31 \\
+\Sigma x^2 y - B\,\Sigma x^4 - C\,\Sigma x^3 - D\,\Sigma x^2 &amp;= 0
+&amp;&amp;\Longrightarrow&amp; 98B + 36C + 14D &amp;= 83
+\end{aligned}</span></p>
+<p><span class="math display">A = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 1
+&amp; 1 &amp; 1 \\ 1 &amp; 2 &amp; 4 \\ 1 &amp; 3 &amp; 9 \end{bmatrix},
+\qquad \mathbf{c} = \begin{bmatrix} D \\ C \\ B \end{bmatrix}</span></p>
+<p><span class="math display">A^{\mathsf{T}}A = \begin{bmatrix} 4 &amp;
+6 &amp; 14 \\ 6 &amp; 14 &amp; 36 \\ 14 &amp; 36 &amp; 98 \end{bmatrix},
+\qquad A^{\mathsf{T}}\mathbf{y} = \begin{bmatrix} 13 \\ 31 \\ 83
+\end{bmatrix}</span></p>
+<p>Row reducing the augmented system:</p>
+<p><span class="math display">\left[\begin{array}{ccc|c} 4 &amp; 6 &amp;
+14 &amp; 13 \\ 6 &amp; 14 &amp; 36 &amp; 31 \\ 14 &amp; 36 &amp; 98
+&amp; 83 \end{array}\right] \;\xrightarrow{\ \text{RREF}\ }\;
+\left[\begin{array}{ccc|c} 1 &amp; 0 &amp; 0 &amp; 0.55 \\ 0 &amp; 1
+&amp; 0 &amp; 0.05 \\ 0 &amp; 0 &amp; 1 &amp; 0.75
+\end{array}\right]</span></p>
+<p><span class="math display">\boxed{\,y = 0.75x^2 + 0.05x +
+0.55\,}</span></p>
+<h3 id="mean-squared-error-of-each-fit">Mean squared error of each
+fit</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">x</span></th>
+<th><span class="math inline">y</span></th>
+<th>line <span class="math inline">\hat{y}</span></th>
+<th>line <span class="math inline">r</span></th>
+<th>parabola <span class="math inline">\hat{y}</span></th>
+<th>parabola <span class="math inline">r</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.5</td>
+<td>−0.20</td>
+<td>0.70</td>
+<td>0.55</td>
+<td>−0.05</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.5</td>
+<td>2.10</td>
+<td>−0.60</td>
+<td>1.35</td>
+<td>0.15</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3.5</td>
+<td>4.40</td>
+<td>−0.90</td>
+<td>3.65</td>
+<td>−0.15</td>
+</tr>
+<tr>
+<td>3</td>
+<td>7.5</td>
+<td>6.70</td>
+<td>0.80</td>
+<td>7.45</td>
+<td>0.05</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Fit</th>
+<th><span class="math inline">\Sigma r^2</span></th>
+<th>MSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Line</td>
+<td><span class="math inline">y = 2.3x - 0.2</span></td>
+<td>2.3000</td>
+<td>0.575000</td>
+</tr>
+<tr>
+<td>Parabola</td>
+<td><span class="math inline">y = 0.75x^2 + 0.05x + 0.55</span></td>
+<td>0.0500</td>
+<td>0.012500</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="media/fits.png"
+alt="Line and parabola fits against the four data points" />
+<figcaption aria-hidden="true">Line and parabola fits against the four
+data points</figcaption>
+</figure>
+<h3 id="numerical-solution-one-parameter-at-a-time">Numerical solution:
+one parameter at a time</h3>
+<p>The assignment’s method optimizes a single parameter with every other
+one held fixed, then moves to the next. Each step is a Newton-Raphson
+step on that parameter alone:</p>
+<p><span class="math display">\theta \leftarrow \theta -
+\left.\frac{\partial\,\mathrm{MSE}}{\partial
+\theta}\right/\frac{\partial^2\mathrm{MSE}}{\partial
+\theta^2}</span></p>
+<p>Solving for the second order derivatives gives, for example:</p>
+<p><span class="math display">\frac{\partial^2\mathrm{MSE}}{\partial
+b^2} = \frac{2}{n}\,n = 2, \qquad \frac{\partial^2\mathrm{MSE}}{\partial
+m^2} = \frac{2}{n}\Sigma x^2 = 7, \qquad
+\frac{\partial^2\mathrm{MSE}}{\partial B^2} = \frac{2}{n}\Sigma x^4 =
+49</span></p>
+<p>Substituting and simplifying, the old value cancels and each update
+is that parameter’s own normal equation solved for itself:</p>
+<p><span class="math display">b \leftarrow \frac{\Sigma y - m\,\Sigma
+x}{n} = \frac{13 - 6m}{4}, \qquad m \leftarrow \frac{\Sigma xy -
+b\,\Sigma x}{\Sigma x^2} = \frac{31 - 6b}{14}</span></p>
+<p><span class="math display">D \leftarrow \frac{13 - 6C - 14B}{4},
+\qquad C \leftarrow \frac{31 - 6D - 36B}{14}, \qquad B \leftarrow
+\frac{83 - 14D - 36C}{98}</span></p>
+<h4 id="line-starting-from-m-0-b-0">Line, starting from <span
+class="math inline">m = 0</span>, <span class="math inline">b =
+0</span></h4>
+<table>
+<thead>
+<tr>
+<th>Sweep</th>
+<th><span class="math inline">b</span></th>
+<th><span class="math inline">m</span></th>
+<th>MSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>17.750000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3.250000</td>
+<td>0.821429</td>
+<td>4.825893</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2.017857</td>
+<td>1.349490</td>
+<td>2.331747</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1.225765</td>
+<td>1.688958</td>
+<td>1.301002</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.716563</td>
+<td>1.907187</td>
+<td>0.875032</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.389219</td>
+<td>2.047477</td>
+<td>0.698993</td>
+</tr>
+<tr>
+<td>⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+</tr>
+<tr>
+<td>40</td>
+<td>−0.200000</td>
+<td>2.300000</td>
+<td>0.575000</td>
+</tr>
+</tbody>
+</table>
+<h4 id="parabola-starting-from-b-c-d-0">Parabola, starting from <span
+class="math inline">B = C = D = 0</span></h4>
+<table>
+<thead>
+<tr>
+<th>Sweep</th>
+<th><span class="math inline">D</span></th>
+<th><span class="math inline">C</span></th>
+<th><span class="math inline">B</span></th>
+<th>MSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>17.750000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3.250000</td>
+<td>0.821429</td>
+<td>0.080904</td>
+<td>4.665530</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1.734694</td>
+<td>1.262807</td>
+<td>0.135237</td>
+<td>1.615198</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.882460</td>
+<td>1.488336</td>
+<td>0.174137</td>
+<td>0.673799</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.408015</td>
+<td>1.591641</td>
+<td>0.203967</td>
+<td>0.389550</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.148656</td>
+<td>1.626090</td>
+<td>0.228363</td>
+<td>0.303547</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.011594</td>
+<td>1.622098</td>
+<td>0.249410</td>
+<td>0.273853</td>
+</tr>
+<tr>
+<td>7</td>
+<td>−0.056081</td>
+<td>1.596981</td>
+<td>0.268304</td>
+<td>0.258318</td>
+</tr>
+<tr>
+<td>8</td>
+<td>−0.084536</td>
+<td>1.560590</td>
+<td>0.285737</td>
+<td>0.245428</td>
+</tr>
+<tr>
+<td>⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+</tr>
+<tr>
+<td>440</td>
+<td>0.550000</td>
+<td>0.050000</td>
+<td>0.750000</td>
+<td>0.012500</td>
+</tr>
+</tbody>
+</table>
+<p>Substituting the <span class="math inline">b</span> rule into the
+<span class="math inline">m</span> rule collapses the line’s two updates
+into one recurrence, whose slope is the factor the error shrinks by each
+sweep:</p>
+<p><span class="math display">m_{k+1} = \frac{31 - 6\left(\frac{13 -
+6m_k}{4}\right)}{14} = \frac{11.5 + 9m_k}{14}, \qquad \frac{9}{14} =
+0.642857</span></p>
+<h3 id="numerical-solution-full-multivariate-newton-raphson">Numerical
+solution: full multivariate Newton-Raphson</h3>
+<p>Taking all the parameters at once, we collect them in one vector:
+<span class="math inline">\mathbf{c} = [D, C, B]^{\mathsf{T}}</span> for
+the parabola. The gradient stacks the first partials, and the Hessian is
+the matrix of every second partial, <span class="math inline">H_{ij} =
+\partial^2\mathrm{MSE}/\partial c_i\,\partial c_j</span>:</p>
+<p><span class="math display">
+\nabla\mathrm{MSE} = \begin{bmatrix}
+\dfrac{\partial\mathrm{MSE}}{\partial D} \\[2ex]
+\dfrac{\partial\mathrm{MSE}}{\partial C} \\[2ex]
+\dfrac{\partial\mathrm{MSE}}{\partial B}
+\end{bmatrix},
+\qquad
+H = \begin{bmatrix}
+\dfrac{\partial^2\mathrm{MSE}}{\partial D^2} &amp;
+\dfrac{\partial^2\mathrm{MSE}}{\partial D\,\partial C} &amp;
+\dfrac{\partial^2\mathrm{MSE}}{\partial D\,\partial B} \\[2ex]
+\dfrac{\partial^2\mathrm{MSE}}{\partial C\,\partial D} &amp;
+\dfrac{\partial^2\mathrm{MSE}}{\partial C^2} &amp;
+\dfrac{\partial^2\mathrm{MSE}}{\partial C\,\partial B} \\[2ex]
+\dfrac{\partial^2\mathrm{MSE}}{\partial B\,\partial D} &amp;
+\dfrac{\partial^2\mathrm{MSE}}{\partial B\,\partial C} &amp;
+\dfrac{\partial^2\mathrm{MSE}}{\partial B^2}
+\end{bmatrix}
+</span></p>
+<p>The mixed partials are equal either way round, so <span
+class="math inline">H</span> is symmetric. Evaluating each entry on the
+four data points leaves only sums of powers of <span
+class="math inline">x</span>, which is the same matrix as <span
+class="math inline">\frac{2}{n}A^{\mathsf{T}}A</span>:</p>
+<p><span class="math display">
+H = \frac{2}{n}\begin{bmatrix}
+n &amp; \Sigma x &amp; \Sigma x^2 \\
+\Sigma x &amp; \Sigma x^2 &amp; \Sigma x^3 \\
+\Sigma x^2 &amp; \Sigma x^3 &amp; \Sigma x^4
+\end{bmatrix}
+</span></p>
+<p>The line case is the top-left <span class="math inline">2 \times
+2</span> block of that, with <span class="math inline">\mathbf{c} = [b,
+m]^{\mathsf{T}}</span>, which is where the <span
+class="math inline">\begin{bmatrix} 2 &amp; 3 \\ 3 &amp; 7
+\end{bmatrix}</span> below comes from.</p>
+<h4 id="line-1">Line</h4>
+<p><span class="math display">H = \begin{bmatrix} 2 &amp; 3 \\ 3 &amp; 7
+\end{bmatrix}, \qquad H^{-1} = \frac{1}{5}\begin{bmatrix} 7 &amp; -3 \\
+-3 &amp; 2 \end{bmatrix}, \qquad \nabla\mathrm{MSE}\big|_{\mathbf{c} =
+\mathbf{0}} = \begin{bmatrix} -6.5 \\ -15.5 \end{bmatrix}</span></p>
+<p><span class="math display">\mathbf{c} \leftarrow \begin{bmatrix} 0 \\
+0 \end{bmatrix} - \frac{1}{5}\begin{bmatrix} 7 &amp; -3 \\ -3 &amp; 2
+\end{bmatrix}\begin{bmatrix} -6.5 \\ -15.5 \end{bmatrix} =
+\begin{bmatrix} 0 \\ 0 \end{bmatrix} - \begin{bmatrix} 0.2 \\ -2.3
+\end{bmatrix} = \begin{bmatrix} -0.2 \\ 2.3 \end{bmatrix}</span></p>
+<h4 id="parabola-1">Parabola</h4>
+<p><span class="math display">H = \begin{bmatrix} 2 &amp; 3 &amp; 7 \\ 3
+&amp; 7 &amp; 18 \\ 7 &amp; 18 &amp; 49 \end{bmatrix}, \qquad
+\nabla\mathrm{MSE}\big|_{\mathbf{c} = \mathbf{0}} = \begin{bmatrix} -6.5
+\\ -15.5 \\ -41.5 \end{bmatrix}</span></p>
+<p>Solving <span class="math inline">H\mathbf{s} =
+\nabla\mathrm{MSE}</span> by elimination:</p>
+<p><span class="math display">\begin{aligned} 2s_1 + 3s_2 + 7s_3 &amp;=
+-6.5 \\ 3s_1 + 7s_2 + 18s_3 &amp;= -15.5 \\ 7s_1 + 18s_2 + 49s_3 &amp;=
+-41.5 \end{aligned} \qquad\Longrightarrow\qquad \mathbf{s} =
+\begin{bmatrix} -0.55 \\ -0.05 \\ -0.75 \end{bmatrix}</span></p>
+<p><span class="math display">\mathbf{c} \leftarrow \mathbf{0} -
+\mathbf{s} = \begin{bmatrix} 0.55 \\ 0.05 \\ 0.75
+\end{bmatrix}</span></p>
+<h3 id="comparison">Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Line</th>
+<th>Parabola</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Analytical (normal equations)</td>
+<td>direct solve</td>
+<td>direct solve</td>
+</tr>
+<tr>
+<td>One parameter at a time</td>
+<td>40 sweeps</td>
+<td>440 sweeps</td>
+</tr>
+<tr>
+<td>Full multivariate Newton-Raphson</td>
+<td>1 iteration</td>
+<td>1 iteration</td>
+</tr>
+</tbody>
+</table>
+<p>All three land on the same coefficients and the same MSE. Iteration
+counts are to a gradient tolerance of <span
+class="math inline">10^{-7}</span>.</p>
+<h3 id="code">Code</h3>
+<p>The design matrix is the only thing that changes between the two
+models, so one set of functions fits both.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> design_matrix(points, order):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> []</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> power <span class="kw">in</span> <span class="bu">range</span>(order <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        col <span class="op">=</span> []</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x, _ <span class="kw">in</span> points:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            col.append(<span class="bu">float</span>(x) <span class="op">**</span> power)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        cols.append(col)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> np.column_stack(cols)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> np.array([y <span class="cf">for</span> _, y <span class="kw">in</span> points], dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> A, b</span></code></pre></div>
+<p>Analytical fit, solving <span
+class="math inline">A^{\mathsf{T}}A\,\mathbf{c} =
+A^{\mathsf{T}}\mathbf{y}</span> directly:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_polynominals(points, order):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    A, b <span class="op">=</span> design_matrix(points, order)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ATA <span class="op">=</span> A.T <span class="op">@</span> A</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ATb <span class="op">=</span> A.T <span class="op">@</span> b</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.linalg.solve(ATA, ATb)</span></code></pre></div>
+<p>One parameter at a time. Each inner step divides a first derivative
+by a second derivative, and writing <code>coeffs[j]</code> in place is
+what makes the next parameter see the update:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_coordinate_newton(points, order, tolerance<span class="op">=</span><span class="fl">1e-7</span>, max_sweeps<span class="op">=</span><span class="dv">10000</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    A, b <span class="op">=</span> design_matrix(points, order)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    ATA <span class="op">=</span> A.T <span class="op">@</span> A</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    ATb <span class="op">=</span> A.T <span class="op">@</span> b</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(points)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    coeffs <span class="op">=</span> np.zeros(order <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> []</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    sweeps <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> sweep <span class="kw">in</span> <span class="bu">range</span>(max_sweeps):</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        history.append(coeffs.copy())</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        gradient <span class="op">=</span> <span class="op">-</span>(<span class="dv">2</span> <span class="op">/</span> n) <span class="op">*</span> (ATb <span class="op">-</span> ATA <span class="op">@</span> coeffs)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(gradient)) <span class="op">&lt;</span> tolerance:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(order <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            g <span class="op">=</span> <span class="op">-</span>(<span class="dv">2</span> <span class="op">/</span> n) <span class="op">*</span> (ATb[j] <span class="op">-</span> ATA[j] <span class="op">@</span> coeffs)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            h <span class="op">=</span> (<span class="dv">2</span> <span class="op">/</span> n) <span class="op">*</span> ATA[j, j]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>            coeffs[j] <span class="op">=</span> coeffs[j] <span class="op">-</span> g <span class="op">/</span> h</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        sweeps <span class="op">=</span> sweep <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> coeffs, sweeps</span></code></pre></div>
+<p>Full multivariate Newton-Raphson. The Hessian is built once because
+it does not depend on the coefficients:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_hessian_newton(points, order, tolerance<span class="op">=</span><span class="fl">1e-7</span>, max_iter<span class="op">=</span><span class="dv">100</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    xs <span class="op">=</span> np.array([x <span class="cf">for</span> x, _ <span class="kw">in</span> points], dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ys <span class="op">=</span> np.array([y <span class="cf">for</span> _, y <span class="kw">in</span> points], dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(points)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># H[j][k] = d2MSE/(dc_j dc_k) = (2/n) * sum of x^(j+k)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    H <span class="op">=</span> np.zeros((order <span class="op">+</span> <span class="dv">1</span>, order <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(order <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(order <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            H[j, k] <span class="op">=</span> (<span class="dv">2</span> <span class="op">/</span> n) <span class="op">*</span> np.<span class="bu">sum</span>(xs <span class="op">**</span> (j <span class="op">+</span> k))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    coeffs <span class="op">=</span> np.zeros(order <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    iterations <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> []</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(max_iter):</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        history.append(coeffs.copy())</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        predictions <span class="op">=</span> np.zeros(n)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(order <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            predictions <span class="op">+=</span> coeffs[j] <span class="op">*</span> xs<span class="op">**</span>j</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        residual <span class="op">=</span> ys <span class="op">-</span> predictions</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># gradient[j] = dMSE/dc_j = -(2/n) * sum of x^j * residual</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        gradient <span class="op">=</span> np.zeros(order <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(order <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            gradient[j] <span class="op">=</span> <span class="op">-</span>(<span class="dv">2</span> <span class="op">/</span> n) <span class="op">*</span> np.<span class="bu">sum</span>(xs<span class="op">**</span>j <span class="op">*</span> residual)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(gradient)) <span class="op">&lt;</span> tolerance:</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        s <span class="op">=</span> np.linalg.solve(H, gradient)   <span class="co"># H s = grad MSE</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        coeffs <span class="op">=</span> coeffs <span class="op">-</span> s                <span class="co"># c &lt;- c - s</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        iterations <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> coeffs, iterations</span></code></pre></div>
+<h2 id="appendix-hand-work">Appendix: Hand work</h2>
+<figure>
+<img src="media/SYDE542_Analytical_Method_Newtons_Method.jpeg"
+alt="Analytical solution and Newton’s method by hand" />
+<figcaption aria-hidden="true">Analytical solution and Newton’s method
+by hand</figcaption>
+</figure>
+<figure>
+<img src="media/SYDE542_Golden_Section.jpeg"
+alt="Golden section search by hand" />
+<figcaption aria-hidden="true">Golden section search by
+hand</figcaption>
+</figure>
+<figure>
+<img src="media/CurveFittingArithmetic.jpeg"
+alt="Curve fitting by hand: MSE, partial derivatives, and the normal equations" />
+<figcaption aria-hidden="true">Curve fitting by hand: MSE, partial
+derivatives, and the normal equations</figcaption>
+</figure>
+<figure>
+<img src="media/CurveFittingHessian.jpeg"
+alt="Hessian and the Newton step by hand, for both the line and the parabola" />
+<figcaption aria-hidden="true">Hessian and the Newton step by hand, for
+both the line and the parabola</figcaption>
+</figure>
     </main>
   </body>
 </html>

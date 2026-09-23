@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>$title$ | SYDE 572</title>
+    <link rel="stylesheet" href="$root$style.css" />
+$if(highlighting-css)$
+    <style>
+$highlighting-css$
+    </style>
+$endif$
+$math$
+  </head>
+  <body>
+$include-before$
+    <main>
+      <h1>$title$</h1>
+$if(subtitle)$
+      <p class="subtitle">$subtitle$</p>
+$endif$
+$if(toc)$
+      <nav class="toc" aria-label="Contents">
+$toc$
+      </nav>
+$endif$
+$body$
+    </main>
+  </body>
+</html>
