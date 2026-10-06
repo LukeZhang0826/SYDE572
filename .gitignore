@@ -9,5 +9,6 @@ __pycache__/
 # build.sh output: the PDFs and its scratch directory
 /build/
 
-# The notebook writes plots here; the site uses the copies in content/<n>/media/
-/media/
+# Each notebook now lives beside the page it illustrates, so its plots land
+# straight in assignment<n>/media/, which is the folder the site copies from and
+# is tracked. Nothing left to ignore here.

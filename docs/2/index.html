@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SYDE 572 - Assignment 2 | SYDE 572</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+<script defer=""
+src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+</script>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+  </head>
+  <body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../">SYDE 572</a>
+    <ul class="nav-links">
+      <li><a href="../1/">Assignment 1</a></li>
+      <li><a href="../2/" aria-current="page">Assignment 2</a></li>
+      <li><span aria-disabled="true">Assignment 3</span></li>
+      <li><span aria-disabled="true">Assignment 4</span></li>
+      <li><span aria-disabled="true">Assignment 5</span></li>
+      <li class="nav-external"><a href="https://github.com/LukeZhang0826/SYDE572">GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>
+    <main>
+      <h1>SYDE 572 - Assignment 2</h1>
+      <p class="subtitle">Linear basis function regression with
+polynomial and Gaussian bases</p>
+      <p class="byline">Luke
+Zhang<span class="byline-sep">|</span><a href="https://lukeypookster.com/SYDE572/2/">lukeypookster.com/SYDE572/2/</a><span class="byline-sep">|</span><a href="https://github.com/LukeZhang0826/SYDE572">github.com/LukeZhang0826/SYDE572</a></p>
+      <nav class="toc" aria-label="Contents">
+<ul>
+<li><a href="#setup" id="toc-setup">Setup</a></li>
+<li><a href="#part-1a-error-versus-polynomial-degree"
+id="toc-part-1a-error-versus-polynomial-degree">Part 1a: Error versus
+polynomial degree</a></li>
+<li><a href="#part-1b-examining-the-learned-weights"
+id="toc-part-1b-examining-the-learned-weights">Part 1b: Examining the
+learned weights</a></li>
+<li><a href="#part-1c-one-dimensional-visualization"
+id="toc-part-1c-one-dimensional-visualization">Part 1c: One-dimensional
+visualization</a></li>
+<li><a href="#part-1d-l2-regularization-and-cross-validation"
+id="toc-part-1d-l2-regularization-and-cross-validation">Part 1d: L2
+regularization and cross-validation</a></li>
+<li><a href="#part-2-gaussian-basis-functions"
+id="toc-part-2-gaussian-basis-functions">Part 2: Gaussian basis
+functions</a></li>
+<li><a href="#part-2e-error-versus-number-of-basis-functions"
+id="toc-part-2e-error-versus-number-of-basis-functions">Part 2e: Error
+versus number of basis functions</a></li>
+<li><a href="#part-2f-regularized-gaussian-regression"
+id="toc-part-2f-regularized-gaussian-regression">Part 2f: Regularized
+Gaussian regression</a></li>
+</ul>
+      </nav>
+<p>This assignment fits linear basis function regression to the Boston
+Housing dataset. We are predicting a town’s median home value from 13
+features. Part 1 uses a polynomial basis and part 2 a Gaussian basis,
+each first without regularization and then with an L2 penalty whose
+strength is chosen by 10-fold cross-validation.</p>
+<h2 id="setup">Setup</h2>
+<p>The dataset is the Boston Housing data, 506 towns with 13 features
+each. The target is MEDV (the median value of owner-occupied homes in
+thousands of dollars). The first 100 rows are the training set and the
+remaining 406 are the test set.</p>
+<h3 id="the-model">The model</h3>
+<p>Linear basis function regression predicts the target as a weighted
+sum of fixed functions of the input. Each basis function <span
+class="math inline">\phi_j</span> maps the full input vector <span
+class="math inline">\mathbf{x}</span> to a single number, and the model
+holds one weight <span class="math inline">w_j</span> per basis
+function:</p>
+<p><span class="math display">y(\mathbf{x}, \mathbf{w}) =
+\sum_{j=0}^{M-1} w_j \phi_j(\mathbf{x}) = \mathbf{w}^{\mathsf{T}}
+\boldsymbol{\phi}(\mathbf{x})</span></p>
+<p>The <span class="math inline">M</span> basis functions are chosen
+before fitting and are never altered by it, so the weight vector <span
+class="math inline">\mathbf{w}</span> is the entire output of training.
+The model is linear in <span class="math inline">\mathbf{w}</span> even
+when the basis functions are nonlinear in <span
+class="math inline">\mathbf{x}</span>, which is what lets a degree-7
+polynomial be fitted by linear least squares.</p>
+<h3 id="loading-the-data">Loading the data</h3>
+<p>The file is whitespace-separated with no header, 506 rows of 14
+values. Columns 0 to 12 are the features and column 13 is MEDV. We split
+the first 100 rows as our training data and the rest as testing
+data.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>housing_data_paths <span class="op">=</span> os.path.join(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;housing.data&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(housing_data_paths, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> []</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> <span class="bu">file</span>:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        arr.append([<span class="bu">float</span>(n) <span class="cf">for</span> n <span class="kw">in</span> row.strip().split()])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> np.array(arr)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> [<span class="st">&quot;CRIM&quot;</span>, <span class="st">&quot;ZN&quot;</span>, <span class="st">&quot;INDUS&quot;</span>, <span class="st">&quot;CHAS&quot;</span>, <span class="st">&quot;NOX&quot;</span>, <span class="st">&quot;RM&quot;</span>, <span class="st">&quot;AGE&quot;</span>, <span class="st">&quot;DIS&quot;</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;RAD&quot;</span>, <span class="st">&quot;TAX&quot;</span>, <span class="st">&quot;PTRATIO&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;LSTAT&quot;</span>, <span class="st">&quot;MEDV&quot;</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>training_data_X <span class="op">=</span> arr[:<span class="dv">100</span>, :<span class="dv">13</span>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>training_data_Y <span class="op">=</span> arr[:<span class="dv">100</span>, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>test_data_X <span class="op">=</span> arr[<span class="dv">100</span>:, :<span class="dv">13</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>test_data_Y <span class="op">=</span> arr[<span class="dv">100</span>:, <span class="op">-</span><span class="dv">1</span>]</span></code></pre></div>
+<h3 id="normalization">Normalization</h3>
+<p>The feature values span wide ranges, and raising them to the 7th
+power makes the spread worse. For example, NOX feature to the power of 7
+is <span class="math inline">\approx 0.013</span> while the TAX feature
+to the power of 7 is <span class="math inline">\approx 5 \times
+10^{18}</span> on the training rows. Therefore, for each feature, we
+need to normalize/standardize the data.</p>
+<p><span class="math display">\tilde{x}_{nj} = \frac{x_{nj} -
+\mu_j}{\sigma_j}, \qquad
+\mu_j = \frac{1}{N}\sum_{n=1}^{N} x_{nj}, \qquad
+\sigma_j = \sqrt{\frac{1}{N}\sum_{n=1}^{N}(x_{nj} - \mu_j)^2}</span></p>
+<p><span class="math inline">\mu_j</span> (mean) and <span
+class="math inline">\sigma_j</span> (standard deviation) are computed on
+the <strong>training rows only</strong> and the same values are applied
+to the test rows, so no information about the test set reaches the
+model.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_normalizer(X):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    std <span class="op">=</span> X.std(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    std[std <span class="op">==</span> <span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span>  <span class="co"># no divide by zero</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mean, std</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize(X, mean, std):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (X <span class="op">-</span> mean) <span class="op">/</span> std</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>mean, std <span class="op">=</span> fit_normalizer(training_data_X)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>training_data_Xn <span class="op">=</span> normalize(training_data_X, mean, std)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>test_data_Xn <span class="op">=</span> normalize(test_data_X, mean, std)</span></code></pre></div>
+<p>The CHAS feature is identically zero across the first 100 rows, so
+<span class="math inline">\sigma_{\text{CHAS}} = 0</span> and the
+division is undefined. Since <span class="math inline">x_{nj} -
+\mu_j</span> is already zero for a constant column, substituting <span
+class="math inline">\sigma_j = 1</span> leaves the column at zero
+without introducing undefined behavior. However, this leaves the column
+identically zero rather than nan (not a number), and every power of zero
+is also zero, so the design matrix carries <span
+class="math inline">d</span> columns of zeros and is rank deficient.
+<span
+class="math inline">\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}</span>
+(Gram matrix) is consequently singular and the normal equations have
+infinitely many solutions, every one of them producing identical
+predictions, since whatever weight CHAS receives is multiplied by zero
+on all 100 training rows. The CHAS weights are therefore not estimated
+from the data at all but selected by the solver. np.linalg.lstsq returns
+the minimum-norm solution, which sets them to exactly zero, as the
+degree-1 weight table shows. The effect is that CHAS is dropped from the
+model entirely, including on the test set, where the 35 towns that do
+border the river normalize to 1 and are then multiplied by a zero
+weight.</p>
+<h3 id="polynomial-basis-without-cross-terms">Polynomial basis without
+cross-terms</h3>
+<p>For a degree <span class="math inline">d</span> polynomial over <span
+class="math inline">D = 13</span> features, the basis uses only
+monomials of a single variable:</p>
+<p><span class="math display">\boldsymbol{\phi}(\mathbf{x}) = \big[\,
+1,\; x_1,\; x_1^2,\; \ldots,\; x_1^d,\; x_2,\; x_2^2,\; \ldots,\;
+x_2^d,\; \ldots,\; x_{13}^d \,\big]^{\mathsf{T}}</span></p>
+<p>No cross-terms of the form <span class="math inline">x_i x_j</span>
+with <span class="math inline">i \neq j</span> appear, and the leading
+<span class="math inline">1</span> is the bias. Therefore the number of
+basis functions is</p>
+<p><span class="math display">M = Dd + 1 = 13d + 1</span></p>
+<p>so <span class="math inline">M = 14</span> at degree 1 and <span
+class="math inline">M = 92</span> at degree 7.</p>
+<h3 id="design-matrix">Design matrix</h3>
+<p>Stacking <span
+class="math inline">\boldsymbol{\phi}(\mathbf{x}_n)</span> as rows for
+all <span class="math inline">N</span> points gives the <strong>design
+matrix</strong> <span class="math inline">\boldsymbol{\Phi}</span>, with
+entries <span class="math inline">\Phi_{nj} =
+\phi_j(\mathbf{x}_n)</span>:</p>
+<p><span class="math display">\boldsymbol{\Phi} =
+\begin{bmatrix}
+1 &amp; x_{1,1} &amp; x_{1,1}^2 &amp; \cdots &amp; x_{1,13}^d \\
+1 &amp; x_{2,1} &amp; x_{2,1}^2 &amp; \cdots &amp; x_{2,13}^d \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; x_{N,1} &amp; x_{N,1}^2 &amp; \cdots &amp; x_{N,13}^d
+\end{bmatrix}</span></p>
+<p>A row is one town evaluated across every basis function and a column
+is one basis function evaluated across every town. The prediction vector
+is <span class="math inline">\hat{\mathbf{y}} =
+\boldsymbol{\Phi}\mathbf{w}</span>.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> design_matrix(A, order):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    ROWS, COLS <span class="op">=</span> A.shape</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> [[<span class="dv">1</span> <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(ROWS)]]  <span class="co"># bias first</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(COLS):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> power <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, order <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            col <span class="op">=</span> []</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(ROWS):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                col.append(A[r, c] <span class="op">**</span> power)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            cols.append(col)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.column_stack(cols)</span></code></pre></div>
+<p>The bias column is created once, outside both loops. The column
+ordering is bias, then every power of feature 0, then every power of
+feature 1, and so on, which puts feature <span
+class="math inline">i</span> at power <span class="math inline">p</span>
+in column <span class="math inline">1 + i \cdot d + (p - 1)</span>.</p>
+<h3 id="least-squares">Least squares</h3>
+<p>The weights minimize the sum of squared residuals:</p>
+<p><span class="math display">E(\mathbf{w}) =
+\tfrac{1}{2}\sum_{n=1}^{N}\big(t_n -
+\mathbf{w}^{\mathsf{T}}\boldsymbol{\phi}(\mathbf{x}_n)\big)^2 =
+\tfrac{1}{2}\lVert \mathbf{t} - \boldsymbol{\Phi}\mathbf{w}
+\rVert^2</span></p>
+<p>Expanding the second order norm with <span class="math inline">\lVert
+\mathbf{v} \rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v}</span>:</p>
+<p><span class="math display">E(\mathbf{w}) = \tfrac{1}{2}(\mathbf{t} -
+\boldsymbol{\Phi}\mathbf{w})^{\mathsf{T}}(\mathbf{t} -
+\boldsymbol{\Phi}\mathbf{w})
+= \tfrac{1}{2}\big(\mathbf{t}^{\mathsf{T}}\mathbf{t} -
+2\mathbf{w}^{\mathsf{T}}\boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t} +
+\mathbf{w}^{\mathsf{T}}\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}\mathbf{w}\big)</span></p>
+<p>The first term does not contain <span
+class="math inline">\mathbf{w}</span> and differentiates to zero. The
+second is linear, and <span
+class="math inline">\nabla_{\mathbf{w}}(\mathbf{a}^{\mathsf{T}}\mathbf{w})
+= \mathbf{a}</span>. The third is quadratic, and <span
+class="math inline">\nabla_{\mathbf{w}}(\mathbf{w}^{\mathsf{T}}\mathbf{A}\mathbf{w})
+= 2\mathbf{A}\mathbf{w}</span> for symmetric <span
+class="math inline">\mathbf{A}</span>, which <span
+class="math inline">\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}</span>
+is. Together:</p>
+<p><span class="math display">\nabla_{\mathbf{w}} E =
+\tfrac{1}{2}\big(-2\boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t} +
+2\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}\mathbf{w}\big) =
+\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}\mathbf{w} -
+\boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t}</span></p>
+<p>Setting the gradient to zero gives the normal equations, and
+multiplying on the left by <span
+class="math inline">(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi})^{-1}</span>
+isolates the weights:</p>
+<p><span
+class="math display">\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}\,\mathbf{w}
+= \boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t}
+\qquad \Longrightarrow \qquad
+\mathbf{w} =
+\big(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}\big)^{-1}\boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t}</span></p>
+<p>The inverse is not formed in code. <span
+class="math inline">\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}</span>
+is singular here because of the constant CHAS column, so the solution is
+obtained by singular value decomposition instead, which
+<code>np.linalg.lstsq</code> does implicitly.</p>
+<h3 id="error-measure">Error measure</h3>
+<p><span class="math display">E_{\text{RMS}} =
+\sqrt{\frac{1}{N}\sum_{n=1}^{N}\big(\hat{y}_n - t_n\big)^2}</span></p>
+<p>The square root returns the units to those of MEDV, thousands of
+dollars.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit(Phi, y):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># least squares weights for Phi</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    w, _, _, _ <span class="op">=</span> np.linalg.lstsq(Phi, y, rcond<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rms_error(Phi, w, y):</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt(np.mean((Phi <span class="op">@</span> w <span class="op">-</span> y) <span class="op">**</span> <span class="dv">2</span>))</span></code></pre></div>
+<h2 id="part-1a-error-versus-polynomial-degree">Part 1a: Error versus
+polynomial degree</h2>
+<p>Degrees 1 through 7, no regularization, fitted on the first 100
+points and evaluated on the remaining 406. The same weights are scored
+on both sets; the test rows never enter the fit.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>train_errors <span class="op">=</span> []</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>test_errors <span class="op">=</span> []</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> order <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">8</span>):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    Phi_train <span class="op">=</span> design_matrix(training_data_Xn, order)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    Phi_test <span class="op">=</span> design_matrix(test_data_Xn, order)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> fit(Phi_train, training_data_Y)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    train_errors.append(rms_error(Phi_train, w, training_data_Y))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    test_errors.append(rms_error(Phi_test, w, test_data_Y))</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Degree</th>
+<th><span class="math inline">M</span></th>
+<th>Training RMS</th>
+<th>Test RMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>14</td>
+<td>2.0372</td>
+<td>36.4449</td>
+</tr>
+<tr>
+<td>2</td>
+<td>27</td>
+<td>1.5781</td>
+<td>1097.1883</td>
+</tr>
+<tr>
+<td>3</td>
+<td>40</td>
+<td>1.4491</td>
+<td><span class="math inline">4.8673 \times 10^{4}</span></td>
+</tr>
+<tr>
+<td>4</td>
+<td>53</td>
+<td>1.2705</td>
+<td><span class="math inline">2.1859 \times 10^{7}</span></td>
+</tr>
+<tr>
+<td>5</td>
+<td>66</td>
+<td>1.0966</td>
+<td><span class="math inline">1.8358 \times 10^{10}</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td>79</td>
+<td>1.0725</td>
+<td><span class="math inline">5.0241 \times 10^{12}</span></td>
+</tr>
+<tr>
+<td>7</td>
+<td>92</td>
+<td>0.8815</td>
+<td><span class="math inline">6.8793 \times 10^{15}</span></td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="media/poly-degree-error.png"
+alt="Training and test RMS error against polynomial degree" />
+<figcaption aria-hidden="true">Training and test RMS error against
+polynomial degree</figcaption>
+</figure>
+<p>The y axis is logarithmic because the test error spans roughly
+fourteen orders of magnitude across the degrees shown.</p>
+<p>Training RMS falls monotonically with degree, from 2.0372 at degree 1
+to 0.8815 at degree 7. Each added degree contributes 13 more free
+weights, and 92 weights fitted to 100 points can track the training
+targets closely. Test RMS moves the opposite way across the entire
+range, from 36.4449 to <span class="math inline">6.9 \times
+10^{15}</span>, so every degree past the first buys training accuracy at
+the cost of generalization.</p>
+<p>This is overfitting as the additional weights describe the particular
+100 training towns rather than a relationship that also holds for the
+remaining 406. Of the seven models, degree 1 has the lowest test error
+and is the one I would choose, though a test RMS of 36.4449 against a
+training RMS of 2.0372 means even it generalizes poorly. Read on its
+own, the training curve selects degree 7, which is the worst of the
+seven by fourteen orders of magnitude, and that gap is why model
+selection cannot be based on training error.</p>
+<h2 id="part-1b-examining-the-learned-weights">Part 1b: Examining the
+learned weights</h2>
+<p>Degree 1, so <span class="math inline">M = 14</span>: one bias plus
+one weight per feature. Because the features are standardized, each
+weight is the change in MEDV (in thousands of dollars) per one standard
+deviation of that feature.</p>
+<p>Dividing a weight by that feature’s <span
+class="math inline">\sigma_j</span> converts it back to natural
+units.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>w1 <span class="op">=</span> fit(design_matrix(training_data_Xn, <span class="dv">1</span>), training_data_Y)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="st">&#39;bias&#39;</span><span class="sc">:&gt;4}</span><span class="ss">  </span><span class="sc">{</span><span class="st">&#39;&#39;</span><span class="sc">:&lt;8}</span><span class="ss">  </span><span class="sc">{</span>w1[<span class="dv">0</span>]<span class="sc">:&gt;9.4f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, name <span class="kw">in</span> <span class="bu">enumerate</span>(names[:<span class="dv">13</span>]):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>i<span class="sc">:&gt;4}</span><span class="ss">  </span><span class="sc">{</span>name<span class="sc">:&lt;8}</span><span class="ss">  </span><span class="sc">{</span>w1[<span class="dv">1</span> <span class="op">+</span> i]<span class="sc">:&gt;9.4f}</span><span class="ss">  </span><span class="sc">{</span>w1[<span class="dv">1</span> <span class="op">+</span> i] <span class="op">/</span> std[i]<span class="sc">:&gt;13.4f}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>The weight vector has the bias prepended but <code>std</code> does
+not, so feature <span class="math inline">i</span> is
+<code>w1[1 + i]</code> and <code>std[i]</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Feature</th>
+<th>Weight (per <span class="math inline">\sigma</span>)</th>
+<th>Per natural unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bias</td>
+<td></td>
+<td>22.3090</td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>CRIM</td>
+<td>-1.3380</td>
+<td>-3.4559</td>
+</tr>
+<tr>
+<td>1</td>
+<td>ZN</td>
+<td>0.1230</td>
+<td>0.0054</td>
+</tr>
+<tr>
+<td>2</td>
+<td>INDUS</td>
+<td>-0.5311</td>
+<td>-0.1688</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CHAS</td>
+<td>-0.0000</td>
+<td>-0.0000</td>
+</tr>
+<tr>
+<td>4</td>
+<td>NOX</td>
+<td>1.0027</td>
+<td>21.5154</td>
+</tr>
+<tr>
+<td>5</td>
+<td>RM</td>
+<td>4.1956</td>
+<td>8.5910</td>
+</tr>
+<tr>
+<td>6</td>
+<td>AGE</td>
+<td>-2.1663</td>
+<td>-0.0792</td>
+</tr>
+<tr>
+<td>7</td>
+<td>DIS</td>
+<td>0.0107</td>
+<td>0.0076</td>
+</tr>
+<tr>
+<td>8</td>
+<td>RAD</td>
+<td>-0.1938</td>
+<td>-0.1399</td>
+</tr>
+<tr>
+<td>9</td>
+<td>TAX</td>
+<td>-0.3486</td>
+<td>-0.0076</td>
+</tr>
+<tr>
+<td>10</td>
+<td>PTRATIO</td>
+<td>0.2613</td>
+<td>0.1546</td>
+</tr>
+<tr>
+<td>11</td>
+<td>B</td>
+<td>0.1811</td>
+<td>0.0066</td>
+</tr>
+<tr>
+<td>12</td>
+<td>LSTAT</td>
+<td>0.1488</td>
+<td>0.0262</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">w_5</span> is the weight on RM, the average
+number of rooms per dwelling, at <span
+class="math inline">+4.1956</span> per standard deviation. One standard
+deviation of RM is <span class="math inline">0.4884</span> rooms, so
+this is about <span class="math inline">+8.59</span> thousand dollars
+per additional room.</p>
+<p><span class="math inline">w_7</span> is the weight on DIS, the
+weighted distance to five Boston employment centres, at <span
+class="math inline">+0.0107</span> per standard deviation, which is
+about <span class="math inline">+\$11</span> and indistinguishable from
+zero.</p>
+<p>The bias is <span class="math inline">22.3090</span>. Because
+standardized features have mean zero, the bias equals the training mean
+of MEDV.</p>
+<p>To separate “DIS does not matter” from “DIS is collinear with
+features that absorbed it”, DIS was also fitted on its own:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Phi_dis <span class="op">=</span> design_matrix(training_data_Xn[:, <span class="dv">7</span>:<span class="dv">8</span>], <span class="dv">1</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>w_dis <span class="op">=</span> fit(Phi_dis, training_data_Y)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>DIS weight</th>
+<th>Training RMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DIS alone</td>
+<td>+0.9418</td>
+<td>5.8226</td>
+</tr>
+<tr>
+<td>All 13 features</td>
+<td>+0.0107</td>
+<td>2.0372</td>
+</tr>
+<tr>
+<td>Predict the training mean</td>
+<td>n/a</td>
+<td>5.8983</td>
+</tr>
+</tbody>
+</table>
+<p>Fitting DIS alone gives a training RMS of <span
+class="math inline">5.8226</span> against <span
+class="math inline">5.8983</span> for predicting the mean, a 1.3%
+improvement, so there is almost nothing to absorb and the feature
+genuinely does not predict MEDV across these 100 towns.</p>
+<h2 id="part-1c-one-dimensional-visualization">Part 1c: One-dimensional
+visualization</h2>
+<p>Using only INDUS (feature index 2) so the fit can be drawn in the
+plane. The basis reduces to <span
+class="math inline">\boldsymbol{\phi}(x) = [1, x, x^2, \ldots,
+x^d]^{\mathsf{T}}</span>, so <span class="math inline">M = d +
+1</span>.</p>
+<p>NOTE: The handout’s Xn(:,2) is read as a zero-indexed column,
+consistent with part b numbering the features from zero, so feature 2 is
+INDUS, the proportion of non-retail business acres per town (a
+one-indexed reading would instead give ZN).</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> polynomial_regression_1d_vis(feature_index, order, filename):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    x_train <span class="op">=</span> training_data_Xn[:, feature_index:feature_index <span class="op">+</span> <span class="dv">1</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    x_test <span class="op">=</span> test_data_Xn[:, feature_index:feature_index <span class="op">+</span> <span class="dv">1</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> fit(design_matrix(x_train, order), training_data_Y)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> np.linspace(x_train.<span class="bu">min</span>(), x_train.<span class="bu">max</span>(), <span class="dv">300</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    curve <span class="op">=</span> design_matrix(grid, order) <span class="op">@</span> w</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    ax.scatter(x_test, test_data_Y, alpha<span class="op">=</span><span class="fl">0.35</span>, label<span class="op">=</span><span class="st">&quot;test&quot;</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    ax.scatter(x_train, training_data_Y, label<span class="op">=</span><span class="st">&quot;training&quot;</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ax.plot(grid, curve, label<span class="op">=</span><span class="ss">f&quot;degree </span><span class="sc">{</span>order<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="ss">f&quot;</span><span class="sc">{</span>names[feature_index]<span class="sc">}</span><span class="ss"> (normalized)&quot;</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">&quot;MEDV ($1000s)&quot;</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">55</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    fig.savefig(<span class="st">&quot;media/&quot;</span> <span class="op">+</span> filename)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> o <span class="kw">in</span> (<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">8</span>):</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    polynomial_regression_1d_vis(<span class="dv">2</span>, o, <span class="ss">f&quot;indus-degree-</span><span class="sc">{</span>o<span class="sc">}</span><span class="ss">.png&quot;</span>)</span></code></pre></div>
+<figure>
+<img src="media/indus-degree-1.png" alt="Degree 1" />
+<figcaption aria-hidden="true">Degree 1</figcaption>
+</figure>
+<p>The straight line captures the broad downward trend, falling from
+about 28 to 15 across the training range, but it cannot bend to follow
+the flattening past <span class="math inline">x = 1</span> and so
+underfits: the model is too rigid to represent structure that is visibly
+present in the data.</p>
+<figure>
+<img src="media/indus-degree-4.png" alt="Degree 4" />
+<figcaption aria-hidden="true">Degree 4</figcaption>
+</figure>
+<p>The curve picks up the curvature the line misses, dropping steeply to
+a minimum near <span class="math inline">x = 0.5</span> and levelling
+off afterwards, and it stays smooth between the training points rather
+than passing through them, which is the behaviour wanted from a fit.</p>
+<figure>
+<img src="media/indus-degree-8.png" alt="Degree 8" />
+<figcaption aria-hidden="true">Degree 8</figcaption>
+</figure>
+<p>The curve oscillates to reach individual training points, with a peak
+near <span class="math inline">x = 1.7</span> that no group of points
+supports, and it leaves the bottom of the axis past <span
+class="math inline">x = 2.3</span>. More seriously, the training data
+ends at <span class="math inline">x = 2.66</span> while 189 of the 406
+test points lie beyond it, where the degree-8 polynomial predicts <span
+class="math inline">4256</span> at <span class="math inline">x =
+3.6</span> and <span class="math inline">1.66 \times 10^6</span> at
+<span class="math inline">x = 6.7</span>, because a high-order
+polynomial outside its fitting range is governed by its leading
+term.</p>
+<h2 id="part-1d-l2-regularization-and-cross-validation">Part 1d: L2
+regularization and cross-validation</h2>
+<p>The <strong>L2 norm</strong> of a vector is its ordinary
+straight-line length, <span class="math inline">\lVert \mathbf{w} \rVert
+= \sqrt{w_0^2 + w_1^2 + \cdots + w_{M-1}^2}</span>. <strong>L2
+regularization</strong> adds a multiple of its square to the error being
+minimized, so the fit now pays a price for large weights and will accept
+a slightly worse fit to the training data in exchange for smaller ones.
+The constant <span class="math inline">\lambda</span> sets that exchange
+rate: at <span class="math inline">\lambda = 0</span> the penalty
+vanishes and the ordinary least squares solution returns, and as <span
+class="math inline">\lambda</span> grows the weights are pulled toward
+zero.</p>
+<p>The degree-7 fit from part 1a reached its low training error with
+weights large enough to turn into test predictions of <span
+class="math inline">10^{15}</span>, and penalizing their magnitude is a
+direct way to suppress that without giving up the flexibility of a
+high-degree basis. The method is also known as ridge regression, which
+is where <code>ridge_fit</code> takes its name.</p>
+<p>Adding a penalty on the squared magnitude of the weights gives</p>
+<p><span class="math display">E(\mathbf{w}) = \tfrac{1}{2}\lVert
+\mathbf{t} - \boldsymbol{\Phi}\mathbf{w} \rVert^2 +
+\frac{\lambda}{2}\lVert \mathbf{w} \rVert^2</span></p>
+<p>Expanding both terms with <span class="math inline">\lVert \mathbf{v}
+\rVert^2 = \mathbf{v}^{\mathsf{T}}\mathbf{v}</span>:</p>
+<p><span class="math display">E(\mathbf{w}) =
+\tfrac{1}{2}\big(\mathbf{t}^{\mathsf{T}}\mathbf{t} -
+2\mathbf{w}^{\mathsf{T}}\boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t} +
+\mathbf{w}^{\mathsf{T}}\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}\mathbf{w}\big)
++ \tfrac{\lambda}{2}\mathbf{w}^{\mathsf{T}}\mathbf{w}</span></p>
+<p>The first group differentiates exactly as in the unregularized case.
+The penalty is quadratic in <span class="math inline">\mathbf{w}</span>
+with <span
+class="math inline">\nabla_{\mathbf{w}}(\mathbf{w}^{\mathsf{T}}\mathbf{w})
+= 2\mathbf{w}</span>, so the <span
+class="math inline">\tfrac{\lambda}{2}</span> cancels the 2 and it
+contributes <span class="math inline">\lambda\mathbf{w}</span>:</p>
+<p><span class="math display">\nabla_{\mathbf{w}} E =
+\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}\mathbf{w} -
+\boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t} + \lambda\mathbf{w}</span></p>
+<p>Setting this to zero and writing <span
+class="math inline">\lambda\mathbf{w} =
+\lambda\mathbf{I}\mathbf{w}</span> so that <span
+class="math inline">\mathbf{w}</span> can be factored out:</p>
+<p><span
+class="math display">\big(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi}
++ \lambda\mathbf{I}\big)\mathbf{w} =
+\boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t}
+\qquad \Longrightarrow \qquad
+\mathbf{w} = \big(\boldsymbol{\Phi}^{\mathsf{T}}\boldsymbol{\Phi} +
+\lambda\mathbf{I}\big)^{-1}\boldsymbol{\Phi}^{\mathsf{T}}\mathbf{t}</span></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ridge_fit(Phi, y, lam):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># least squares weights, but big weights cost lam each</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    I <span class="op">=</span> np.eye(Phi.shape[<span class="dv">1</span>])</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    I[<span class="dv">0</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="fl">0.0</span>  <span class="co"># bias is not penalized</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.linalg.solve(Phi.T <span class="op">@</span> Phi <span class="op">+</span> lam <span class="op">*</span> I, Phi.T <span class="op">@</span> y)</span></code></pre></div>
+<p>The first diagonal entry is zeroed so the bias is excluded from the
+penalty, since otherwise the model is penalized for predicting a nonzero
+average house price.</p>
+<p><strong>10-fold cross-validation.</strong> Choosing <span
+class="math inline">\lambda</span> requires a way to compare models, and
+neither available error will do: training error always prefers <span
+class="math inline">\lambda = 0</span>, since the penalty exists
+precisely to worsen the training fit, and using test error to choose
+<span class="math inline">\lambda</span> would let the test set
+influence the model and destroy its value as a measure of
+generalization. The solution is to hold out part of the training data
+instead. A validation set is data held out from fitting so that models
+can be compared, distinct from the test set, which is not touched
+here.</p>
+<p>A holdout of 10 points out of 100 would both waste data and give a
+result that depends on which 10 were chosen. <span
+class="math inline">k</span>-fold cross-validation (CV) avoids this by
+splitting the training points into <span class="math inline">k</span>
+equal groups, called folds, and running <span
+class="math inline">k</span> separate fits in which each fold takes a
+turn as the validation set while the remaining <span
+class="math inline">k-1</span> folds are used for training. Every point
+is therefore fitted on <span class="math inline">k-1</span> times and
+scored on once. Here <span class="math inline">k = 10</span>, so the 100
+training points are shuffled and split into 10 folds of 10, each <span
+class="math inline">\lambda</span> is fitted ten times, and the ten RMS
+scores are averaged:</p>
+<p><span class="math display">\text{CV}(\lambda) =
+\frac{1}{10}\sum_{k=1}^{10} E_{\text{RMS}}^{(k)}(\lambda)</span></p>
+<p>To describe the code below: for each <span
+class="math inline">\lambda</span> the inner loop walks the ten folds.
+val is a boolean mask marking the fold currently held out, so x[~val]
+and training_data_Y[~val] are the other 90 towns, and ridge_fit returns
+the weights learned from those alone. Scoring those weights with
+rms_error on the 10 held-out rows gives one error per fold, and the mean
+of the ten is <span class="math inline">\text{CV}(\lambda)</span>, one
+entry in the returned list.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> polynomial_regression_reg(x, order, lambdas, folds):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    shuffled <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>).permutation(<span class="bu">len</span>(x)) <span class="co"># returns 0-99 in random order</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    means <span class="op">=</span> []</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> lam <span class="kw">in</span> lambdas:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        errs <span class="op">=</span> []</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> part <span class="kw">in</span> np.array_split(shuffled, folds):</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            val <span class="op">=</span> np.zeros(<span class="bu">len</span>(x), dtype<span class="op">=</span><span class="bu">bool</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            val[part] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            w <span class="op">=</span> ridge_fit(design_matrix(x[<span class="op">~</span>val], order), training_data_Y[<span class="op">~</span>val], lam)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            errs.append(rms_error(design_matrix(x[val], order), w, training_data_Y[val]))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        means.append(np.mean(errs))</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> means</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>]</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> polynomial_regression_reg(training_data_Xn[:, <span class="dv">2</span>:<span class="dv">3</span>], <span class="dv">8</span>, lambdas, <span class="dv">10</span>)</span></code></pre></div>
+<p>The shuffle is necessary because the rows are not in random order, as
+the constant CHAS column across the first 100 demonstrates. Without it,
+contiguous folds would group systematically similar towns together.</p>
+<p>Degree 8 on INDUS, with <span class="math inline">\lambda \in \{0,\
+0.01,\ 0.1,\ 1,\ 10,\ 100,\ 1000\}</span>:</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\lambda</span></th>
+<th>Average validation RMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>4.3818</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>4.3204</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td><strong>4.1273</strong></td>
+</tr>
+<tr>
+<td>1</td>
+<td>4.1281</td>
+</tr>
+<tr>
+<td>10</td>
+<td>4.1925</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4.5230</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>5.3003</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="media/reg-cv.png"
+alt="Average validation error against the regularizing constant" />
+<figcaption aria-hidden="true">Average validation error against the
+regularizing constant</figcaption>
+</figure>
+<p><span class="math inline">\lambda = 0</span> cannot be drawn on a
+logarithmic axis, so it appears as the dashed horizontal baseline.</p>
+<p>I would choose <span class="math inline">\lambda = 0.1</span>. The
+curve has a flat basin across <span class="math inline">\lambda =
+0.1</span> and <span class="math inline">\lambda = 1</span>, which
+differ by <span class="math inline">0.0008</span> and are not
+meaningfully different at ten folds. The two sides of that basin are not
+symmetric, though: removing the penalty entirely costs <span
+class="math inline">0.25</span> relative to the minimum, while raising
+it to <span class="math inline">\lambda = 1000</span> costs <span
+class="math inline">1.17</span>. Over-regularizing is the more expensive
+mistake, so taking the lower end of the flat region leaves the most
+distance from the steep rise on the right. Every <span
+class="math inline">\lambda</span> below roughly 30 improves on the
+unregularized baseline.</p>
+<h2 id="part-2-gaussian-basis-functions">Part 2: Gaussian basis
+functions</h2>
+<p>Replacing the monomials with Gaussians centred on data points:</p>
+<p><span class="math display">\phi_j(\mathbf{x}) =
+\exp\!\left(-\frac{\lVert \mathbf{x} - \boldsymbol{\mu}_j
+\rVert^2}{2s^2}\right)</span></p>
+<p>Each centre <span class="math inline">\boldsymbol{\mu}_j</span> is a
+randomly chosen training point, and the norm is taken across all 13
+features at once, not one feature. <span class="math inline">s</span>
+controls the width and is not specified so <span class="math inline">s =
+1</span> is used throughout, which is a reasonable scale given that the
+features are standardized.</p>
+<p>Everything downstream is unchanged: the design matrix is still <span
+class="math inline">\Phi_{nj} = \phi_j(\mathbf{x}_n)</span> with a bias
+column prepended, and the weights still come from the normal
+equations.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gaussian_design_matrix(A, centers, s):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># squared distance from every row of A to every center, across all 13 features</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    d2 <span class="op">=</span> np.zeros((<span class="bu">len</span>(A), <span class="bu">len</span>(centers)))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, c <span class="kw">in</span> <span class="bu">enumerate</span>(centers):</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        d2[:, j] <span class="op">=</span> ((A <span class="op">-</span> c) <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.column_stack([np.ones(<span class="bu">len</span>(A)), np.exp(<span class="op">-</span>d2 <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> s <span class="op">**</span> <span class="dv">2</span>))])</span></code></pre></div>
+<p>The two bases behave in opposite ways far from the data. A monomial
+<span class="math inline">x^d</span> keeps growing as <span
+class="math inline">x</span> grows, so the weight on <span
+class="math inline">x^8</span> still controls the prediction no matter
+how far out a point sits, even though that weight was chosen to fit
+points in the middle of the training range. That is what produced the
+prediction of <span class="math inline">1.66 \times 10^6</span> in part
+1c for the polynomial of degree 8.</p>
+<p>A Gaussian does the reverse. It is largest at its own centre and
+shrinks toward zero as a point moves away from it, so a town far from
+every centre gets a value near zero from every basis function. All that
+is left is the bias, which is always 1, and the model predicts the
+average training price. That prediction is uninformative, but it is not
+absurd.</p>
+<p>The usual names for this are local and global: a Gaussian is local,
+affecting predictions only within a bounded region around its centre,
+while a monomial is global, affecting them everywhere. The practicality
+of this is that a Gaussian model degrades toward the average away from
+its training data instead of diverging.</p>
+<h2 id="part-2e-error-versus-number-of-basis-functions">Part 2e: Error
+versus number of basis functions</h2>
+<p>Centres are chosen by generating a random permutation of the training
+points and taking the first <span class="math inline">K</span>, for
+<span class="math inline">K = 5, 15, 25, \ldots, 95</span> and no
+regularization.</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gaussian_regression(Ks):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    shuffled <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>).permutation(<span class="bu">len</span>(training_data_Xn))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    train_errors, test_errors <span class="op">=</span> [], []</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> K <span class="kw">in</span> Ks:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        centers <span class="op">=</span> training_data_Xn[shuffled[:K]]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        Phi_train <span class="op">=</span> gaussian_design_matrix(training_data_Xn, centers, <span class="dv">1</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        Phi_test <span class="op">=</span> gaussian_design_matrix(test_data_Xn, centers, <span class="dv">1</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        w <span class="op">=</span> fit(Phi_train, training_data_Y)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        train_errors.append(rms_error(Phi_train, w, training_data_Y))</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        test_errors.append(rms_error(Phi_test, w, test_data_Y))</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> train_errors, test_errors</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>Ks <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">5</span>, <span class="dv">100</span>, <span class="dv">10</span>))</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>train_errors, test_errors <span class="op">=</span> gaussian_regression(Ks)</span></code></pre></div>
+<p>The permutation is drawn once, outside the loop, so the <span
+class="math inline">K = 15</span> centres contain all of the <span
+class="math inline">K = 5</span> centres. Increasing <span
+class="math inline">K</span> therefore adds basis functions rather than
+replacing them, and the curve measures the effect of the count alone.
+The same centres build both design matrices, since the centres are part
+of the fitted model and must come from training data only.</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">K</span></th>
+<th>Training RMS</th>
+<th>Test RMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>5.2575</td>
+<td>9.8217</td>
+</tr>
+<tr>
+<td>15</td>
+<td>5.1094</td>
+<td>9.8101</td>
+</tr>
+<tr>
+<td>25</td>
+<td>4.1635</td>
+<td>9.8176</td>
+</tr>
+<tr>
+<td>35</td>
+<td>2.9336</td>
+<td>9.7544</td>
+</tr>
+<tr>
+<td>45</td>
+<td>2.4371</td>
+<td>9.8189</td>
+</tr>
+<tr>
+<td>55</td>
+<td>1.9855</td>
+<td>9.9191</td>
+</tr>
+<tr>
+<td>65</td>
+<td>1.8047</td>
+<td>9.8981</td>
+</tr>
+<tr>
+<td>75</td>
+<td>1.5832</td>
+<td>9.9041</td>
+</tr>
+<tr>
+<td>85</td>
+<td>1.3748</td>
+<td>9.8104</td>
+</tr>
+<tr>
+<td>95</td>
+<td>0.3444</td>
+<td>10.2906</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="media/gaussian-k-error.png"
+alt="Training and test RMS error against number of basis functions" />
+<figcaption aria-hidden="true">Training and test RMS error against
+number of basis functions</figcaption>
+</figure>
+<p>Training RMS falls steadily with <span class="math inline">K</span>,
+from <span class="math inline">5.2575</span> at <span
+class="math inline">K = 5</span> to <span
+class="math inline">0.3444</span> at <span class="math inline">K =
+95</span>, since each added centre gives the fit another weight to
+place. The test curve does not respond at all: it stays between <span
+class="math inline">9.75</span> and <span
+class="math inline">9.92</span> across the whole range, rising only to
+<span class="math inline">10.2906</span> at <span class="math inline">K
+= 95</span>, where the design matrix is <span class="math inline">(100,
+96)</span> and carries nearly as many free parameters as data
+points.</p>
+<p>Predicting the training mean gives a test RMS of <span
+class="math inline">9.8339</span>, which is where the curve sits, so the
+model is returning the baseline for the test towns. That is what the
+Gaussian basis produces when a point lies far from every centre: all the
+exponentials are near zero, only the bias column survives, and the
+prediction is <span class="math inline">w_0</span>. With <span
+class="math inline">s = 1</span> and 13 standardized features, the
+median squared distance between two training towns is <span
+class="math inline">21.4</span>, and <span
+class="math inline">\exp(-10.7) \approx 2 \times 10^{-5}</span>, so no
+basis function reaches appreciably past its own centre. The additional
+centres buy training accuracy by memorizing individual training towns
+and contribute nothing anywhere else.</p>
+<p>The contrast with part 1a is the shape of the test curve. There it
+rose by fourteen orders of magnitude, here it is flat. A monomial grows
+without bound away from the origin, so an overfitted polynomial produces
+unbounded predictions, whereas a Gaussian decays to zero away from its
+centre, so the worst an overfitted Gaussian model can do on an
+unfamiliar town is fall back to the bias. Both models overfit, and only
+the polynomial basis lets the overfitting escape into the
+predictions.</p>
+<h2 id="part-2f-regularized-gaussian-regression">Part 2f: Regularized
+Gaussian regression</h2>
+<p>Same cross-validation procedure as part 1d, with the Gaussian design
+matrix and all 13 features, using 90 basis functions.</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gaussian_regression_reg(K, lambdas, folds):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> training_data_Xn</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    shuffled <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>).permutation(<span class="bu">len</span>(x))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    means <span class="op">=</span> []</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> lam <span class="kw">in</span> lambdas:</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        errs <span class="op">=</span> []</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> part <span class="kw">in</span> np.array_split(shuffled, folds):</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            val <span class="op">=</span> np.zeros(<span class="bu">len</span>(x), dtype<span class="op">=</span><span class="bu">bool</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            val[part] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            centers <span class="op">=</span> x[<span class="op">~</span>val][:K]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            Phi_t <span class="op">=</span> gaussian_design_matrix(x[<span class="op">~</span>val], centers, <span class="dv">1</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            Phi_v <span class="op">=</span> gaussian_design_matrix(x[val], centers, <span class="dv">1</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># lambda 0 is singular here, so lstsq instead of ridge_fit</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>            w <span class="op">=</span> fit(Phi_t, training_data_Y[<span class="op">~</span>val]) <span class="cf">if</span> lam <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> ridge_fit(Phi_t, training_data_Y[<span class="op">~</span>val], lam)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>            errs.append(rms_error(Phi_v, w, training_data_Y[val]))</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        means.append(np.mean(errs))</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> means</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> gaussian_regression_reg(<span class="dv">90</span>, lambdas, <span class="dv">10</span>)</span></code></pre></div>
+<p>Two details differ from part 1d. The centres are taken from each
+fold’s own 90 training rows rather than from all 100, which lands
+exactly on the 90 basis functions the question asks for and keeps the
+held-out rows out of the model entirely. And <span
+class="math inline">\lambda = 0</span> must be routed through
+<code>lstsq</code>.</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\lambda</span></th>
+<th>Average validation RMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>4.1308</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>3.9238</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td><strong>3.8419</strong></td>
+</tr>
+<tr>
+<td>1</td>
+<td>4.0799</td>
+</tr>
+<tr>
+<td>10</td>
+<td>4.8477</td>
+</tr>
+<tr>
+<td>100</td>
+<td>5.4116</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>5.5571</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="media/gaussian-reg-cv.png"
+alt="Average validation error against the regularizing constant, Gaussian basis" />
+<figcaption aria-hidden="true">Average validation error against the
+regularizing constant, Gaussian basis</figcaption>
+</figure>
+<p>I would choose <span class="math inline">\lambda = 0.1</span>, which
+attains the lowest average validation error at <span
+class="math inline">3.8419</span>. The curve rises to the left, giving
+<span class="math inline">3.9238</span> at <span
+class="math inline">\lambda = 0.01</span> and <span
+class="math inline">4.1308</span> unregularized, and steeply to the
+right, reaching <span class="math inline">5.5571</span> at <span
+class="math inline">\lambda = 1000</span>. As in part 1d,
+over-regularizing costs more than under-regularizing, <span
+class="math inline">1.72</span> against <span
+class="math inline">0.29</span> relative to the minimum. Part 1d
+selected the same <span class="math inline">\lambda</span>, but the grid
+contains seven values, six of them nonzero, spanning five decades, so
+this means only that the two optima fall in the same one of seven bins,
+and both curves are flat enough near the minimum that a factor of ten in
+<span class="math inline">\lambda</span> costs little. The shared value
+is a coincidence of a coarse grid rather than a property of the
+problem.</p>
+    </main>
+  </body>
+</html>

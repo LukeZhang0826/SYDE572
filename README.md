@@ -18,15 +18,16 @@ Each assignment is one Markdown file. `build.sh` turns it into both the web page
 
 | Path | What it is |
 | --- | --- |
-| `content/<n>/index.md` | The write-up for assignment `<n>`, in Markdown with LaTeX math. |
-| `content/<n>/media/` | That assignment's images. |
+| `assignment<n>/index.md` | The write-up for assignment `<n>`, in Markdown with LaTeX math. |
+| `assignment<n>/media/` | That assignment's images, written by its notebook and copied into the site. |
+| `assignment<n>/Assignment<n>.ipynb` | The code behind assignment `<n>`. |
+| `assignment<n>/data/` | Any data set the assignment is given. |
 | `templates/page.html` | The Pandoc template every page is rendered through. |
 | `static/style.css` | Styles shared by every page, including the `@media print` rules the PDF uses. |
-| `build.sh` | Builds `content/` into `docs/` and `build/pdf/`. |
+| `build.sh` | Builds every `assignment<n>/` into `docs/` and `build/pdf/`. |
 | `watch.sh` | Reruns `build.sh` whenever a source file is saved. |
 | `docs/` | Generated site. GitHub Pages serves the `main` branch from this folder, so it is committed. |
 | `build/pdf/` | Generated PDFs for Learn. Not committed. |
-| `Assignment1.ipynb` | Code for Assignment 1: Newton-Raphson and golden section search for the distance from a point to a curve, least squares fitting for part 2, and the plots. |
 
 Nothing in `docs/` is edited by hand. `build.sh` overwrites it.
 
@@ -60,7 +61,7 @@ sudo pacman -S entr
 ./watch.sh 1      # just assignment 1
 ```
 
-It watches every `content/<n>/index.md` plus `build.sh`, `templates/page.html`, and `static/style.css`. Press space to force a rebuild, q or Ctrl-C to stop.
+It watches every `assignment<n>/index.md` plus `build.sh`, `templates/page.html`, and `static/style.css`. Press space to force a rebuild, q or Ctrl-C to stop.
 
 Open the PDF in a viewer that reloads when the file changes and it follows along a couple of seconds behind each save. Zathura does, and it needs a PDF backend:
 
@@ -85,17 +86,13 @@ The notebook needs Python 3 with NumPy, Matplotlib, and Jupyter.
 
 ```bash
 pip install numpy matplotlib jupyterlab
-jupyter lab Assignment1.ipynb
+jupyter lab assignment1/Assignment1.ipynb
 ```
 
-Running the plotting cells writes PNGs to `media/` in the repo root. That folder is ignored by git, so copy the images the page uses into the assignment's source folder:
-
-```bash
-cp media/*.png content/1/media/
-```
+Jupyter runs a notebook with its own folder as the working directory, so the plotting cells write straight to `assignment1/media/`, which is the folder `build.sh` copies into the site. Rerunning them overwrites the committed PNGs in place, so check `git diff --stat` before committing if you only meant to look at a plot.
 
 ## Adding an assignment
 
-1. Create `content/<n>/index.md` with a `title` and `subtitle` in its YAML header, and put its images in `content/<n>/media/`.
-2. Run `./build.sh`. The navbar is generated from the folders that exist, so every other assignment picks up the link automatically.
-3. Commit `content/` and `docs/`, then push to `main`. Pages usually updates within a few minutes.
+1. Create `assignment<n>/index.md` with a `title` and `subtitle` in its YAML header, and put its images in `assignment<n>/media/`.
+2. Run `./build.sh`. The navbar is generated from the assignments that have an `index.md`, so every other assignment picks up the link automatically. A folder holding only a notebook stays greyed out in the navbar until its write-up exists.
+3. Commit `assignment<n>/` and `docs/`, then push to `main`. Pages usually updates within a few minutes.

@@ -17,10 +17,10 @@ command -v entr >/dev/null || {
   exit 1
 }
 
-# Everything build.sh reads. find picks up a new content/<n>/ without editing
-# this list, and avoids the shell's ls alias, which entr can't parse.
+# Everything build.sh reads. find picks up a new assignment<n>/index.md without
+# editing this list, and avoids the shell's ls alias, which entr can't parse.
 sources() {
-  find content -name index.md
+  find . -mindepth 2 -maxdepth 2 -path './assignment*/index.md'
   printf '%s\n' build.sh templates/page.html static/style.css
 }
 

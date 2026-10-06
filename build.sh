@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Builds every assignment in content/ into the site in docs/ and a PDF in build/pdf/.
+# Builds every assignment in assignment<n>/ into the site in docs/ and a PDF in
+# build/pdf/.
 #
 #   ./build.sh          build everything
 #   ./build.sh 2        build only assignment 2
@@ -27,8 +28,10 @@ for tool in pandoc chromium; do
   }
 done
 
-# Assignment directories that actually exist, in numeric order
-mapfile -t available < <(find content -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort -n)
+# Assignments that have a write-up, in numeric order. This keys on index.md
+# rather than on the folder, because assignment<n>/ also holds the notebook and
+# the data, so it exists before there is a page worth linking to.
+mapfile -t available < <(find . -mindepth 2 -maxdepth 2 -path './assignment*/index.md' -printf '%h\n' | sed 's|^\./assignment||' | sort -n)
 
 if [[ $# -gt 0 ]]; then
   targets=("$@")
@@ -43,8 +46,8 @@ mkdir -p "$OUT" "$PDF" "$TMP"
 touch "$OUT/.nojekyll"
 cp static/style.css "$OUT/style.css"
 
-# The navbar is generated per page so that adding content/<n>/ is the only step
-# needed to link a new assignment from every existing one.
+# The navbar is generated per page so that adding assignment<n>/index.md is the
+# only step needed to link a new assignment from every existing one.
 write_nav() {
   local current=$1 file=$2 n
 
@@ -72,7 +75,7 @@ write_nav() {
 }
 
 for n in "${targets[@]}"; do
-  src="content/$n/index.md"
+  src="assignment$n/index.md"
 
   if [[ ! -f $src ]]; then
     echo "skipping assignment $n, no $src" >&2
@@ -101,11 +104,11 @@ for n in "${targets[@]}"; do
     --variable repolabel="${REPO_URL#https://}" \
     --output "$OUT/$n/index.html"
 
-  if [[ -d content/$n/media ]]; then
+  if [[ -d assignment$n/media ]]; then
     # Copy the contents rather than the folder, so a rerun doesn't nest media/media
     rm -rf "${OUT:?}/$n/media"
     mkdir -p "$OUT/$n/media"
-    cp -r "content/$n/media/." "$OUT/$n/media/"
+    cp -r "assignment$n/media/." "$OUT/$n/media/"
   fi
 
   # --virtual-time-budget waits for KaTeX to finish typesetting before printing
@@ -121,19 +124,20 @@ for n in "${targets[@]}"; do
   echo "  $PDF/assignment-$n.pdf"
 done
 
-# No home page yet, so the site root sends visitors to the first assignment
-first=${available[0]}
+# No home page yet, so the site root sends visitors to the newest assignment.
+# available is sorted numerically, so this follows along as assignments are added.
+latest=${available[-1]}
 cat >"$OUT/index.html" <<HTML
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>SYDE 572 | Luke Zhang</title>
-    <meta http-equiv="refresh" content="0; url=./$first/" />
-    <link rel="canonical" href="./$first/" />
+    <meta http-equiv="refresh" content="0; url=./$latest/" />
+    <link rel="canonical" href="./$latest/" />
   </head>
   <body>
-    <p><a href="./$first/">Go to Assignment $first</a></p>
+    <p><a href="./$latest/">Go to Assignment $latest</a></p>
   </body>
 </html>
 HTML
