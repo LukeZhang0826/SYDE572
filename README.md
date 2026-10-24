@@ -7,8 +7,8 @@ My assignments for SYDE 572 at the University of Waterloo, Fall 2026. The write-
 | # | Topic | Page |
 | --- | --- | --- |
 | 1 | Shortest distance from a point to a function, and fitting to an equation | [Assignment 1](https://lukeypookster.com/SYDE572/1/) |
-| 2 | Not posted yet | |
-| 3 | Not posted yet | |
+| 2 | Linear basis function regression with polynomial and Gaussian bases | [Assignment 2](https://lukeypookster.com/SYDE572/2/) |
+| 3 | Principal component analysis and ISOMAP on the Iris dataset | [Assignment 3](https://lukeypookster.com/SYDE572/3/) |
 | 4 | Not posted yet | |
 | 5 | Not posted yet | |
 
@@ -82,14 +82,17 @@ Then go to http://localhost:8000.
 
 ## Running the notebook
 
-The notebook needs Python 3 with NumPy, Matplotlib, and Jupyter.
+The notebooks need Python 3 with NumPy, pandas, Matplotlib, scikit-learn, and Jupyter. Assignment 1 uses only NumPy and Matplotlib, assignment 2 adds pandas, and assignment 3 adds scikit-learn.
+
+Arch will not let pip install into the system Python, so use a virtual environment:
 
 ```bash
-pip install numpy matplotlib jupyterlab
-jupyter lab assignment1/Assignment1.ipynb
+python -m venv ~/.venvs/school
+~/.venvs/school/bin/pip install numpy pandas matplotlib scikit-learn jupyterlab
+~/.venvs/school/bin/jupyter lab assignment3/Assignment3.ipynb
 ```
 
-Jupyter runs a notebook with its own folder as the working directory, so the plotting cells write straight to `assignment1/media/`, which is the folder `build.sh` copies into the site. Rerunning them overwrites the committed PNGs in place, so check `git diff --stat` before committing if you only meant to look at a plot.
+Jupyter runs a notebook with its own folder as the working directory, so the plotting cells write straight to `assignment<n>/media/`, which is the folder `build.sh` copies into the site. Rerunning them overwrites the committed PNGs in place, so check `git diff --stat` before committing if you only meant to look at a plot.
 
 ## Adding an assignment
 
