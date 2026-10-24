@@ -52,7 +52,7 @@ write_nav() {
   local current=$1 file=$2 n
 
   {
-    echo '<nav class="nav">'
+    echo '<nav class="nav" aria-label="Assignments">'
     echo '  <div class="nav-inner">'
     echo '    <a class="nav-brand" href="../">SYDE 572</a>'
     echo '    <ul class="nav-links">'
