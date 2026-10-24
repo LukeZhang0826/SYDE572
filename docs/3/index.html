@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SYDE 572 - Assignment 3 | SYDE 572</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+<script defer=""
+src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+</script>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+  </head>
+  <body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../">SYDE 572</a>
+    <ul class="nav-links">
+      <li><a href="../1/">Assignment 1</a></li>
+      <li><a href="../2/">Assignment 2</a></li>
+      <li><a href="../3/" aria-current="page">Assignment 3</a></li>
+      <li><span aria-disabled="true">Assignment 4</span></li>
+      <li><span aria-disabled="true">Assignment 5</span></li>
+      <li class="nav-external"><a href="https://github.com/LukeZhang0826/SYDE572">GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>
+    <main>
+      <h1>SYDE 572 - Assignment 3</h1>
+      <p class="subtitle">Principal component analysis and ISOMAP on the
+Iris dataset</p>
+      <p class="byline">Luke
+Zhang<span class="byline-sep">|</span><a href="https://lukeypookster.com/SYDE572/3/">lukeypookster.com/SYDE572/3/</a><span class="byline-sep">|</span><a href="https://github.com/LukeZhang0826/SYDE572">github.com/LukeZhang0826/SYDE572</a></p>
+      <nav class="toc" aria-label="Contents">
+<ul>
+<li><a href="#pca" id="toc-pca">PCA</a></li>
+<li><a href="#part-1-pca-by-hand" id="toc-part-1-pca-by-hand">Part 1:
+PCA by hand</a></li>
+<li><a href="#the-iris-dataset" id="toc-the-iris-dataset">The Iris
+dataset</a></li>
+<li><a href="#part-2-data-visualization"
+id="toc-part-2-data-visualization">Part 2: Data visualization</a></li>
+<li><a href="#part-3-pca" id="toc-part-3-pca">Part 3: PCA</a></li>
+<li><a href="#part-4-data-compression"
+id="toc-part-4-data-compression">Part 4: Data compression</a></li>
+<li><a href="#part-5-non-linear-components"
+id="toc-part-5-non-linear-components">Part 5: Non-linear
+components</a></li>
+<li><a href="#appendix-hand-work" id="toc-appendix-hand-work">Appendix:
+Hand work</a></li>
+</ul>
+      </nav>
+<p>This assignment is about reducing the number of dimensions in a
+dataset while throwing away as little as possible. Part 1 works through
+PCA by hand on a five point dataset. Parts 2 to 5 use the Iris dataset,
+plotting raw feature combinations, running PCA on it, measuring how much
+the reduced version keeps, and comparing PCA against ISOMAP, a nonlinear
+alternative.</p>
+<h2 id="pca">PCA</h2>
+<p>Principal component analysis (PCA) finds the directions along which a
+dataset varies the most and describes each point by where it sits along
+those directions rather than by all of its original features. A
+<strong>principal component</strong> (PC) is one of those directions, a
+unit vector in the original feature space. The first PC is the direction
+of greatest variance, the second the direction of greatest remaining
+variance perpendicular to the first, and so on.</p>
+<p>The procedure:</p>
+<ol type="1">
+<li><strong>Center</strong> the data by subtracting the mean of each
+feature. PCA measures variance around the mean, so this step is not
+optional.</li>
+<li>Form the <strong>covariance matrix</strong> <span
+class="math inline">\mathbf{S}</span> of the centered data. Entry <span
+class="math inline">S_{ij}</span> is the covariance between features
+<span class="math inline">i</span> and <span
+class="math inline">j</span>, a measure of how much the two move
+together, and <span class="math inline">S_{ii}</span> is the ordinary
+variance of feature <span class="math inline">i</span>.</li>
+<li>Take the <strong>eigenvectors</strong> of <span
+class="math inline">\mathbf{S}</span>. An eigenvector <span
+class="math inline">\mathbf{v}</span> with eigenvalue <span
+class="math inline">\lambda</span> satisfies <span
+class="math inline">\mathbf{S}\mathbf{v} = \lambda\mathbf{v}</span>, a
+direction the matrix stretches without rotating. These are the principal
+components, and each eigenvalue is the variance along its own
+eigenvector. <span class="math inline">\mathbf{S}</span> is symmetric,
+so they come out orthogonal and can be scaled to unit length, which is
+the <span class="math inline">\lVert \mathbf{w} \rVert = 1</span> the
+handout assumes.</li>
+</ol>
+<p>To <strong>project</strong> a centered point <span
+class="math inline">\tilde{\mathbf{x}}</span> onto a unit PC <span
+class="math inline">\mathbf{u}</span>, take <span class="math inline">t
+= \mathbf{u}^{\mathsf{T}}\tilde{\mathbf{x}}</span>, the signed distance
+along <span class="math inline">\mathbf{u}</span> of the nearest point
+on that line. That single number is the compressed form of the point.
+<strong>Reconstructing</strong> is <span
+class="math inline">\hat{\mathbf{x}} = t\mathbf{u}</span>, and the
+<strong>reconstruction error</strong> is the L2 norm (straight line
+length <span class="math inline">\lVert \mathbf{v} \rVert = \sqrt{v_1^2
++ \cdots + v_d^2}</span>) of what is left:</p>
+<p><span class="math display">e(\mathbf{x}) = \big\lVert
+\tilde{\mathbf{x}} -
+(\mathbf{u}^{\mathsf{T}}\tilde{\mathbf{x}})\,\mathbf{u}
+\big\rVert</span></p>
+<p>This is the perpendicular distance from the point to the PC line.
+Minimizing orthogonal distance and maximizing variance therefore pick
+the same direction, since the two squared totals add to a constant.</p>
+<h2 id="part-1-pca-by-hand">Part 1: PCA by hand</h2>
+<h3 id="the-data">The data</h3>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">x_1</span></th>
+<th><span class="math inline">x_2</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-2</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="centering">Centering</h3>
+<p><span class="math display">\mu_1 = \frac{-2 - 1 + 0 + 1 + 2}{5} = 0,
+\qquad \mu_2 = \frac{-1 + 0 + 1 + 2 + 3}{5} = 1</span></p>
+<p>Subtracting <span class="math inline">(\mu_1, \mu_2) = (0, 1)</span>
+from every row gives the centered data:</p>
+<p><span class="math display">\tilde{\mathbf{X}} = \begin{bmatrix} -2
+&amp; -2 \\ -1 &amp; -1 \\ 0 &amp; 0 \\ 1 &amp; 1 \\ 2 &amp; 2
+\end{bmatrix}</span></p>
+<p>Every centered row has the form <span class="math inline">(k,
+k)</span>, so all five points lie exactly on the line <span
+class="math inline">\tilde{x}_2 = \tilde{x}_1</span>, which is <span
+class="math inline">x_2 = x_1 + 1</span> in the original coordinates.
+There is no spread in the perpendicular direction.</p>
+<h3 id="covariance-matrix">Covariance matrix</h3>
+<p>With <span class="math inline">N = 5</span> points and the <span
+class="math inline">N - 1</span> denominator:</p>
+<p><span class="math display">\mathbf{S} =
+\frac{1}{N-1}\tilde{\mathbf{X}}^{\mathsf{T}}\tilde{\mathbf{X}} =
+\frac{1}{4}\begin{bmatrix} 10 &amp; 10 \\ 10 &amp; 10 \end{bmatrix} =
+\begin{bmatrix} 2.5 &amp; 2.5 \\ 2.5 &amp; 2.5 \end{bmatrix}</span></p>
+<p>since <span class="math inline">\sum \tilde{x}_1^2 = \sum
+\tilde{x}_1\tilde{x}_2 = \sum \tilde{x}_2^2 = 4 + 1 + 0 + 1 + 4 =
+10</span>.</p>
+<p>NOTE: using <span class="math inline">1/N</span> instead of <span
+class="math inline">1/(N-1)</span> scales every entry by <span
+class="math inline">4/5</span>, and both eigenvalues with it, but leaves
+the eigenvectors unchanged.</p>
+<h3 id="eigenvalues-and-eigenvectors">Eigenvalues and eigenvectors</h3>
+<p><span class="math display">\det(\mathbf{S} - \lambda\mathbf{I}) =
+(2.5 - \lambda)^2 - 2.5^2 = \lambda^2 - 5\lambda = \lambda(\lambda -
+5)</span></p>
+<p>so <span class="math inline">\lambda_1 = 5</span> and <span
+class="math inline">\lambda_2 = 0</span>. For <span
+class="math inline">\lambda_1 = 5</span>:</p>
+<p><span class="math display">(\mathbf{S} - 5\mathbf{I})\mathbf{v} =
+\begin{bmatrix} -2.5 &amp; 2.5 \\ 2.5 &amp; -2.5
+\end{bmatrix}\begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \mathbf{0} \quad
+\Longrightarrow \quad v_1 = v_2</span></p>
+<h3 id="the-first-principal-component">1. The first principal
+component</h3>
+<p>Any multiple of <span class="math inline">(1, 1)</span> is an
+eigenvector, and normalizing to unit length gives</p>
+<p><span class="math display">\mathbf{u} =
+\frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} \approx
+\begin{bmatrix} 0.7071 \\ 0.7071 \end{bmatrix}</span></p>
+<p>The sign is arbitrary, since <span
+class="math inline">-\mathbf{u}</span> is an equally valid eigenvector
+and describes the same line.</p>
+<p>The second eigenvalue is exactly zero, so there is no variance
+perpendicular to <span class="math inline">\mathbf{u}</span>. The first
+PC captures 100% of it and one number describes each point.</p>
+<h3 id="reconstruction-error-of-3-3">2. Reconstruction error of <span
+class="math inline">(3, 3)</span></h3>
+<p>Center the query point using the same mean as the training data,
+<span class="math inline">(0, 1)</span>:</p>
+<p><span class="math display">\tilde{\mathbf{p}} = (3, 3) - (0, 1) = (3,
+2)</span></p>
+<p>Project onto <span class="math inline">\mathbf{u}</span>:</p>
+<p><span class="math display">t =
+\mathbf{u}^{\mathsf{T}}\tilde{\mathbf{p}} = \frac{1}{\sqrt{2}}(3 + 2) =
+\frac{5}{\sqrt{2}} \approx 3.5355</span></p>
+<p>Reconstruct:</p>
+<p><span class="math display">\hat{\mathbf{p}} = t\,\mathbf{u} =
+\frac{5}{\sqrt{2}} \cdot \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1
+\end{bmatrix} = \begin{bmatrix} 2.5 \\ 2.5 \end{bmatrix}</span></p>
+<p>The residual and its length:</p>
+<p><span class="math display">\tilde{\mathbf{p}} - \hat{\mathbf{p}} = (3
+- 2.5,\; 2 - 2.5) = (0.5,\, -0.5)</span></p>
+<p><span class="math display">e = \sqrt{0.5^2 + (-0.5)^2} = \sqrt{0.5} =
+\frac{1}{\sqrt{2}} \approx 0.7071</span></p>
+<p>As a check, the perpendicular distance from a point to the line <span
+class="math inline">x_2 = x_1 + 1</span> is <span
+class="math inline">|x_1 - x_2 + 1| / \sqrt{2}</span>, which gives <span
+class="math inline">|3 - 3 + 1| / \sqrt{2} = 0.7071</span>.</p>
+<h3 id="reconstruction-error-of-3-4">3. Reconstruction error of <span
+class="math inline">(3, 4)</span></h3>
+<p><span class="math display">\tilde{\mathbf{p}} = (3, 4) - (0, 1) = (3,
+3)</span></p>
+<p><span class="math display">t = \frac{1}{\sqrt{2}}(3 + 3) =
+\frac{6}{\sqrt{2}} = 3\sqrt{2}</span></p>
+<p><span class="math display">\hat{\mathbf{p}} = 3\sqrt{2} \cdot
+\frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} = \begin{bmatrix}
+3 \\ 3 \end{bmatrix}</span></p>
+<p>The residual is exactly <span class="math inline">(0, 0)</span>,
+so</p>
+<p><span class="math display">e = 0</span></p>
+<p><span class="math inline">(3, 4)</span> satisfies <span
+class="math inline">x_2 = x_1 + 1</span>, so it lies on the same line as
+all five training points and the one dimensional representation loses
+nothing. <span class="math inline">(3, 3)</span> sits one unit off that
+line, and <span class="math inline">1/\sqrt{2}</span> is its
+perpendicular distance to it. Compression is lossless exactly on the
+subspace PCA selected and lossy everywhere else.</p>
+<h3 id="numerical-check">Numerical check</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array([</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>], dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Xc <span class="op">=</span> X <span class="op">-</span> mu</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> np.cov(Xc, rowvar<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>vals, vecs <span class="op">=</span> np.linalg.eigh(C) <span class="co"># eigen decomposition</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> vecs[:, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> recon_error(p):</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> np.asarray(p, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    pc <span class="op">=</span> p <span class="op">-</span> mu</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> pc <span class="op">@</span> u</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    recon <span class="op">=</span> t <span class="op">*</span> u</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    residual <span class="op">=</span> pc <span class="op">-</span> recon</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.linalg.norm(residual)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mu, vals, u)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recon_error([<span class="dv">3</span>, <span class="dv">3</span>]), recon_error([<span class="dv">3</span>, <span class="dv">4</span>]))</span></code></pre></div>
+<p><code>np.linalg.eigh</code> is the eigendecomposition routine for
+symmetric matrices. It returns real eigenvalues in ascending order and
+orthonormal eigenvectors as columns, so the first PC is the last column.
+The general <code>np.linalg.eig</code> guarantees neither.</p>
+<p>Output:</p>
+<pre><code>[0. 1.] [0. 5.] [0.70710678 0.70710678]
+0.7071067811865476 6.280369834735101e-16</code></pre>
+<p>The eigenvalues are <span class="math inline">0</span> and <span
+class="math inline">5</span>, the first PC is <span
+class="math inline">(0.7071, 0.7071)</span>, and the errors are <span
+class="math inline">0.7071</span> and <span class="math inline">6.3
+\times 10^{-16}</span>, floating point zero. All three agree with the
+hand calculation.</p>
+<h2 id="the-iris-dataset">The Iris dataset</h2>
+<p>Parts 2 to 5 use the Iris dataset: 150 flowers, 4 measurements each
+in centimetres, labelled with one of 3 species, 50 each. PCA and ISOMAP
+are both unsupervised, meaning they see only the features, so the labels
+never enter a fit. They colour the plots, so we can check whether the
+structure found without them lines up with the species.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> load_iris()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> iris.data, iris.target</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>names, species <span class="op">=</span> iris.feature_names, iris.target_names</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">&quot;tab:blue&quot;</span>, <span class="st">&quot;tab:orange&quot;</span>, <span class="st">&quot;tab:green&quot;</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X.shape, names, species)</span></code></pre></div>
+<p><code>X</code> is <span class="math inline">150 \times 4</span> and
+<code>y</code> holds 150 integers in <span class="math inline">\{0, 1,
+2\}</span> for setosa, versicolor and virginica. This is the same data
+as the UCI copy the handout links to.</p>
+<p>The four features, and how much of the total variance each holds:</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Feature</th>
+<th>Variance</th>
+<th>Share of total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>sepal length</td>
+<td>0.6857</td>
+<td>14.99%</td>
+</tr>
+<tr>
+<td>1</td>
+<td>sepal width</td>
+<td>0.1900</td>
+<td>4.15%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>petal length</td>
+<td>3.1163</td>
+<td>68.15%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>petal width</td>
+<td>0.5810</td>
+<td>12.71%</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>total</strong></td>
+<td><strong>4.5730</strong></td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<p>Petal length alone holds more than two thirds of it.</p>
+<h2 id="part-2-data-visualization">Part 2: Data visualization</h2>
+<p>Marginalizing means dropping feature dimensions and keeping the rest,
+which in code is column selection on <code>X</code>. The plots below use
+one, two and three of the four.</p>
+<h3 id="one-feature-petal-length">One feature: petal length</h3>
+<p>A scatter needs two axes, so a single feature is shown as a histogram
+per species, with transparency so overlaps are visible.</p>
+<figure>
+<img src="media/iris-1d-petal-length.png"
+alt="Petal length alone, one histogram per species" />
+<figcaption aria-hidden="true">Petal length alone, one histogram per
+species</figcaption>
+</figure>
+<p>Setosa occupies 1.0 to 1.9 cm and nothing else appears below 3.0 cm,
+so a single threshold in that gap separates it from the other 100
+flowers with no errors. Versicolor (3.0 to 5.1 cm) and virginica (4.5 to
+6.9 cm) overlap between 4.5 and 5.1. 2 versicolor sit above 4.9 cm and 6
+virginica below 5.0, so about 8 of those 100 cannot be assigned on petal
+length alone.</p>
+<h3 id="two-features-petal-length-and-petal-width">Two features: petal
+length and petal width</h3>
+<figure>
+<img src="media/iris-2d-petal.png"
+alt="Petal length against petal width" />
+<figcaption aria-hidden="true">Petal length against petal
+width</figcaption>
+</figure>
+<p>Setosa is isolated in the bottom left with a wide margin in both
+directions. Versicolor and virginica form elongated groups along a
+common diagonal, since long petals are also wide petals. They touch near
+<span class="math inline">(5, 1.7)</span>, but a diagonal line separates
+almost all of them, better than either feature alone.</p>
+<h3 id="three-features-sepal-length-petal-length-petal-width">Three
+features: sepal length, petal length, petal width</h3>
+<figure>
+<img src="media/iris-3d-sepal-petal.png"
+alt="Sepal length, petal length and petal width" />
+<figcaption aria-hidden="true">Sepal length, petal length and petal
+width</figcaption>
+</figure>
+<p>The groups sit in the same arrangement as the 2D plot, stretched
+along the sepal length axis. Versicolor spans 4.9 to 7.0 cm on that axis
+and virginica 4.9 to 7.9 cm, almost entirely overlapping, so the petal
+measurements are still doing the separating.</p>
+<h3 id="comment">Comment</h3>
+<p>The petal marginalizations give clean clusters and the sepal ones do
+not. Any plot containing petal length separates setosa perfectly, since
+the gap between 1.9 and 3.0 cm is the largest structure in the dataset.
+Separating versicolor from virginica is the harder problem, and it needs
+both petal measurements.</p>
+<p>Sepal width is the weakest of the four at 4.15% of the total
+variance, and it runs against the other three. Setosa has the
+<em>widest</em> sepals (mean 3.428 cm) while being smallest in every
+other measurement. The dataset is not really four dimensional.</p>
+<h2 id="part-3-pca">Part 3: PCA</h2>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">3</span>).fit(X)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> pca.transform(X)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ratio <span class="op">=</span> pca.explained_variance_ratio_</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> pd.DataFrame(pca.components_, columns<span class="op">=</span>names, index<span class="op">=</span>[<span class="st">&quot;PC1&quot;</span>, <span class="st">&quot;PC2&quot;</span>, <span class="st">&quot;PC3&quot;</span>])</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(axes.<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ratio.<span class="bu">round</span>(<span class="dv">4</span>), ratio.cumsum().<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div>
+<p><code>fit</code> computes the mean and the principal components,
+<code>transform</code> returns <code>Z</code> (row <span
+class="math inline">n</span> holds flower <span
+class="math inline">n</span>’s projections onto PC1, PC2 and PC3), and
+<code>pca.components_</code> holds the PC vectors themselves in the
+original feature space.</p>
+<p>NOTE: <code>PCA</code> centers but does not rescale, and the features
+are left unstandardized. All four are centimetre measurements of the
+same kind of object, so their variances are comparable and rescaling
+would discard real information about which one varies more.
+Standardizing gives 72.96% of variance on PC1 instead of 92.46%, since
+it promotes sepal width from 4.15% of the total to 25%.</p>
+<h3 id="the-pca-axes">The PCA axes</h3>
+<p>Each row is one principal component, given as the weights on the four
+original features:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>sepal length</th>
+<th>sepal width</th>
+<th>petal length</th>
+<th>petal width</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PC1</strong></td>
+<td>0.3614</td>
+<td>-0.0845</td>
+<td>0.8567</td>
+<td>0.3583</td>
+</tr>
+<tr>
+<td><strong>PC2</strong></td>
+<td>0.6566</td>
+<td>0.7302</td>
+<td>-0.1734</td>
+<td>-0.0755</td>
+</tr>
+<tr>
+<td><strong>PC3</strong></td>
+<td>-0.5820</td>
+<td>0.5979</td>
+<td>0.0762</td>
+<td>0.5458</td>
+</tr>
+</tbody>
+</table>
+<p>PC1 is dominated by petal length at <span
+class="math inline">0.8567</span>, with the other size measurements
+positive and sepal width slightly negative, so it reads as overall petal
+size. The direction of greatest variance is essentially the feature that
+already separated the species in Part 2. PC2 is mostly sepal length and
+width together (<span class="math inline">0.6566</span> and <span
+class="math inline">0.7302</span>) with the petal terms near zero, an
+overall sepal size axis, perpendicular to the first by construction.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Variance explained</th>
+<th>Cumulative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC1</td>
+<td>92.46%</td>
+<td>92.46%</td>
+</tr>
+<tr>
+<td>PC2</td>
+<td>5.31%</td>
+<td>97.77%</td>
+</tr>
+<tr>
+<td>PC3</td>
+<td>1.71%</td>
+<td>99.48%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="marginalized-on-the-major-axis">Marginalized on the major
+axis</h3>
+<figure>
+<img src="media/pca-1d.png" alt="The data projected onto PC1 alone" />
+<figcaption aria-hidden="true">The data projected onto PC1
+alone</figcaption>
+</figure>
+<p>Projecting onto PC1 alone keeps 92.46% of the variance and reduces
+each flower to one number. Setosa separates completely, its PC1 values
+topping out at <span class="math inline">-2.1998</span> while nothing
+else goes below <span class="math inline">-0.9065</span>. Versicolor
+spans <span class="math inline">-0.906</span> to <span
+class="math inline">1.558</span> and virginica <span
+class="math inline">0.521</span> to <span
+class="math inline">3.796</span>, overlapping in a band in the middle,
+the same pair that overlapped on raw petal length.</p>
+<h3 id="top-two-axes">Top two axes</h3>
+<figure>
+<img src="media/pca-2d.png"
+alt="The data in the plane of PC1 and PC2" />
+<figcaption aria-hidden="true">The data in the plane of PC1 and
+PC2</figcaption>
+</figure>
+<p>The two dimensional representation keeps 97.77% of the variance.
+Nearly all of the separation is still horizontal. PC2 spreads each
+species vertically without pulling them apart, on a 5.31% share.
+Versicolor and virginica remain adjacent with a small overlap near <span
+class="math inline">\text{PC1} \approx 1.2</span>.</p>
+<h3 id="top-three-axes">Top three axes</h3>
+<figure>
+<img src="media/pca-3d.png"
+alt="The data in the space of PC1, PC2 and PC3" />
+<figcaption aria-hidden="true">The data in the space of PC1, PC2 and
+PC3</figcaption>
+</figure>
+<p>Adding PC3 takes the total to 99.48%. It spans about <span
+class="math inline">-0.8</span> to <span class="math inline">0.8</span>,
+an order of magnitude narrower than PC1, and the species are thoroughly
+mixed along it, so it contributes nothing to telling them apart.</p>
+<h2 id="part-4-data-compression">Part 4: Data compression</h2>
+<p>The Frobenius norm of a matrix is the square root of the sum of the
+squares of all its entries, <span class="math inline">\lVert \mathbf{A}
+\rVert_F = \sqrt{\sum_{i,j} A_{ij}^2}</span>. For centered data this
+connects directly to variance, because the variance of feature <span
+class="math inline">j</span> is <span
+class="math inline">\frac{1}{N-1}\sum_n \tilde{x}_{nj}^2</span> and
+summing over all features gives</p>
+<p><span class="math display">\sum_{j=1}^{D} \operatorname{Var}(x_j) =
+\frac{1}{N-1} \lVert \tilde{\mathbf{X}} \rVert_F^2 =
+\operatorname{tr}(\mathbf{S}) = \sum_{j=1}^{D} \lambda_j</span></p>
+<p>The trace of a matrix (the sum of its diagonal entries) equals the
+sum of its eigenvalues. Total variance can therefore be split two ways,
+across the original features or across the principal components, and
+both add to the same number. PC <span class="math inline">j</span>’s
+share is <span class="math inline">\lambda_j / \sum_k \lambda_k</span>,
+and since PCA keeps the largest eigenvalues first, dropping the rest
+discards the least possible.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pca_full <span class="op">=</span> PCA().fit(X)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ratio_full <span class="op">=</span> pca_full.explained_variance_ratio_</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>cumulative <span class="op">=</span> ratio_full.cumsum()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ratio_full.<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cumulative.<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;2D representation explains:&quot;</span>, <span class="ss">f&quot;</span><span class="sc">{</span>cumulative[<span class="dv">1</span>]<span class="sc">:.2%}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;PCs needed for 50%:&quot;</span>, <span class="bu">int</span>(np.searchsorted(cumulative, <span class="fl">0.5</span>) <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Xc <span class="op">=</span> X <span class="op">-</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>frob_sq <span class="op">=</span> (Xc <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>()</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>total_var <span class="op">=</span> frob_sq <span class="op">/</span> (<span class="bu">len</span>(X) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>eigen_sum <span class="op">=</span> pca_full.explained_variance_.<span class="bu">sum</span>()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total_var, eigen_sum, np.allclose(total_var, eigen_sum))</span></code></pre></div>
+<p><code>PCA()</code> with no <code>n_components</code> keeps all four,
+which the second question needs.
+<code>np.searchsorted(cumulative, 0.5)</code> returns the first index at
+which the running total reaches 0.5, and adding 1 turns an index into a
+count.</p>
+<p>Output:</p>
+<pre><code>[0.9246 0.0531 0.0171 0.0052]
+[0.9246 0.9777 0.9948 1.    ]
+2D representation explains: 97.77%
+PCs needed for 50%: 1
+4.572957046979866 4.572957046979804 True</code></pre>
+<p>The last line checks the identity above numerically. <span
+class="math inline">\lVert \tilde{\mathbf{X}} \rVert_F^2 / (N-1) =
+4.5730</span> and <span class="math inline">\sum_j \lambda_j = 4.2282 +
+0.2427 + 0.0782 + 0.0238 = 4.5730</span>, agreeing to 13 significant
+figures.</p>
+<h3 id="variance-explained-by-the-two-dimensional-representation">1.
+Variance explained by the two dimensional representation</h3>
+<p><span class="math display">\frac{\lambda_1 + \lambda_2}{\lambda_1 +
+\lambda_2 + \lambda_3 + \lambda_4} = \frac{4.2282 + 0.2427}{4.5730} =
+0.9777</span></p>
+<p><strong>97.77%</strong>, so going from 4 dimensions to 2 halves the
+storage and loses 2.23% of the variance, which in the units of the data
+is an average reconstruction error of 0.2745 cm per flower and a worst
+case of 0.7607 cm.</p>
+<h3 id="number-of-pcs-needed-for-50-of-the-variance">2. Number of PCs
+needed for 50% of the variance</h3>
+<p><strong>One.</strong> PC1 alone explains 92.46%, clearing 50% by a
+wide margin. The dataset is close to one dimensional. A single “overall
+petal size” axis carries almost everything, and the other three
+directions hold 7.54% between them.</p>
+<h2 id="part-5-non-linear-components">Part 5: Non-linear components</h2>
+<p>PCA can only produce linear projections, meaning every reduced
+coordinate is a weighted sum of the original features, so it can rotate
+and flatten the data but not unroll it. If the flowers sit on a curved
+surface inside the four dimensional space, a method that follows the
+surface should describe them more compactly.</p>
+<p>ISOMAP is such a method. Instead of straight line (Euclidean)
+distances it uses <strong>geodesic</strong> distance, measured along the
+dataset itself. It connects each point to its <span
+class="math inline">k</span> nearest neighbours in a graph and takes the
+shortest path through that graph as the distance between any two points,
+then runs multidimensional scaling (MDS), which places points in a low
+dimensional space so their distances match the given ones as closely as
+possible. Two flowers at opposite ends of a curved surface are far apart
+along it even when close in a straight line.</p>
+<p>NOTE: the handout describes the MDS step as a gradient descent fit.
+sklearn’s <code>Isomap</code> does not iterate. It hands the geodesic
+distance matrix to <code>KernelPCA</code> with
+<code>kernel="precomputed"</code>, so the embedding is one
+eigendecomposition, the classical MDS solution. The iterative version
+lives in sklearn’s separate <code>MDS</code> class, which uses SMACOF,
+and <code>Isomap</code> never calls it.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>iso <span class="op">=</span> Isomap(n_neighbors<span class="op">=</span><span class="dv">3</span>, n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> iso.fit_transform(X)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(E.shape, iso.reconstruction_error())</span></code></pre></div>
+<p>The handout specifies 3 nearest neighbours. It does not specify a
+number of output dimensions, and <code>n_components=2</code> is chosen
+to match PCA’s two dimensional representation so the comparison below is
+like for like. Running it produces a warning:</p>
+<pre><code>UserWarning: The number of connected components of the neighbors graph is 2 &gt; 1.
+Completing the graph to fit Isomap might be slow.</code></pre>
+<p>A <strong>connected component</strong> of a graph is a set of nodes
+reachable from one another with no edges leaving the set. At <span
+class="math inline">k = 3</span> the graph splits into exactly two, all
+50 setosa in one and all 100 versicolor and virginica in the other,
+because no setosa flower is among the 3 nearest neighbours of any
+non-setosa flower or the reverse. Shortest path distance between
+disconnected components is infinite and MDS cannot use it, so sklearn
+adds edges until the graph is whole. The resulting setosa to other
+distances are an artifact of that patching, not something measured from
+the data.</p>
+<figure>
+<img src="media/isomap-2d.png" alt="ISOMAP embedding with k = 3" />
+<figcaption aria-hidden="true">ISOMAP embedding with k = 3</figcaption>
+</figure>
+<figure>
+<img src="media/pca-vs-isomap.png" alt="PCA and ISOMAP side by side" />
+<figcaption aria-hidden="true">PCA and ISOMAP side by side</figcaption>
+</figure>
+<p>Setosa is collapsed onto a nearly straight line far to the left. That
+is the disconnected component. Its internal geodesic distances are
+genuine, but its position relative to everything else comes from the
+repaired edges. Versicolor and virginica open into a V that separates
+them somewhat more cleanly than PCA manages, though they still meet near
+the join.</p>
+<h3 id="comparing-the-two">Comparing the two</h3>
+<p>Against the data compression criterion, PCA wins outright, and the
+comparison is not close:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>PCA</th>
+<th>ISOMAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Axis vectors in feature space</td>
+<td>yes, <code>components_</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>Variance accounted for</td>
+<td>97.77% in 2D</td>
+<td>not defined</td>
+</tr>
+<tr>
+<td>Mapping new points</td>
+<td>matrix multiply</td>
+<td>requires the training graph</td>
+</tr>
+<tr>
+<td>Invertible</td>
+<td>yes, <code>inverse_transform</code></td>
+<td>no</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>one eigendecomposition</td>
+<td><span class="math inline">k</span>-NN graph, all pairs shortest
+paths, then MDS</td>
+</tr>
+</tbody>
+</table>
+<p>ISOMAP’s <code>reconstruction_error()</code> was <span
+class="math inline">0.4364</span>, but that measures the mismatch
+between graph distances and embedded distances, not an error in the
+units of the original features, so it cannot be compared against PCA’s
+97.77% or the 0.2745 cm from Part 4.</p>
+<p>Against the ability to classify the two are close, with PCA slightly
+ahead. Scoring a <span class="math inline">k</span>-nearest-neighbour
+classifier (<span class="math inline">k = 5</span>) on each
+representation with 5-fold stratified cross validation:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>knn <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>representations <span class="op">=</span> {</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;raw 4D&quot;</span>: X,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;PCA 2D&quot;</span>: Z[:, :<span class="dv">2</span>],</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ISOMAP 2D&quot;</span>: E,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name <span class="kw">in</span> representations:</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> representations[name]</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    scores <span class="op">=</span> cross_val_score(knn, data, y, cv<span class="op">=</span>cv)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> scores.mean()</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    std <span class="op">=</span> scores.std()</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name, <span class="bu">round</span>(mean, <span class="dv">4</span>), <span class="st">&quot;+/-&quot;</span>, <span class="bu">round</span>(std, <span class="dv">4</span>))</span></code></pre></div>
+<p><code>StratifiedKFold</code> splits the 150 flowers into 5 folds that
+each preserve the 50/50/50 species proportions, so every fold holds 10
+of each, and <code>cross_val_score</code> fits on four folds and scores
+on the fifth, five times. <code>Z[:, :2]</code> is the same pair of
+columns plotted in Part 3.</p>
+<table>
+<thead>
+<tr>
+<th>Representation</th>
+<th>Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw 4 features</td>
+<td>95.33%</td>
+</tr>
+<tr>
+<td>PCA, 2 components</td>
+<td>96.00%</td>
+</tr>
+<tr>
+<td>ISOMAP, 2 components, <span class="math inline">k = 3</span></td>
+<td>92.67%</td>
+</tr>
+</tbody>
+</table>
+<p>Both reductions keep essentially all of the usable signal, and PCA at
+2 dimensions beats the full 4 dimensional data, so the two discarded
+directions were mostly noise. ISOMAP is about 3 points worse. Its
+advantage in pulling versicolor and virginica apart is offset by the
+setosa collapse, which compresses 50 flowers onto a line and distorts
+their neighbourhoods.</p>
+<h3 id="which-is-preferable">Which is preferable</h3>
+<p>PCA, for this dataset. ISOMAP is built for data lying on a curved
+surface, and Iris does not. 92.46% of its variance is on a single
+straight axis, so there is no curvature to exploit. What ISOMAP finds
+instead is the gap between setosa and the rest, which PCA had already
+found, and it pays for that with a disconnected graph needing repair
+before the method can run at all. Raising <span
+class="math inline">k</span> would fix the graph, but the handout asks
+for <span class="math inline">k = 3</span>, and the point stands either
+way. On data this close to linear the extra machinery buys nothing, and
+ISOMAP would only be the better choice where the important structure is
+genuinely curved.</p>
+<h2 id="appendix-hand-work">Appendix: Hand work</h2>
+<figure>
+<img src="media/part1-by-hand.jpeg"
+alt="Part 1 worked by hand: centering, the covariance matrix, both eigenvalues and eigenvectors, and the two reconstruction errors" />
+<figcaption aria-hidden="true">Part 1 worked by hand: centering, the
+covariance matrix, both eigenvalues and eigenvectors, and the two
+reconstruction errors</figcaption>
+</figure>
+    </main>
+  </body>
+</html>
