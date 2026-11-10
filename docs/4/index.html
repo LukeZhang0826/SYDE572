@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SYDE 572 - Assignment 4 | SYDE 572</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+<script defer=""
+src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+</script>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+  </head>
+  <body>
+<nav class="nav" aria-label="Assignments">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../">SYDE 572</a>
+    <ul class="nav-links">
+      <li><a href="../1/">Assignment 1</a></li>
+      <li><a href="../2/">Assignment 2</a></li>
+      <li><a href="../3/">Assignment 3</a></li>
+      <li><a href="../4/" aria-current="page">Assignment 4</a></li>
+      <li><span aria-disabled="true">Assignment 5</span></li>
+      <li class="nav-external"><a href="https://github.com/LukeZhang0826/SYDE572">GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>
+    <main>
+      <h1>SYDE 572 - Assignment 4</h1>
+      <p class="subtitle">Text classification with Naive Bayes</p>
+      <p class="byline">Luke
+Zhang<span class="byline-sep">|</span><a href="https://lukeypookster.com/SYDE572/4/">lukeypookster.com/SYDE572/4/</a><span class="byline-sep">|</span><a href="https://github.com/LukeZhang0826/SYDE572">github.com/LukeZhang0826/SYDE572</a></p>
+      <nav class="toc" aria-label="Contents">
+<ul>
+<li><a href="#naive-bayes" id="toc-naive-bayes">Naive Bayes</a></li>
+<li><a href="#the-review-data" id="toc-the-review-data">The review
+data</a></li>
+<li><a href="#part-1-estimating-the-parameters"
+id="toc-part-1-estimating-the-parameters">Part 1: Estimating the
+parameters</a></li>
+<li><a href="#part-2-scoring-a-document"
+id="toc-part-2-scoring-a-document">Part 2: Scoring a document</a></li>
+<li><a href="#part-3-classifying" id="toc-part-3-classifying">Part 3:
+Classifying</a></li>
+<li><a href="#part-4-evaluation" id="toc-part-4-evaluation">Part 4:
+Evaluation</a></li>
+<li><a href="#part-5-error-analysis" id="toc-part-5-error-analysis">Part
+5: Error analysis</a></li>
+</ul>
+      </nav>
+<p>This assignment builds a sentiment classifier for customer reviews.
+You hand it a pile of reviews that are already marked positive or
+negative, it counts words, and then it guesses the sentiment of reviews
+it has never seen.</p>
+<h2 id="naive-bayes">Naive Bayes</h2>
+<p>The idea is to pick whichever label makes the review you are looking
+at most likely. Bayes’ rule gives</p>
+<p><span class="math display">P(\text{label} \mid \text{words}) \propto
+P(\text{label}) \cdot P(\text{words} \mid \text{label})</span></p>
+<p><span class="math inline">P(\text{label})</span> is the
+<strong>prior</strong>, which is just how common that label is before
+you read a single word. <span class="math inline">P(\text{words} \mid
+\text{label})</span> is the <strong>likelihood</strong>, how likely this
+exact bag of words is if the review really is that label.</p>
+<p>The naive part is pretending the words are independent of each other
+once you know the label. That is clearly false, since “not” sitting in
+front of “good” changes what “good” means, but it lets you write the
+likelihood as one factor per word:</p>
+<p><span class="math display">P(\text{words} \mid \text{label}) =
+\prod_{w \in \text{doc}} P(w \mid \text{label})</span></p>
+<p>Two things break if you implement that literally.</p>
+<p>The first is underflow. Reviews here average 150 words, so you end up
+multiplying 150 numbers that are all smaller than 0.001, and floating
+point rounds the result to exactly zero. Taking the logarithm fixes it,
+because <span class="math inline">\log(ab) = \log a + \log b</span>, so
+the product becomes a sum and the numbers stay in a sane range. Every
+probability in my model is stored as a log.</p>
+<p>The second is zeros. If a word never showed up in the positive
+reviews, <span class="math inline">P(w \mid \text{pos})</span> is zero,
+and one zero factor drags the entire product to zero no matter how
+positive the other 149 words were. The fix is
+<strong>smoothing</strong>: pretend you saw every word <span
+class="math inline">\alpha</span> extra times before you started
+counting.</p>
+<p><span class="math display">P(w \mid c) = \frac{\text{count}(w, c) +
+\alpha}{\left(\sum_{w&#39;} \text{count}(w&#39;, c)\right) + \alpha
+|V|}</span></p>
+<p><span class="math inline">|V|</span> is the vocabulary size, the
+number of distinct words in the training set, and it shows up on the
+bottom so the probabilities over all words still add to 1. I used <span
+class="math inline">\alpha = 1</span>, which is the usual starting
+point.</p>
+<h2 id="the-review-data">The review data</h2>
+<p>The data is 11,914 customer reviews from Blitzer et al. (2007),
+covering six topics (books, camera, dvd, health, music, software). One
+review per line, already lowercased and split into words, with
+punctuation separated out as its own token. A line looks like this,
+wrapped here to fit the page:</p>
+<pre><code>music neg 241.txt i bought this album because i loved the
+title song . it &#39;s such a great song , how bad can the rest
+of the album be , right ? ...</code></pre>
+<p>Column 0 is the topic, column 1 is the sentiment label, column 2 is a
+file id, and everything after that is the review. I only need columns 1
+and 3 onward, so <code>read_documents</code> keeps <code>words[1]</code>
+as the label and <code>words[3:]</code> as the document.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_documents(doc_file):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    docs <span class="op">=</span> []</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> []</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(doc_file, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> f:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            words <span class="op">=</span> line.strip().split()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            docs.append(words[<span class="dv">3</span>:])</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            labels.append(words[<span class="dv">1</span>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> docs, labels</span></code></pre></div>
+<p>The classes are nearly balanced, 6000 positive against 5914 negative.
+First 80% of the file goes to training (9531 reviews) and the last 20%
+to testing (2383). The file is already shuffled, so slicing it in order
+is fine.</p>
+<h2 id="part-1-estimating-the-parameters">Part 1: Estimating the
+parameters</h2>
+<p><code>train_nb</code> walks the training reviews once and builds a
+<code>Counter</code> of word counts per label, plus the vocabulary as a
+set. Then for each label it computes the log prior and the smoothed log
+probability of every word in the vocabulary.</p>
+<p>It returns a dict with three keys: <code>labels</code>,
+<code>log_prior</code>, and <code>log_likelihood</code>. Nothing else
+downstream needs the raw counts, so they stay inside the function.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_nb(documents, labels, alpha<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    counts <span class="op">=</span> {}                      <span class="co"># label -&gt; Counter of word -&gt; count</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    doc_counts <span class="op">=</span> Counter(labels)     <span class="co"># label -&gt; how many reviews have it</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    vocab <span class="op">=</span> <span class="bu">set</span>()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> doc, label <span class="kw">in</span> <span class="bu">zip</span>(documents, labels):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        counts.setdefault(label, Counter()).update(doc)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        vocab.update(doc)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    n_docs <span class="op">=</span> <span class="bu">len</span>(documents)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> <span class="bu">len</span>(vocab)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    log_prior <span class="op">=</span> {}</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    log_likelihood <span class="op">=</span> {}</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> label, c <span class="kw">in</span> counts.items():</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        log_prior[label] <span class="op">=</span> np.log(doc_counts[label] <span class="op">/</span> n_docs)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        total <span class="op">=</span> <span class="bu">sum</span>(c.values()) <span class="op">+</span> alpha <span class="op">*</span> v</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        log_likelihood[label] <span class="op">=</span> {w: np.log((c[w] <span class="op">+</span> alpha) <span class="op">/</span> total) <span class="cf">for</span> w <span class="kw">in</span> vocab}</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;labels&quot;</span>: <span class="bu">list</span>(counts),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;log_prior&quot;</span>: log_prior,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;log_likelihood&quot;</span>: log_likelihood,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<p>The vocabulary came out to 52,392 distinct words, with about 715k
+word tokens in the negative class and 721k in the positive. Two quick
+checks that the counting worked:</p>
+<ul>
+<li><code>np.exp(model["log_prior"]["pos"])</code> is 0.5086, which
+matches 6000 positive reviews out of 11,914.</li>
+<li><code>model["log_likelihood"]["pos"]["great"]</code> is -5.953, a
+plain negative number, so nothing blew up.</li>
+</ul>
+<h2 id="part-2-scoring-a-document">Part 2: Scoring a document</h2>
+<p><code>score_doc_label(document, label, model)</code> starts at the
+log prior for that label and adds the log likelihood of each word in the
+document. That sum is the log of the whole Naive Bayes product.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> score_doc_label(document, label, model):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    log_prob <span class="op">=</span> model[<span class="st">&quot;log_prior&quot;</span>][label]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    likelihood <span class="op">=</span> model[<span class="st">&quot;log_likelihood&quot;</span>][label]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> word <span class="kw">in</span> document:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> word <span class="kw">in</span> likelihood:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            log_prob <span class="op">+=</span> likelihood[word]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_prob</span></code></pre></div>
+<p>Words that are not in the vocabulary get skipped. They appeared zero
+times for every label, so they would contribute the same amount to each
+label’s score and cannot change which one wins. Skipping them also means
+the dictionary lookup never raises a <code>KeyError</code>.</p>
+<h3 id="sanity-check-1">Sanity check 1</h3>
+<p>Scoring the one word documents <code>["great"]</code> and
+<code>["bad"]</code>, converted back to probabilities with
+<code>np.exp</code>:</p>
+<table>
+<thead>
+<tr>
+<th>document</th>
+<th>neg</th>
+<th>pos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>["great"]</code></td>
+<td>0.000528</td>
+<td>0.001321</td>
+</tr>
+<tr>
+<td><code>["bad"]</code></td>
+<td>0.000455</td>
+<td>0.000172</td>
+</tr>
+</tbody>
+</table>
+<p>“great” is about 2.5 times more likely under positive, “bad” is about
+2.6 times more likely under negative, and both land in the 0.001 to
+0.002 range the handout predicted. That is the expected behaviour.</p>
+<h3 id="sanity-check-2">Sanity check 2</h3>
+<p><code>["a", "top-quality", "performance"]</code> returns -13.49 for
+negative and -12.81 for positive. No crash. “top-quality” is genuinely
+absent from the training vocabulary, so this does exercise the skip
+branch, and the other two words carry the decision.</p>
+<h2 id="part-3-classifying">Part 3: Classifying</h2>
+<p><code>classify_nb</code> scores the document under every label and
+returns whichever one scored highest. It tracks the best score in a
+variable seeded to negative infinity so the first label always wins the
+first comparison.</p>
+<p><code>classify_documents</code> runs that over a list of documents
+and returns the list of guesses.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_nb(document, model):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    best_label <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    best_score <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> label <span class="kw">in</span> model[<span class="st">&quot;labels&quot;</span>]:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> score_doc_label(document, label, model)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> score <span class="op">&gt;</span> best_score:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            best_label <span class="op">=</span> label</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            best_score <span class="op">=</span> score</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_label</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_documents(docs, model):</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [classify_nb(doc, model) <span class="cf">for</span> doc <span class="kw">in</span> docs]</span></code></pre></div>
+<h2 id="part-4-evaluation">Part 4: Evaluation</h2>
+<p><code>accuracy</code> zips the true labels against the guesses,
+counts the positions where they match, and divides by the total.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> accuracy(true_labels, guessed_labels):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    correct <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t, g <span class="kw">in</span> <span class="bu">zip</span>(true_labels, guessed_labels):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t <span class="op">==</span> g:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            correct <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> correct <span class="op">/</span> <span class="bu">len</span>(true_labels)</span></code></pre></div>
+<p><strong>On the 2383 test reviews the classifier gets 0.8154, so about
+81.5% correct.</strong> For reference, always guessing the more common
+label would get about 50%, so the model is doing real work.</p>
+<h3 id="where-the-errors-sit">Where the errors sit</h3>
+<figure>
+<img src="media/confusion-matrix.png"
+alt="Counts of actual label against guessed label on the 2383 test reviews" />
+<figcaption aria-hidden="true">Counts of actual label against guessed
+label on the 2383 test reviews</figcaption>
+</figure>
+<p>A <strong>confusion matrix</strong> is a table of actual label
+against guessed label, so the diagonal is the correct answers and
+everything off it is a mistake. 1036 + 907 = 1943 right out of 2383, and
+the two error cells are not even: 246 positive reviews got called
+negative against 194 negatives called positive. So the classifier leans
+slightly negative, which lines up with the error analysis below, where
+every example it was most confidently wrong about was a positive
+review.</p>
+<h3 id="picking-alpha">Picking alpha</h3>
+<figure>
+<img src="media/accuracy-vs-alpha.png"
+alt="Test accuracy against the smoothing parameter, log scale on the x axis" />
+<figcaption aria-hidden="true">Test accuracy against the smoothing
+parameter, log scale on the x axis</figcaption>
+</figure>
+<p>Retraining at a few values of <span class="math inline">\alpha</span>
+and scoring each one on the test set gives a curve with a clear shape.
+Tiny values like 0.01 do badly (77.2%) because barely-smoothed counts
+let a single rare word dominate the sum. Accuracy climbs to a flat peak
+around <span class="math inline">\alpha = 1</span> to <span
+class="math inline">5</span>, topping out at 81.8%, then falls off again
+past 10 as the smoothing swamps the actual counts and every word starts
+to look equally likely under both labels. The default <span
+class="math inline">\alpha = 1</span> is within 0.2 points of the best
+value, so I left it there.</p>
+<h2 id="part-5-error-analysis">Part 5: Error analysis</h2>
+<p>I pulled every test review the classifier got wrong, kept the ones
+under 40 words so they are readable, and sorted by margin. Margin here
+means the wrong label’s score minus the right label’s score, in log
+units, so a big margin is the classifier being confidently wrong instead
+of narrowly wrong.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>short_errors <span class="op">=</span> []</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(test_docs)):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    doc <span class="op">=</span> test_docs[i]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    true_label <span class="op">=</span> test_labels[i]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    guess_label <span class="op">=</span> guesses[i]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> true_label <span class="op">==</span> guess_label <span class="kw">or</span> <span class="bu">len</span>(doc) <span class="op">&gt;</span> <span class="dv">40</span>:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    margin <span class="op">=</span> score_doc_label(doc, guess_label, model) <span class="op">-</span> score_doc_label(doc, true_label, model)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    short_errors.append((margin, i))</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>short_errors.sort(reverse<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>The top three:</p>
+<p><strong>Margin 8.09, actually positive, guessed negative</strong></p>
+<blockquote>
+<p>“i bought zonealarm internet security suite for the included
+zonealarm pro firewall ( it cost much less that way ) . if i did n’t
+already have norton antivirus , i ’d use the antivirus , too”</p>
+</blockquote>
+<p>There is almost no sentiment vocabulary in here at all. It is a
+factual description of a purchase, and the only strong signal is
+<code>n't</code>, which shows up constantly in negative reviews. The
+writer is being positive by saying they would happily use the antivirus
+too, but that requires following a hypothetical across a whole sentence,
+and a word counter cannot do that.</p>
+<p><strong>Margin 5.48, actually positive, guessed negative</strong></p>
+<blockquote>
+<p>“this movie is a reallllllllllllly scary movie . the only part i did
+n’t like was that pervert mikks in the beginning . be warned of
+grossness . that is all i need to say”</p>
+</blockquote>
+<p><code>scary</code>, <code>pervert</code>, <code>grossness</code> and
+<code>warned</code> are all negative words in general, but in a review
+of a horror movie “scary” is the compliment. The model has no idea what
+topic it is reading, so it cannot know that. On top of that, “the only
+part i did n’t like” is a positive construction built entirely out of
+negative words.</p>
+<p><strong>Margin 4.73, actually positive, guessed negative</strong></p>
+<blockquote>
+<p>“excellent service , and the product worked extremely well . the only
+criticism i would have is the cost of postage . it was ridiculous , the
+product came in a big parcel , and inside was a dvd .”</p>
+</blockquote>
+<p>This one has strong positive words at the front
+(<code>excellent</code>, <code>worked</code>, <code>well</code>) but
+then spends most of its length on the shipping complaint, with
+<code>criticism</code> and <code>ridiculous</code> in it. Bag of words
+has no sense of proportion or structure, so a short bit of praise
+followed by a long gripe looks like a negative review even though the
+gripe is explicitly flagged as the only problem.</p>
+<p>The common thread is negation and context. All three are positive
+reviews read as negative, and in every case the words themselves lean
+negative while the sentence structure around them does not. The Pang et
+al. (2002) negation trick, tagging every word after a “not” or “n’t”
+until the end of the sentence, would probably help on the first two.
+Bigrams would catch “did n’t like” as a single feature instead of three
+unrelated ones.</p>
+    </main>
+  </body>
+</html>

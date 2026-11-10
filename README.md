@@ -9,7 +9,7 @@ My assignments for SYDE 572 at the University of Waterloo, Fall 2026. The write-
 | 1 | Shortest distance from a point to a function, and fitting to an equation | [Assignment 1](https://lukeypookster.com/SYDE572/1/) |
 | 2 | Linear basis function regression with polynomial and Gaussian bases | [Assignment 2](https://lukeypookster.com/SYDE572/2/) |
 | 3 | Principal component analysis and ISOMAP on the Iris dataset | [Assignment 3](https://lukeypookster.com/SYDE572/3/) |
-| 4 | Not posted yet | |
+| 4 | Text classification with Naive Bayes | [Assignment 4](https://lukeypookster.com/SYDE572/4/) |
 | 5 | Not posted yet | |
 
 ## Layout
