@@ -12,3 +12,6 @@ __pycache__/
 # Each notebook now lives beside the page it illustrates, so its plots land
 # straight in assignment<n>/media/, which is the folder the site copies from and
 # is tracked. Nothing left to ignore here.
+
+# Course handout bundles, same reason as the PDFs above.
+*.zip
