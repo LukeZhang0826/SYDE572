@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SYDE 572 - Assignment 5 | SYDE 572</title>
+    <link rel="stylesheet" href="../style.css" />
+<script defer=""
+src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+</script>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+  </head>
+  <body>
+<nav class="nav" aria-label="Assignments">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../">SYDE 572</a>
+    <ul class="nav-links">
+      <li><a href="../1/">Assignment 1</a></li>
+      <li><a href="../2/">Assignment 2</a></li>
+      <li><a href="../3/">Assignment 3</a></li>
+      <li><a href="../4/">Assignment 4</a></li>
+      <li><a href="../5/" aria-current="page">Assignment 5</a></li>
+      <li class="nav-external"><a href="https://github.com/LukeZhang0826/SYDE572">GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>
+    <main>
+      <h1>SYDE 572 - Assignment 5</h1>
+      <p class="subtitle">Value iteration and Q-learning</p>
+      <p class="byline">Luke
+Zhang<span class="byline-sep">|</span><a href="https://lukeypookster.com/SYDE572/5/">lukeypookster.com/SYDE572/5/</a><span class="byline-sep">|</span><a href="https://github.com/LukeZhang0826/SYDE572">github.com/LukeZhang0826/SYDE572</a></p>
+      <nav class="toc" aria-label="Contents">
+<ul>
+<li><a href="#mdps-and-value-iteration"
+id="toc-mdps-and-value-iteration">MDPs and value iteration</a></li>
+<li><a href="#problem-1-value-iteration"
+id="toc-problem-1-value-iteration">Problem 1: Value iteration</a></li>
+<li><a href="#problem-2-q-learning"
+id="toc-problem-2-q-learning">Problem 2: Q-learning</a></li>
+</ul>
+      </nav>
+<p>This assignment uses the simple_rl library to poke at two ways of
+solving a gridworld. Problem 1 is value iteration, where the agent
+already knows exactly how the world works and just has to compute the
+best move from every square. Problem 2 is Q-learning, where the agent
+knows nothing up front and has to figure it out by wandering around and
+seeing what happens.</p>
+<h2 id="mdps-and-value-iteration">MDPs and value iteration</h2>
+<p>A <strong>Markov decision process</strong> (MDP) is the setup both
+problems live in. There is a set of states <span
+class="math inline">S</span> (here, the squares of the grid), a set of
+actions <span class="math inline">A</span> (up, down, left, right), a
+transition function <span class="math inline">P(s&#39; \mid s, a)</span>
+that says where you end up if you take action <span
+class="math inline">a</span> in state <span
+class="math inline">s</span>, a reward <span class="math inline">R(s, a,
+s&#39;)</span> you get for that move, and a discount factor <span
+class="math inline">\gamma</span> between 0 and 1.</p>
+<p>The gridworld is slippery. With probability 0.95 you go where you
+meant to, and with probability 0.05 you slide in one of the two
+perpendicular directions instead. Walking into a wall or off the edge
+leaves you where you were. Every normal square costs <span
+class="math inline">-0.1</span>, the goal gives <span
+class="math inline">+1</span>, the lava gives <span
+class="math inline">-1</span>, and both goal and lava end the
+episode.</p>
+<p>The <strong>value</strong> <span class="math inline">V(s)</span> of a
+state is the total discounted reward you expect to collect starting from
+<span class="math inline">s</span> if you play well from then on.
+<strong>Value iteration</strong> (VI) finds it by starting every state
+at 0 and repeatedly applying the Bellman backup</p>
+<p><span class="math display">V_k(s) = \max_a \sum_{s&#39;} P(s&#39;
+\mid s, a) \left( R(s, a, s&#39;) + \gamma V_{k-1}(s&#39;)
+\right)</span></p>
+<p>to every state. Each pass is one iteration. It stops when the biggest
+change in any state between two passes is smaller than a threshold <span
+class="math inline">\delta</span> (delta). The <strong>policy</strong>,
+the arrow drawn in each square, is just whichever action won the
+max.</p>
+<p><span class="math inline">\gamma</span> is how much the agent cares
+about the future. A reward <span class="math inline">t</span> steps away
+is worth <span class="math inline">\gamma^t</span> of what it would be
+worth right now, so when <span class="math inline">\gamma</span> is near
+1, it means patient and when <span class="math inline">\gamma</span> is
+near 0 means only the next step matters.</p>
+<h2 id="problem-1-value-iteration">Problem 1: Value iteration</h2>
+<h3 id="a-the-gridworld">(a) The gridworld</h3>
+<p>A 4 by 4 grid with the agent (triangle) starting bottom left, a wall
+right above it, the goal (green) in the top right and lava (red) right
+below the goal.</p>
+<figure>
+<img src="media/1a/gridworld.png"
+alt="The 4 by 4 gridworld for parts a to c, with values and policy arrows" />
+<figcaption aria-hidden="true">The 4 by 4 gridworld for parts a to c,
+with values and policy arrows</figcaption>
+</figure>
+<h3 id="b-changing-gamma">(b) Changing gamma</h3>
+<p>I kept <span class="math inline">\delta</span> at the default of
+0.0001 and ran <span class="math inline">\gamma</span> at 0.9, 0.7, 0.1
+and 0.001.</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\gamma</span></th>
+<th>iterations</th>
+<th>value at start</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.9</td>
+<td>7</td>
+<td>0.08</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>7</td>
+<td>-0.15</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>4</td>
+<td>-0.11</td>
+</tr>
+<tr>
+<td>0.001</td>
+<td>3</td>
+<td>-0.1</td>
+</tr>
+</tbody>
+</table>
+<div class="gallery">
+<figure>
+<img src="media/1b/g-0.9.png" alt="gamma = 0.9" />
+<figcaption aria-hidden="true">gamma = 0.9</figcaption>
+</figure>
+<figure>
+<img src="media/1b/g-0.7.png" alt="gamma = 0.7" />
+<figcaption aria-hidden="true">gamma = 0.7</figcaption>
+</figure>
+<figure>
+<img src="media/1b/g-0.1.png" alt="gamma = 0.1" />
+<figcaption aria-hidden="true">gamma = 0.1</figcaption>
+</figure>
+<figure>
+<img src="media/1b/g-0.001.png" alt="gamma = 0.001" />
+<figcaption aria-hidden="true">gamma = 0.001</figcaption>
+</figure>
+</div>
+<p><strong>(i)</strong> At 0.9 and 0.7 the policy is the same. From the
+start it goes right, up the middle columns and then right along the top
+row into the goal, which is 6 moves and a shortest path. It never goes
+up the right column, since that walks straight into the lava, and the
+two squares in the bottom right point left to steer away from it. So it
+does take a shortest path, but out of all the shortest paths it picks
+one that does not go near the lava. The only thing that changes between
+0.9 and 0.7 is the values, which drop off faster as you get further from
+the goal. At 0.7 the start square is actually negative, because the
+<span class="math inline">+1</span> is discounted so hard by the time it
+gets back there that the step costs win.</p>
+<p>At 0.1 and 0.001 it falls apart. Only the square right next to the
+goal (0.85) knows the goal is there. Every other square has a value of
+about <span class="math inline">-0.1</span>, which is just the cost of
+one step, because anything two or more steps away gets multiplied by
+<span class="math inline">\gamma^2 \approx 0.01</span> or less and
+basically disappears. Since every action looks equally bad from those
+squares, the arrows are arbitrary, and from the start square it points
+left into the edge of the grid.</p>
+<p>So <span class="math inline">\gamma</span> sets how far ahead the
+agent looks. With a high <span class="math inline">\gamma</span> the
+reward at the goal spreads back across the whole grid and the agent will
+put up with step costs to get there. With a tiny <span
+class="math inline">\gamma</span> the agent only sees one step ahead, so
+unless it is already next to the goal it has no reason to move toward
+it. It also takes fewer iterations, since there is less future to
+propagate back.</p>
+<p><strong>(ii)</strong> With <span class="math inline">\gamma =
+1</span> it converges in 8 iterations.</p>
+<figure>
+<img src="media/1b-gamma1/g-1.png" alt="gamma = 1" />
+<figcaption aria-hidden="true">gamma = 1</figcaption>
+</figure>
+<p>The convergence guarantee for VI comes from <span
+class="math inline">\gamma &lt; 1</span> shrinking the error every pass.
+At <span class="math inline">\gamma = 1</span> that is gone, but it
+still converges here because the goal and lava are terminal. Every
+square can reach one of them in a few steps, so the total reward along
+any path is a finite sum of step costs plus the terminal reward, and the
+values settle after the information from the goal has had time to travel
+back to the start. The values come out as roughly <span
+class="math inline">1 - 0.11</span> per step away from the goal, which
+is just the step costs being added up undiscounted.</p>
+<p>To make it not converge, take away the way out. If you wall the agent
+off from both the goal and the lava (like part d), every step costs
+<span class="math inline">-0.1</span> forever and nothing ever ends the
+episode, so with <span class="math inline">\gamma = 1</span> the value
+of the trapped squares goes down by 0.1 every single iteration and never
+settles. It would run until the 500 iteration cap.</p>
+<h3 id="c-changing-delta">(c) Changing delta</h3>
+<p>Same grid, <span class="math inline">\gamma</span> at the default of
+0.95, and <span class="math inline">\delta</span> from 1 down to
+0.0001.</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\delta</span></th>
+<th>iterations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>6</td>
+</tr>
+<tr>
+<td>0.001</td>
+<td>7</td>
+</tr>
+<tr>
+<td>0.0001</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<div class="gallery">
+<figure>
+<img src="media/1c/d-1.png" alt="delta = 1" />
+<figcaption aria-hidden="true">delta = 1</figcaption>
+</figure>
+<figure>
+<img src="media/1c/d-0.0001.png" alt="delta = 0.0001" />
+<figcaption aria-hidden="true">delta = 0.0001</figcaption>
+</figure>
+</div>
+<p>Smaller <span class="math inline">\delta</span> means more
+iterations, but not many more. Each time <span
+class="math inline">\delta</span> gets 10 times tighter it only adds 1
+or 2 iterations. That is because the error shrinks by a factor of about
+<span class="math inline">\gamma</span> every pass, so getting it 10
+times smaller costs a fixed number of extra passes, a logarithmic
+relationship. It is also a tiny grid with nearby terminal states, so
+once the goal value has spread to the start in about 6 passes there is
+not much left to change.</p>
+<p><span class="math inline">\delta = 1</span> is way too loose. It
+stops after one pass, when only the squares closest to the goal have
+been updated, so the rest of the grid is still at <span
+class="math inline">-0.1</span> and the policy at the start points left
+into the wall. By <span class="math inline">\delta = 0.0001</span> it
+matches the picture from part a.</p>
+<h3 id="d-a-trapped-agent">(d) A trapped agent</h3>
+<p>Agent at (1,1), walls at (1,2), (2,1) and (2,2) so it is boxed into
+the corner, goal in the top right, everything else default (<span
+class="math inline">\gamma = 0.95</span>, <span
+class="math inline">\delta = 0.0001</span>). It took 136 iterations.</p>
+<figure>
+<img src="media/1d/g-0.95.png"
+alt="The agent boxed into the bottom left corner" />
+<figcaption aria-hidden="true">The agent boxed into the bottom left
+corner</figcaption>
+</figure>
+<p><strong>(i)</strong> No. Every square other than the start still has
+a normal looking value (0.47 to 0.89) and a sensible policy pointing at
+the goal. VI does not care where the agent starts. It sweeps every state
+in the MDP, and from those squares the goal is reachable, so they get
+real values. The only state that is cut off is the start itself, and it
+gets <span class="math inline">-2.0</span>.</p>
+<p><strong>(ii)</strong> Yes, it converges to <span
+class="math inline">-2</span>. In the start square every action,
+including the 0.05 slips, hits a wall or the edge, so the agent stays
+put with probability 1 and collects <span
+class="math inline">-0.1</span>. The backup for that state collapses
+to</p>
+<p><span class="math display">V_k(s_0) = -0.1 + 0.95\,
+V_{k-1}(s_0)</span></p>
+<p>Starting from <span class="math inline">V_0 = 0</span> that gives
+<span class="math inline">-0.1</span>, then <span
+class="math inline">-0.195</span>, then <span
+class="math inline">-0.285</span>, and in general</p>
+<p><span class="math display">V_k(s_0) = -0.1 \sum_{i=0}^{k-1} 0.95^i =
+-0.1 \cdot \frac{1 - 0.95^k}{1 - 0.95} = -2\,(1 - 0.95^k)</span></p>
+<p>As <span class="math inline">k \to \infty</span>, <span
+class="math inline">0.95^k \to 0</span> and <span class="math inline">V
+\to -2</span>. You can also get it straight from the fixed point, <span
+class="math inline">V = -0.1 + 0.95V</span>, so <span
+class="math inline">V = -0.1/0.05 = -2</span>.</p>
+<p>That also explains the 136 iterations. The change at pass <span
+class="math inline">k</span> is <span class="math inline">0.1 \cdot
+0.95^{k-1}</span>, and that first drops under <span
+class="math inline">\delta = 0.0001</span> when <span
+class="math inline">k - 1 &gt; \ln(0.001)/\ln(0.95) \approx
+134.7</span>, so at <span class="math inline">k = 136</span>. Every
+other square converges way earlier, the trapped one is what keeps it
+running.</p>
+<h3 id="e-bigger-grids">(e) Bigger grids</h3>
+<p>Default everything, just changing the width and height.</p>
+<table>
+<thead>
+<tr>
+<th>grid</th>
+<th>states</th>
+<th>iterations</th>
+<th>time (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5 x 5</td>
+<td>25</td>
+<td>7</td>
+<td>0.285</td>
+</tr>
+<tr>
+<td>10 x 10</td>
+<td>100</td>
+<td>13</td>
+<td>0.904</td>
+</tr>
+<tr>
+<td>15 x 15</td>
+<td>225</td>
+<td>19</td>
+<td>1.560</td>
+</tr>
+<tr>
+<td>20 x 20</td>
+<td>400</td>
+<td>29</td>
+<td>2.874</td>
+</tr>
+<tr>
+<td>25 x 25</td>
+<td>625</td>
+<td>40</td>
+<td>4.840</td>
+</tr>
+</tbody>
+</table>
+<div class="gallery">
+<figure>
+<img src="media/1e/wH-10.png" alt="10 x 10" />
+<figcaption aria-hidden="true">10 x 10</figcaption>
+</figure>
+<figure>
+<img src="media/1e/wH-25.png" alt="25 x 25" />
+<figcaption aria-hidden="true">25 x 25</figcaption>
+</figure>
+</div>
+<p><strong>(i)</strong> Time goes up with the number of states, and
+faster than the iteration count alone would explain, since bigger grids
+need both more iterations (7 to 40) and more work per iteration. Going
+from 25 to 625 states is 25 times as many states and about 17 times the
+time. Part of the reason it is not more is a fixed overhead of about 0.2
+s, which is what every 4 by 4 run in parts b and c took no matter
+what.</p>
+<p><strong>(ii)</strong> One iteration runs the backup once for every
+state. For each of the <span class="math inline">|S|</span> states it
+tries each of the <span class="math inline">|A|</span> actions, and for
+each action it sums over every possible next state <span
+class="math inline">s&#39;</span>, which is another <span
+class="math inline">|S|</span> terms, each constant time since <span
+class="math inline">V_{k-1}(s&#39;)</span> is a lookup. That gives</p>
+<p><span class="math display">O(|S| \cdot |A| \cdot |S|) = O(|S|^2
+|A|)</span></p>
+<p>per iteration.</p>
+<p><strong>(iii)</strong> They do not match. If one iteration were
+really <span class="math inline">O(|S|^2)</span>, going from 25 to 625
+states would make each iteration 625 times slower, before even counting
+the extra iterations, and the measured time only went up 17 times. The
+<span class="math inline">|S|^2</span> comes from the inner sum over
+every <span class="math inline">s&#39;</span>, but in a gridworld almost
+all of those terms are zero. From any square you can only land in the
+square you aimed for, one of the two perpendicular ones, or stay put, so
+there are at most a handful of <span class="math inline">s&#39;</span>
+with nonzero probability. The library only keeps those, so the inner sum
+is effectively constant and one iteration acts like <span
+class="math inline">O(|S||A|)</span>. The big O in (ii) is the worst
+case for an MDP where any state can lead to any other, the gridworld is
+a lot sparser than that.</p>
+<h2 id="problem-2-q-learning">Problem 2: Q-learning</h2>
+<p><strong>Q-learning</strong> learns a value for each state and action
+pair, <span class="math inline">Q(s, a)</span>, the expected discounted
+reward of taking <span class="math inline">a</span> in <span
+class="math inline">s</span> and playing well after. It does not need
+<span class="math inline">P</span> or <span
+class="math inline">R</span>. The agent just acts, sees the reward <span
+class="math inline">r</span> and the next state <span
+class="math inline">s&#39;</span>, and nudges its estimate toward what
+it saw:</p>
+<p><span class="math display">Q(s, a) \leftarrow (1 - \alpha)\, Q(s, a)
++ \alpha \left( r + \gamma \max_{a&#39;} Q(s&#39;, a&#39;)
+\right)</span></p>
+<p><span class="math inline">\alpha</span> (alpha) is the
+<strong>learning rate</strong>, how far each new sample moves the
+estimate. <span class="math inline">\epsilon</span> (epsilon) controls
+<strong>exploration</strong>: with probability <span
+class="math inline">\epsilon</span> the agent takes a random action,
+otherwise it takes the action with the highest <span
+class="math inline">Q</span>. Every <span class="math inline">Q</span>
+starts at 0.</p>
+<p>The defaults are a 10 by 10 grid with some walls and lava, goal at
+(10, 8), <span class="math inline">\gamma = 0.95</span>, <span
+class="math inline">\alpha = 0.2</span>, <span
+class="math inline">\epsilon = 0.1</span>, uniform exploration. Each run
+is 5 instances of 60 episodes, 200 steps max per episode, and the plots
+show cumulative reward against a random agent. Every step costs <span
+class="math inline">-0.1</span>, so cumulative reward always goes down,
+and the flatter the line, the faster the agent is reaching the goal.</p>
+<h3 id="a-value-iteration-on-gym-problems">(a) Value iteration on Gym
+problems</h3>
+<p>No, VI would not work on CartPole, MountainCar or Atari. VI needs two
+things those do not give you. It needs the model, <span
+class="math inline">P(s&#39; \mid s, a)</span> and <span
+class="math inline">R</span>, written down for every state and action,
+but in Gym you only get to step the environment and see what comes back.
+And it needs to loop over every state on every pass. CartPole and
+MountainCar have continuous states (positions and velocities), so there
+are infinitely many, and Atari states are raw screen images, so the
+number of possible states is astronomically large.</p>
+<p>Q-learning gets around both. It is <strong>model-free</strong>, it
+learns from the samples <span class="math inline">(s, a, r,
+s&#39;)</span> it actually experiences, so it never needs <span
+class="math inline">P</span> or <span class="math inline">R</span>. It
+also only updates states the agent actually visits, so it never has to
+enumerate the whole state space, and because the update is just a target
+to move toward, the table of <span class="math inline">Q</span> values
+can be swapped for a function approximator like a neural network that
+generalizes across similar states, which is how it gets used on
+Atari.</p>
+<h3 id="b-changing-epsilon">(b) Changing epsilon</h3>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\epsilon</span></th>
+<th>Q-learning</th>
+<th>random</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>-501.0</td>
+<td>-568.3</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>-490.5</td>
+<td>-580.0</td>
+</tr>
+<tr>
+<td>0.1 (default, from part d)</td>
+<td>-483.8</td>
+<td>-576.5</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>-348.7</td>
+<td>-569.1</td>
+</tr>
+<tr>
+<td>0.99</td>
+<td>-538.0</td>
+<td>-591.2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>-582.5</td>
+<td>-576.9</td>
+</tr>
+</tbody>
+</table>
+<div class="gallery">
+<figure>
+<img src="media/2b/ep-0.01.png" alt="epsilon = 0.01" />
+<figcaption aria-hidden="true">epsilon = 0.01</figcaption>
+</figure>
+<figure>
+<img src="media/2b/ep-0.5.png" alt="epsilon = 0.5" />
+<figcaption aria-hidden="true">epsilon = 0.5</figcaption>
+</figure>
+<figure>
+<img src="media/2b/ep-0.99.png" alt="epsilon = 0.99" />
+<figcaption aria-hidden="true">epsilon = 0.99</figcaption>
+</figure>
+</div>
+<p>The best was in the middle at 0.5, where the Q-learning line pulls
+away from random early and is clearly flattening by the end. Low <span
+class="math inline">\epsilon</span> (0.01) still beats random but learns
+slowly, because it mostly does whatever it currently thinks is best and
+rarely tries anything new, so it is slow to discover the route to the
+goal. High <span class="math inline">\epsilon</span> (0.99) is barely
+better than random, because even though it is learning good <span
+class="math inline">Q</span> values in the background it almost never
+actually uses them. Over only 60 episodes on a grid this size, a lot of
+exploring paid off.</p>
+<p><strong>(i)</strong> At <span class="math inline">\epsilon = 1</span>
+the agent always picks a random action, so it is literally a random
+agent. It still updates its <span class="math inline">Q</span> values,
+it just never acts on them, so its curve lands right on top of the
+random one (-582.5 vs -576.9).</p>
+<figure>
+<img src="media/2b/ep-1.png" alt="epsilon = 1" />
+<figcaption aria-hidden="true">epsilon = 1</figcaption>
+</figure>
+<p><strong>(ii)</strong> At <span class="math inline">\epsilon =
+0</span> it always takes the greedy action. It tracks random for the
+first 30 or so episodes and then starts slowly pulling ahead, ending at
+-501.</p>
+<figure>
+<img src="media/2b/ep-0.png" alt="epsilon = 0" />
+<figcaption aria-hidden="true">epsilon = 0</figcaption>
+</figure>
+<p>It still learns at all because every <span
+class="math inline">Q</span> starts at 0 and every step costs <span
+class="math inline">-0.1</span>. Any action it tries gets pushed below
+0, so the actions it has not tried yet look better by comparison and the
+greedy choice ends up trying them. That gives it some exploration for
+free, but it is a slow systematic kind, and once it has a path that
+works it has no reason to look for a better one, so it gets stuck on
+whatever it found first.</p>
+<h3 id="c-changing-alpha">(c) Changing alpha</h3>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\alpha</span></th>
+<th>Q-learning</th>
+<th>random</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.01</td>
+<td>-713.5</td>
+<td>-594.7</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>-365.4</td>
+<td>-599.1</td>
+</tr>
+<tr>
+<td>0.99</td>
+<td>-277.9</td>
+<td>-562.4</td>
+</tr>
+</tbody>
+</table>
+<div class="gallery">
+<figure>
+<img src="media/2c/a-0.01.png" alt="alpha = 0.01" />
+<figcaption aria-hidden="true">alpha = 0.01</figcaption>
+</figure>
+<figure>
+<img src="media/2c/a-0.5.png" alt="alpha = 0.5" />
+<figcaption aria-hidden="true">alpha = 0.5</figcaption>
+</figure>
+<figure>
+<img src="media/2c/a-0.99.png" alt="alpha = 0.99" />
+<figcaption aria-hidden="true">alpha = 0.99</figcaption>
+</figure>
+</div>
+<p>Bigger <span class="math inline">\alpha</span> was better across the
+board, and <span class="math inline">\alpha = 0.01</span> was actually
+worse than random. With <span class="math inline">\alpha = 0.01</span>
+each update only moves <span class="math inline">Q</span> 1% of the way
+toward the new sample, so 60 episodes is nowhere near enough to learn
+anything, and the agent spends the whole time acting greedily on <span
+class="math inline">Q</span> values that are still basically 0 plus
+noise. That makes it worse than random, since it keeps committing to the
+same bad moves instead of at least wandering around.</p>
+<p><span class="math inline">\alpha = 0.99</span> basically replaces the
+old estimate with the latest sample every time. That is normally risky
+in a noisy environment, since one unlucky slip overwrites everything,
+but here the world is 95% deterministic, so the latest sample is almost
+always right and trusting it fully is the fastest way to learn.</p>
+<h3 id="d-uniform-vs-softmax-exploration">(d) Uniform vs softmax
+exploration</h3>
+<p><strong>Uniform</strong> exploration is the <span
+class="math inline">\epsilon</span>-greedy rule above, where exploring
+means picking any action with equal chance. <strong>Softmax</strong>
+exploration picks every action with probability proportional to <span
+class="math inline">e^{Q(s,a)/\beta}</span>, with <span
+class="math inline">\beta = 0.2</span> in the library, so better actions
+get picked more often but worse ones still get tried sometimes.</p>
+<table>
+<thead>
+<tr>
+<th>exploration</th>
+<th>Q-learning</th>
+<th>random</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uniform</td>
+<td>-483.8</td>
+<td>-576.5</td>
+</tr>
+<tr>
+<td>softmax</td>
+<td>-573.4</td>
+<td>-577.0</td>
+</tr>
+</tbody>
+</table>
+<div class="gallery">
+<figure>
+<img src="media/2d/ex-uniform.png" alt="Uniform exploration" />
+<figcaption aria-hidden="true">Uniform exploration</figcaption>
+</figure>
+<figure>
+<img src="media/2d/ex-softmax.png" alt="Softmax exploration" />
+<figcaption aria-hidden="true">Softmax exploration</figcaption>
+</figure>
+</div>
+<p>Uniform clearly beats random by the end, softmax barely does. Early
+on all the <span class="math inline">Q</span> values are near 0 and
+close together, so <span class="math inline">e^{Q/\beta}</span> is about
+the same for every action and softmax is basically choosing at random.
+It only starts favouring good actions once their <span
+class="math inline">Q</span> values are clearly separated, and with a
+step cost of <span class="math inline">-0.1</span> and the goal far away
+that takes a long time to happen. Uniform on the other hand takes the
+greedy action 90% of the time from the very start, so as soon as there
+is any difference between actions it acts on it. In both plots the
+agent’s line follows random for the first stretch and then flattens out
+as it starts finding the goal more reliably, the softmax one just
+flattens a lot later and a lot less.</p>
+<h3 id="e-annealing">(e) Annealing</h3>
+<p><strong>Annealing</strong> means shrinking <span
+class="math inline">\alpha</span> and <span
+class="math inline">\epsilon</span> as the agent gains experience. In
+simple_rl both get divided by <span class="math inline">1 +
+\frac{\text{step}}{1000} \cdot \frac{\text{episode} + 1}{2000}</span>,
+so they start at their set values and slowly decay.</p>
+<p>It helps because what you want early on is the opposite of what you
+want later. At the start the agent knows nothing, so it should explore a
+lot and take big learning steps. Later its <span
+class="math inline">Q</span> values are mostly right, so random
+exploring just wastes steps and large updates just let single unlucky
+slips knock good estimates around. Annealing moves the agent from
+exploring to exploiting on its own, instead of being stuck with one
+fixed tradeoff for the whole run, and a decaying learning rate is also
+what the convergence proof for Q-learning needs.</p>
+<p>When I toggled it on, the agent learned a little slower at first,
+since <span class="math inline">\alpha</span> was already shrinking
+while its <span class="math inline">Q</span> values were still bad. By
+the last 100 episodes it was the steadier of the two: <span
+class="math inline">\epsilon</span> had decayed from 0.1 to about 0.02,
+so it almost never took a random step into lava and went straight for
+the goal, while the non-annealed agent kept stumbling into lava now and
+then because it explores 10% of the time forever.</p>
+<h3 id="f-blocking-off-the-start">(f) Blocking off the start</h3>
+<p>I added a wall at (1, 2) on top of the default walls, which already
+had (2, 1), so the agent at (1, 1) is boxed into the corner.</p>
+<figure>
+<img src="media/2f/blocked-start.png"
+alt="Cumulative reward with the agent boxed in" />
+<figcaption aria-hidden="true">Cumulative reward with the agent boxed
+in</figcaption>
+</figure>
+<p>Both lines are exactly on top of each other, a perfectly straight
+line down to -1200 with zero spread between instances. That is <span
+class="math inline">-0.1 \times 200</span> steps <span
+class="math inline">= -20</span> per episode, times 60 episodes. The
+agent can never leave the start square, so every episode it bumps into
+walls for all 200 steps and the episode times out. It does learn, every
+<span class="math inline">Q(s_0, a)</span> goes down toward the same
+value, but every action leads to the same place with the same reward, so
+there is nothing to tell them apart and nothing learning can do to
+improve. The random agent is in the same box, so they get the identical
+reward. It is the same thing as part 1d, just learned from samples
+instead of computed, where VI would give the start square a value of
+<span class="math inline">-2</span>.</p>
+    </main>
+  </body>
+</html>

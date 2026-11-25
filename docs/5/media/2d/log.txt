@@ -1,0 +1,76 @@
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.15 seconds.
+Q-learning agent took 0.36 seconds.
+-------------
+
+	Random: -576.52 (conf_interv: 29.51 )
+	Q-learning: -483.82 (conf_interv: 7.4 )
+
+-ex uniform -> /home/lukeypookster/School/SYDE572/assignment5/media/2d/ex-uniform.png
+
+ Q-learning-softmax interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning-softmax,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning-softmax is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.15 seconds.
+Q-learning-softmax agent took 1.18 seconds.
+-------------
+
+	Random: -577.02 (conf_interv: 49.36 )
+	Q-learning-softmax: -573.38 (conf_interv: 23.95 )
+
+-ex softmax -> /home/lukeypookster/School/SYDE572/assignment5/media/2d/ex-softmax.png

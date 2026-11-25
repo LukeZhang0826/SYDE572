@@ -1,0 +1,5 @@
+flag,value,iterations,seconds,image
+-g,0.9,7,0.2125,assignment5/media/1b/g-0.9.png
+-g,0.7,7,0.2131,assignment5/media/1b/g-0.7.png
+-g,0.1,4,0.2072,assignment5/media/1b/g-0.1.png
+-g,0.001,3,0.2078,assignment5/media/1b/g-0.001.png

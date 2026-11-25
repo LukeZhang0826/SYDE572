@@ -1,0 +1,6 @@
+flag,value,iterations,seconds,image
+"-w,-H",5,7,0.2853,assignment5/media/1e/wH-5.png
+"-w,-H",10,13,0.9037,assignment5/media/1e/wH-10.png
+"-w,-H",15,19,1.5600,assignment5/media/1e/wH-15.png
+"-w,-H",20,29,2.8739,assignment5/media/1e/wH-20.png
+"-w,-H",25,40,4.8395,assignment5/media/1e/wH-25.png

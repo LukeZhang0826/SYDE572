@@ -257,6 +257,27 @@ figure img {
   border-radius: 4px;
 }
 
+/* Side by side figures, from a ::: {.gallery} block in the Markdown. Flex
+   instead of grid so an odd one out on the last row sits centred. */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.gallery figure {
+  flex: 0 1 calc(50% - 0.5rem);
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .gallery figure {
+    flex-basis: 100%;
+  }
+}
+
 figcaption {
   color: var(--muted);
   font-size: 0.85rem;

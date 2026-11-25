@@ -1,0 +1,114 @@
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.15 seconds.
+Q-learning agent took 0.53 seconds.
+-------------
+
+	Random: -594.74 (conf_interv: 32.44 )
+	Q-learning: -713.46 (conf_interv: 17.9 )
+
+-a 0.01 -> /home/lukeypookster/School/SYDE572/assignment5/media/2c/a-0.01.png
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.15 seconds.
+Q-learning agent took 0.29 seconds.
+-------------
+
+	Random: -599.1 (conf_interv: 32.46 )
+	Q-learning: -365.36 (conf_interv: 12.1 )
+
+-a 0.5 -> /home/lukeypookster/School/SYDE572/assignment5/media/2c/a-0.5.png
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.14 seconds.
+Q-learning agent took 0.23 seconds.
+-------------
+
+	Random: -562.38 (conf_interv: 11.56 )
+	Q-learning: -277.92 (conf_interv: 15.42 )
+
+-a 0.99 -> /home/lukeypookster/School/SYDE572/assignment5/media/2c/a-0.99.png

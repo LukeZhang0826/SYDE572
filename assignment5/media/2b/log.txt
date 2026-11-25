@@ -1,0 +1,190 @@
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.38 seconds.
+Q-learning agent took 0.83 seconds.
+-------------
+
+	Random: -579.96 (conf_interv: 36.67 )
+	Q-learning: -490.5 (conf_interv: 16.33 )
+
+-ep 0.01 -> /home/lukeypookster/School/SYDE572/assignment5/media/2b/ep-0.01.png
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.36 seconds.
+Q-learning agent took 0.85 seconds.
+-------------
+
+	Random: -569.08 (conf_interv: 5.12 )
+	Q-learning: -348.68 (conf_interv: 19.88 )
+
+-ep 0.5 -> /home/lukeypookster/School/SYDE572/assignment5/media/2b/ep-0.5.png
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.37 seconds.
+Q-learning agent took 1.46 seconds.
+-------------
+
+	Random: -591.2 (conf_interv: 8.32 )
+	Q-learning: -537.94 (conf_interv: 32.62 )
+
+-ep 0.99 -> /home/lukeypookster/School/SYDE572/assignment5/media/2b/ep-0.99.png
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.2 seconds.
+Q-learning agent took 0.74 seconds.
+-------------
+
+	Random: -576.88 (conf_interv: 23.17 )
+	Q-learning: -582.48 (conf_interv: 23.41 )
+
+-ep 1 -> /home/lukeypookster/School/SYDE572/assignment5/media/2b/ep-1.png
+
+ Q-learning interacting with gridworld_h-10_w-10
+Running experiment: 
+(MDP)
+	gridworld_h-10_w-10
+(Agents)
+	Random,0
+	Q-learning,1
+(Params)
+	instances : 5
+	episodes : 60
+	steps : 200
+	track_disc_reward : False
+
+Random is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+Q-learning is learning.
+  Instance 1 of 5.
+  Instance 2 of 5.
+  Instance 3 of 5.
+  Instance 4 of 5.
+  Instance 5 of 5.
+
+
+--- TIMES ---
+Random agent took 0.15 seconds.
+Q-learning agent took 0.33 seconds.
+-------------
+
+	Random: -568.26 (conf_interv: 13.71 )
+	Q-learning: -501.0 (conf_interv: 13.8 )
+
+-ep 0 -> /home/lukeypookster/School/SYDE572/assignment5/media/2b/ep-0.png
